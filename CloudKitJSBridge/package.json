@@ -1,0 +1,19 @@
+{
+  "name": "cloudkit_js_bridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf ../dist && parcel build index.js --no-source-maps -o cloudkit-min.js -d ./dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  },
+  "dependencies": {
+    "@apple/cktool.database": "^1.2.341",
+    "@apple/cktool.target.nodejs": "^1.2.341"
+  }
+}
