@@ -1,0 +1,170 @@
+//
+//  ContentView.swift
+//  CloudAssetsManager
+//
+//  Created by azusa on 2022/6/2.
+//
+
+import SwiftUI
+import WebKit
+import ComposableArchitecture
+
+struct ContentView: View {
+    
+    let store: Store<AppState, AppAction>
+    
+    var body: some View {
+        ZStack {
+            WithViewStore(store) { viewStore in
+                NavigationView {
+                    List {
+                        Section {
+                            ForEachStore(store.scope(state: \.indexes, action: AppAction.indexes)) { store in
+                                WithViewStore(store) { viewStore in
+                                    NavigationLink(
+                                        isActive: viewStore.binding(get: \.isActive, send: ResourceIndexAction.setActive)
+                                    ) {
+                                        ResourceIndexView(store: store)
+                                    } label: {
+                                        Text(Version.intToString(viewStore.index.version))
+                                    }
+                                }
+                            }
+                        } header: {
+                            Text("Indexes")
+                        }
+                                                
+                        Section {
+                            NavigationLink("Resources") {
+                                ResourcesView(store: store.scope(state: \.resources, action: AppAction.assets))
+                            }
+                        } header: {
+                            Text("Resources")
+                        }
+                        
+                        Section {
+                            NavigationLink {
+                                ConfigurationView(store: store.scope(state: \.configuration, action: AppAction.configuration))
+                            } label: {
+                                Text("Configuration")
+                            }
+                        } header: {
+                            Text(viewStore.configuration.environment.rawValue)
+                        }
+                    }
+                    .listStyle(SidebarListStyle())
+                    .frame(minWidth: 160)
+                }
+                .toolbar {
+                    toolbar(viewStore: viewStore)
+                }
+                .frame(minWidth: 1000, minHeight: 600)
+                .onAppear {
+                    viewStore.send(.loadFromDB)
+                }
+                .sheet(isPresented: viewStore.binding(
+                    get: { $0.createAsset.isActive },
+                    send: { AppAction.createAsset(.setActive($0)) }
+                )) {
+                    CreateAssetView(store: store.scope(state: \.createAsset, action: AppAction.createAsset))
+                }
+                .sheet(isPresented: viewStore.binding(
+                    get: { $0.createResourceIndex.isActive },
+                    send: { AppAction.createResourceIndex(.setActive($0)) }
+                )) {
+                    CreateResourceIndexView(
+                        store: store.scope(state: \.createResourceIndex, action: AppAction.createResourceIndex),
+                        indexes: viewStore.indexes.map { $0.index }
+                    )
+                }
+            }
+        }
+    }
+    
+    func toolbar(viewStore: ViewStore<AppState, AppAction>) -> some ToolbarContent {
+        ToolbarContentBuilder.buildBlock(
+            ToolbarItem {
+                Button {
+                    viewStore.send(.createResourceIndex(.setActive(true)))
+                } label: {
+                    HStack {
+                        Image(systemName: "doc.badge.plus")
+                        Text("Add Indexes")
+                    }
+                }
+            },
+            ToolbarItem {
+                Button {
+                    viewStore.send(.createAsset(.setActive(true)))
+                } label: {
+                    HStack {
+                        Image(systemName: "doc.badge.plus")
+                        Text("Add Resource")
+                    }
+                }
+            },
+            ToolbarItem {
+                Button {
+                    viewStore.send(.loadFromCloud)
+                } label: {
+                    HStack {
+                        Image(systemName: "goforward")
+                        Text("Refresh")
+                    }
+                    
+                }
+            }
+        )
+    }
+}
+
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
+
+struct __WebView: NSViewRepresentable {
+    let cktool: CKToolJS
+    
+    func makeNSView(context: Context) -> WKWebView {
+        let view = WKWebView(frame: .init(x: 0, y: 0, width: 200, height: 200), configuration: .init())
+//        view.navigationDelegate = context.coordinator
+        cktool.webView = view
+        view.navigationDelegate = cktool
+        view.configuration.userContentController.add(cktool, name: "bridge")
+        return view
+    }
+    
+    func updateNSView(_ nsView: WKWebView, context: Context) {
+        nsView.loadHTMLString("""
+        <!DOCTYPE html>
+        <html>
+        <body>
+        <script>
+        document.write("<h1>这是一个标题</h1>");
+        document.write("<p>这是一个段落</p>");
+        </script>
+        </body>
+        </html>
+        """, baseURL: nil)
+        cktool.webView = nsView
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(javaScriptString: cktool.javaScriptString)
+    }
+    
+    typealias NSViewType = WKWebView
+    
+    class Coordinator: NSObject,WKNavigationDelegate {
+        let javaScriptString: String
+        
+        init(javaScriptString: String) {
+            self.javaScriptString = javaScriptString
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        }
+    }
+}
