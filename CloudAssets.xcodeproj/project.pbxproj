@@ -48,7 +48,7 @@
 		7ABEB7A02851D19800C51E18 /* CKToolConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB79F2851D19800C51E18 /* CKToolConfiguration.swift */; };
 		7ABEB7A32851D36B00C51E18 /* SQLiteRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7A22851D36B00C51E18 /* SQLiteRecord.swift */; };
 		7ABEB7A52851D4DA00C51E18 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7A42851D4DA00C51E18 /* Asset.swift */; };
-		7ABEB7A72851DFAD00C51E18 /* ResourceIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7A62851DFAD00C51E18 /* ResourceIndex.swift */; };
+		7ABEB7A72851DFAD00C51E18 /* ResourceIndexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7A62851DFAD00C51E18 /* ResourceIndexes.swift */; };
 		7ABEB7AA2851DFEE00C51E18 /* ResourceIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7A92851DFEE00C51E18 /* ResourceIndexView.swift */; };
 		7ABEB7AC2851E01200C51E18 /* ResourceIndexState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7AB2851E01200C51E18 /* ResourceIndexState.swift */; };
 		7ABEB7AE2851E2E000C51E18 /* CreateResourceIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7AD2851E2E000C51E18 /* CreateResourceIndexView.swift */; };
@@ -133,7 +133,7 @@
 		7ABEB79F2851D19800C51E18 /* CKToolConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKToolConfiguration.swift; sourceTree = "<group>"; };
 		7ABEB7A22851D36B00C51E18 /* SQLiteRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteRecord.swift; sourceTree = "<group>"; };
 		7ABEB7A42851D4DA00C51E18 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
-		7ABEB7A62851DFAD00C51E18 /* ResourceIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceIndex.swift; sourceTree = "<group>"; };
+		7ABEB7A62851DFAD00C51E18 /* ResourceIndexes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceIndexes.swift; sourceTree = "<group>"; };
 		7ABEB7A92851DFEE00C51E18 /* ResourceIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceIndexView.swift; sourceTree = "<group>"; };
 		7ABEB7AB2851E01200C51E18 /* ResourceIndexState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceIndexState.swift; sourceTree = "<group>"; };
 		7ABEB7AD2851E2E000C51E18 /* CreateResourceIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexView.swift; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		7A7100AB284DDF1F003E563E /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				7ABEB7A62851DFAD00C51E18 /* ResourceIndex.swift */,
+				7ABEB7A62851DFAD00C51E18 /* ResourceIndexes.swift */,
 				7A7100AC284DDF2A003E563E /* Resource.swift */,
 				7ABEB7A42851D4DA00C51E18 /* Asset.swift */,
 				7ABEB75C28509EF200C51E18 /* Version.swift */,
@@ -303,11 +303,11 @@
 		7AB34ED92848C2BD003C04EE /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				7AB50B2A285255580078E89D /* Utils */,
 				7A7100AB284DDF1F003E563E /* Types */,
 				7A7100A8284DDD1C003E563E /* Database */,
 				7AB34EE42848C3D4003C04EE /* CloudKit */,
-				7AB34EDB2848C30A003C04EE /* App */,
-				7A7100B0284E123F003E563E /* AssetDownloader.swift */,
+				7AB34EDB2848C30A003C04EE /* ViewState */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -324,7 +324,7 @@
 			path = Frontend;
 			sourceTree = "<group>";
 		};
-		7AB34EDB2848C30A003C04EE /* App */ = {
+		7AB34EDB2848C30A003C04EE /* ViewState */ = {
 			isa = PBXGroup;
 			children = (
 				7AB34EDC2848C316003C04EE /* AppState.swift */,
@@ -334,7 +334,7 @@
 				7ABEB7AB2851E01200C51E18 /* ResourceIndexState.swift */,
 				7ABEB7AF2851E37900C51E18 /* CreateResourceIndexState.swift */,
 			);
-			path = App;
+			path = ViewState;
 			sourceTree = "<group>";
 		};
 		7AB34EE42848C3D4003C04EE /* CloudKit */ = {
@@ -355,6 +355,14 @@
 				7ABEB755285076A700C51E18 /* CreateAssetView.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		7AB50B2A285255580078E89D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7A7100B0284E123F003E563E /* AssetDownloader.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		7ABEB7A82851DFE100C51E18 /* ResourceIndex */ = {
@@ -607,7 +615,7 @@
 				7ABEB75D28509EF200C51E18 /* Version.swift in Sources */,
 				7ABEB7A02851D19800C51E18 /* CKToolConfiguration.swift in Sources */,
 				7ADDC81A284F5DDC00FEDC8E /* CKToolJS+Upload.swift in Sources */,
-				7ABEB7A72851DFAD00C51E18 /* ResourceIndex.swift in Sources */,
+				7ABEB7A72851DFAD00C51E18 /* ResourceIndexes.swift in Sources */,
 				7ABEB7AA2851DFEE00C51E18 /* ResourceIndexView.swift in Sources */,
 				7AB34EC92848AE4E003C04EE /* ContentView.swift in Sources */,
 				7ABEB7A52851D4DA00C51E18 /* Asset.swift in Sources */,

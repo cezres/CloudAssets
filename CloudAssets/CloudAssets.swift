@@ -19,7 +19,7 @@ public class CloudAssets {
     
     public static let shared = CloudAssets()
     
-    private var indexs: AssetIndexs?
+    private var indexes: LocalResourceIndexes?
     
     private init() {
         cachesDirectory = .init(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0], isDirectory: true).appendingPathComponent("cache_assets")
@@ -29,7 +29,7 @@ public class CloudAssets {
             try? FileManager.default.createDirectory(at: cachesDirectory, withIntermediateDirectories: false, attributes: nil)
         }
         
-        queue.name = "CloudAssets"
+        queue.name = "CloudResources"
         queue.maxConcurrentOperationCount = 4
         queue.qualityOfService = .default
         
@@ -43,41 +43,41 @@ public class CloudAssets {
     }
     
     func fetchRecordIdFromAssetIndexs(with name: String) -> CKRecord.ID? {
-        if indexs == nil {
+        if indexes == nil {
             group.wait()
             queryAssetIndexs(version: version)
             group.wait()
         }
         
-        guard let recordName = indexs?[name] else { return nil }
+        guard let recordName = indexes?.indexes[name]?.id else { return nil }
         return .init(recordName: recordName)
     }
     
     func queryAssetIndexs(version: Int) {
-        guard indexs == nil else {
+        guard indexes == nil else {
             return
         }
         group.enter()
         
-        let recordName = "asset_indexs"
+        let recordName = "resourc_indexes"
         let localUrl = cachesDirectory.appendingPathComponent(recordName)
         var isLeave = false
         // Load from local
         if
             let data = try? Data(contentsOf: localUrl),
-            let indexs = try? JSONDecoder().decode(AssetIndexs.self, from: data)
+            let localIndexes = try? JSONDecoder().decode(LocalResourceIndexes.self, from: data)
         {
-            self.indexs = indexs
+            self.indexes = localIndexes
             group.leave()
             isLeave = true
             
-            if indexs.version == version {
-                return
-            }
+//            if localIndexes.version == version {
+//                return
+//            }
         }
         
         // Load from cloud
-        let query = CKQuery(recordType: "AssetIndexs", predicate: .init(format: "version <= \(version)"))
+        let query = CKQuery(recordType: "ResourceIndex", predicate: .init(format: "version <= \(version)"))
         query.sortDescriptors = [
             .init(key: "version", ascending: false)
         ]
@@ -87,11 +87,26 @@ public class CloudAssets {
             "version"
         ]
         operation.recordFetchedBlock = { record in
-            guard let version = record["version"] as? Int, version != self.indexs?.version else { return }
+            guard
+                let version = record["version"] as? Int,
+                version != self.indexes?.version || self.indexes?.modifiedTimestamp != record.modificationDate?.timeIntervalSince1970
+            else { return }
             self.container.publicCloudDatabase.fetch(withRecordID: record.recordID) { record, error in
-                guard let indexsAsset = record?["indexs"] as? CKAsset, let url = indexsAsset.fileURL, let data = try? Data(contentsOf: url), let indexs = try? JSONDecoder().decode(AssetIndexs.self, from: data) else { return }
-                self.indexs = indexs
-                try? data.write(to: localUrl)
+                guard
+                    let indexsAsset = record?["indexes"] as? CKAsset,
+                    let version = record?["version"] as? Int,
+                    let url = indexsAsset.fileURL,
+                    let data = try? Data(contentsOf: url),
+                    let indexs = try? JSONDecoder().decode(ResourceIndexes.self, from: data)
+                else { return }
+                self.indexes = .init(version: version, modifiedTimestamp: record?.modificationDate?.timeIntervalSince1970 ?? 0, indexes: indexs)
+                
+                do {
+                    try JSONEncoder().encode(self.indexes).write(to: localUrl)
+                } catch {
+                    print(error)
+                }
+//                try? data.write(to: localUrl)
                 
                 if !isLeave {
                     self.group.leave()
@@ -182,36 +197,15 @@ public class CloudAssets {
     }
 }
 
-struct AssetIndexs: Codable {
-    typealias AssetId = String
-    typealias AssetName = String
-    
-    struct Imageset: Codable {
-        let x2: AssetId
-        let x3: AssetId
-    }
-    
+typealias ResourceName = String
+typealias ResourceIndexes = [ResourceName: ResourceIndex]
+
+struct LocalResourceIndexes: Codable {
     let version: Int
-    let datas: [AssetName: AssetId]
-    let images: [AssetName: Imageset]
-    
-    var isEmpty: Bool {
-        datas.isEmpty || images.isEmpty
-    }
-    
-    subscript(assetName: AssetName) -> AssetId? {
-        if let assetId = datas[assetName] {
-            return assetId
-        } else if let imageset = images[assetName] {
-            switch Int(UIScreen().scale) {
-            case 2:
-                return imageset.x2
-            case 3:
-                return imageset.x3
-            default:
-                return imageset.x3
-            }
-        }
-        return nil
-    }
+    let modifiedTimestamp: TimeInterval
+    let indexes: ResourceIndexes
+}
+
+struct ResourceIndex: Codable {
+    let id: String
 }

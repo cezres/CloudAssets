@@ -17,12 +17,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        assets.start(identifier: "iCloud.im.bycoin.ios", version: 11215)
+        assets.start(identifier: "iCloud.im.bycoin.ios", version: 300000001)
         
         assets.test()
     }
-
-
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let view = view.viewWithTag(2233) {
             view.removeFromSuperview()
@@ -36,7 +35,7 @@ class ViewController: UIViewController {
             imageView.tag = 2233
             view.addSubview(imageView)
             
-            imageView.setCloudAsset(name: "azusa")
+            imageView.setCloudAsset(name: "nft_3d_background")
         }
     }
 }

@@ -41,7 +41,7 @@ public extension CloudAssets {
 }
 
 extension CloudAssets {
-    func uploadAssetIndexs(version: Int, indexs: AssetIndexs) {
+    func uploadAssetIndexs(version: Int, indexs: ResourceIndexes) {
         let recordName = "asset_indexs_\(version)"
         let url = cachesDirectory.appendingPathComponent(recordName)
         do {
