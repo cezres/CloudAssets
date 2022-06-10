@@ -85,10 +85,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.init { state, acti
     case .createResourceIndex(let action):
         switch action {
         case .completion(let result):
-            if case .success(let value) = result {
-                state.indexes.insert(.init(index: value), at: 0)
-                state.indexes.sort(by: { $0.index.version > $1.index.version })
-            }
+            state.indexes.insert(.init(index: result), at: 0)
+            state.indexes.sort(by: { $0.index.version > $1.index.version })
         default:
             break
         }
@@ -103,6 +101,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.init { state, acti
                     elements[index].resources = state.resources.resources
                     state.indexes = .init(uniqueElements: elements)
                 }
+            }
+        case .deleteCompletion:
+            if let index = state.indexes.firstIndex(where: { $0.id == id }) {
+                state.indexes.remove(at: index)
             }
         default:
             break

@@ -30,6 +30,12 @@ extension CKToolJS {
         let pathExtension: String
         let asset: FileRecord
     }
+    
+    struct ResourceIndexRecord: Codable {
+        let recordName: String
+        let version: Int
+        let indexes: FileRecord
+    }
 }
 
 class CKToolJS: NSObject {
@@ -67,8 +73,8 @@ class CKToolJS: NSObject {
         debugPrint(result)
     }
     
-    func queryAssetIndexsRecords() async throws -> [AssetIndexsRecord] {
-        try await evaluateJavaScript(method: .queryAssetIndexsRecords(continuationToken: ""))
+    func queryResourceIndexRecords() async throws -> [AssetIndexsRecord] {
+        try await evaluateJavaScript(method: .queryResourceIndexRecords)
     }
     
     func queryResourceRecords() async throws -> [AssetsRecord] {
@@ -88,12 +94,52 @@ class CKToolJS: NSObject {
         guard let uploadUrl = URL(string: uploadUrlString) else {
             throw NSError(domain: "Invalid uploadUrl: \(uploadUrlString)", code: -1)
         }
-        
         let uploadResult = try await upload(uploadUrl, file: asset).singleFile
         
         let recordName = UUID().uuidString
         let result: AssetsRecord = try await evaluateJavaScript(method: .createResourceRecord(recordName: recordName, name: name, version: version, pathExtension: asset.pathExtension.lowercased(), fileChecksum: uploadResult.fileChecksum, receipt: uploadResult.receipt, size: size))
         return result
+    }
+    
+    func createResourceIndexRecord(indexes: ResourceIndex) async throws -> ResourceIndexRecord {
+        let data = try JSONEncoder().encode(indexes.indexes)
+        let size = data.count
+        
+        print("Create upload url")
+        let uploadUrlString: String = try await evaluateJavaScript(method: .createAssetUploadUrl(recordType: "ResourceIndex", fieldName: "indexes", size: size))
+        
+        guard let uploadUrl = URL(string: uploadUrlString) else {
+            throw NSError(domain: "Invalid uploadUrl: \(uploadUrlString)", code: -1)
+        }
+        print("Upload file")
+        let uploadResult = try await upload(uploadUrl, data: data).singleFile
+
+        print("Create record")
+        let recordName = "\(indexes.version)_resource_indexes"
+        let result: ResourceIndexRecord = try await evaluateJavaScript(method: .createResourceIndexRecord(recordName: recordName, version: indexes.version, fileChecksum: uploadResult.fileChecksum, receipt: uploadResult.receipt, size: size))
+        return result
+    }
+    
+    func updateResourceIndexRecord(indexes: ResourceIndex) async throws -> ResourceIndexRecord {
+        let data = try JSONEncoder().encode(indexes.indexes)
+        let size = data.count
+        
+        print("Create upload url")
+        let uploadUrlString: String = try await evaluateJavaScript(method: .createAssetUploadUrl(recordType: "ResourceIndex", fieldName: "indexes", size: size))
+        
+        guard let uploadUrl = URL(string: uploadUrlString) else {
+            throw NSError(domain: "Invalid uploadUrl: \(uploadUrlString)", code: -1)
+        }
+        print("Upload file")
+        let uploadResult = try await upload(uploadUrl, data: data).singleFile
+
+        print("Update record")
+        let result: ResourceIndexRecord = try await evaluateJavaScript(method: .updateResourceIndexRecord(indexes.id, indexes.version, uploadResult.fileChecksum, uploadResult.receipt, size))
+        return result
+    }
+    
+    func searchResourceIndexRecord(id: String) async throws -> ResourceIndexRecord {
+        try await evaluateJavaScript(method: .searchResourceIndexRecord(id))
     }
     
     func test() {

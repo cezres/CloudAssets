@@ -81,6 +81,7 @@ export function createResourceIndexRecord(id, recordName, version, fileChecksum,
     api.createRecord({
         ...defaultParams,
         body: {
+            recordType: "ResourceIndex",
             recordName: recordName,
             fields: {
                 "version": createCKDBRecordFieldInt64Value({
@@ -117,65 +118,59 @@ export function queryResourceRecords(id) {
     })
 }
 
-export function queryAssetIndexsRecords(id, continuationToken) {
-    // if (continuationToken) {
-    //     api.queryRecords({
-    //         ...defaultParams,
-    //         body: {
-    //             continuationToken: continuationToken,
-    //             resultsLimit: 10,
-    //         }
-    //     }).then( value => {
-    //         const indexs = value.result.records.map( element => {
-    //             return convertAssetIndexs(element)
-    //         })
-    //         wk_callback({id: id, result: indexs, continuationToken: value.result.continuationToken})
-    //     }).catch( error => {
-    //         wk_callback({error: error.message, id: id})
-    //     })
-    // } else {
-        api.queryRecords({
-            ...defaultParams,
-            body: {
-                query: {
-                    recordType: "AssetIndexs"
-                },
-                resultsLimit: 10,
-            }
-        }).then( response => {
-            console.log(response)
-            const indexs = response.result.records.map( element => {
-                return convertAssetIndexsRecord(element)
-            })
-            wk_callback({ ...response, id: id, data: indexs})
-        }).catch( error => {
-            console.log(error)
-            wk_callback({error: error.message, id: id})
-        })
-    // }
-}
-
-export function createAssetIndexsRecord(id, recordName, version, fileChecksum, receipt, size) {
-    api.createRecord({
+export function queryResourceIndexRecords(id) {
+    api.queryRecords({
         ...defaultParams,
         body: {
-            recordType: "AssetIndexs",
-            recordName: recordName,
-            fields: {
-                "version": createCKDBRecordFieldInt64Value({ 
-                    value: toInt64(version) 
-                }),
-                "indexs": createCKDBRecordFieldAssetValue({ 
-                    value: { fileChecksum: fileChecksum, receipt: receipt, size: toInt64(size) } 
-                }),
-            }
+            query: {
+                recordType: "ResourceIndex"
+            },
+            resultsLimit: 20,
         }
     }).then( response => {
         console.log(response)
-        wk_callback({ ...response, id: id, data: convertAssetIndexsRecord(response.result.record) })
+        const indexs = response.result.records.map( element => {
+            return convertResourceIndexRecord(element)
+        })
+        wk_callback({ ...response, id: id, data: indexs})
     }).catch( error => {
         console.log(error)
         wk_callback({error: error.message, id: id})
+    })
+}
+
+export function searchResourceIndexRecord(id, recordName) {
+    api.getRecord({
+        ...defaultParams,
+        recordName: recordName,
+    }).then( response => {
+        wk_callback({ ...response, id: id, data: convertResourceIndexRecord(response.result.record) })
+    }).catch( error => {
+        wk_callback({ id: id, error: error })
+    })
+}
+
+export function updateResourceIndexRecord(id, recordName, version, fileChecksum, receipt, size) {
+    api.updateRecord({
+        ...defaultParams,
+        recordName: recordName,
+        force: "true",
+        body: {
+            recordType: "ResourceIndex",
+            fields: {
+                "version": createCKDBRecordFieldInt64Value({
+                    value: toInt64(version)
+                }),
+                "indexes": createCKDBRecordFieldAssetValue({ 
+                    value: { fileChecksum: fileChecksum, receipt: receipt, size: toInt64(size) } 
+                })
+            }
+        }
+    }).then( response => {
+        wk_callback({ ...response, id: id, data: convertResourceIndexRecord(response.result.record) })
+    }).catch( error => {
+        wk_callback({ id: id, error: error})
+        // createResourceIndexRecord(id, recordName, version, fileChecksum, receipt, size)
     })
 }
 
@@ -190,14 +185,6 @@ export function deleteRecord(id, recordName) {
         console.log(error)
         wk_callback({ id: id, error: error })
     })
-}
-
-function convertAssetIndexsRecord(record) {
-    return {
-        recordName: record.recordName,
-        version: record.fields.version.value.toNumber(),
-        indexs: convertCKDBAsset(record.fields.indexs.value)
-    }
 }
 
 function convertResourceRecord(record) {

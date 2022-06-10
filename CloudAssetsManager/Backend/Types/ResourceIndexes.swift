@@ -11,8 +11,8 @@ import SQLite
 struct ResourceIndex: Equatable, Identifiable {
     let id: String
     let version: Int
-    let indexes: [ResourceName: Record]
-    let checksum: String
+    var indexes: [ResourceName: Record]
+    var checksum: String
     
     typealias ResourceName = String
     

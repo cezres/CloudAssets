@@ -11,11 +11,16 @@ import WebKit
 extension CKToolJS {
     enum JavaScriptMethod {
         case configureEnvironment(containerId: String, environment: String, userToken: String)
-        case queryAssetIndexsRecords(continuationToken: String?)
+        case queryResourceIndexRecords
         case queryResourceRecords
+        
         
         case createAssetUploadUrl(recordType: String, fieldName: String, size: Int)
         case createResourceRecord(recordName: String, name: String, version: Int, pathExtension: String, fileChecksum: String, receipt: String, size: Int)
+        
+        case createResourceIndexRecord(recordName: String, version: Int, fileChecksum: String, receipt: String, size: Int)
+        case searchResourceIndexRecord(_ recordName: String)
+        case updateResourceIndexRecord(_ recordName: String, _ version: Int, _ fileChecksum: String, _ receipt: String, _ size: Int)
         
         case deleteRecord(recordName: String)
         
@@ -25,9 +30,9 @@ extension CKToolJS {
                 return """
                 main.configureEnvironment("\(containerId)", "\(environment)", "\(userToken)")
                 """
-            case .queryAssetIndexsRecords(_):
+            case .queryResourceIndexRecords:
                 return """
-                main.queryAssetIndexsRecords("\(callbackId)", null)
+                main.queryResourceIndexRecords("\(callbackId)")
                 """
             case .queryResourceRecords:
                 return """
@@ -40,6 +45,18 @@ extension CKToolJS {
             case .createResourceRecord(let recordName, let name, let version, let pathExtension, let fileChecksum, let receipt, let size):
                 return """
                 main.createResourceRecord("\(callbackId)", "\(recordName)", "\(name)", \(version), "\(pathExtension)", "\(fileChecksum)", "\(receipt)", \(size))
+                """
+            case .createResourceIndexRecord(let recordName, let version, let fileChecksum, let receipt, let size):
+                return """
+                main.createResourceIndexRecord("\(callbackId)", "\(recordName)", \(version), "\(fileChecksum)", "\(receipt)", \(size))
+                """
+            case .searchResourceIndexRecord(let recordName):
+                return """
+                main.searchResourceIndexRecord("\(callbackId)", "\(recordName)")
+                """
+            case .updateResourceIndexRecord(let recordName, let version, let fileChecksum, let receipt, let size):
+                return """
+                main.updateResourceIndexRecord("\(callbackId)", "\(recordName)", \(version), "\(fileChecksum)", "\(receipt)", \(size))
                 """
             case .deleteRecord(let recordName):
                 return """

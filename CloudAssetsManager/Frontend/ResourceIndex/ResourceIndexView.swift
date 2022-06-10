@@ -7,12 +7,45 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SwiftUIX
 
 struct ResourceIndexView: View {
     let store: Store<ResourceIndexState, ResourceIndexAction>
     
     var body: some View {
         WithViewStore(store) { viewStore in
+            HStack {
+                Button {
+                    viewStore.send(.upload)
+                } label: {
+                    HStack {
+                        Image(systemName: "square.and.arrow.up")
+                        Text("Upload")
+                    }
+                }
+                
+                Button {
+                    viewStore.send(.download)
+                } label: {
+                    HStack {
+                        Image(systemName: "square.and.arrow.down")
+                        Text("Download")
+                    }
+                }
+                Button {
+                    viewStore.send(.delete)
+                } label: {
+                    HStack {
+                        Image(systemName: "delete.forward")
+                        Text("Delete")
+                    }
+                }
+                
+                Spacer()
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(Edge.Set.init(arrayLiteral: .horizontal, .top), 16)
+            
             GeometryReader { proxy in
                 HStack {
                     resourcesListView(viewStore.leftList, viewStore: viewStore, tapAction: ResourceIndexAction.tapLeft)
@@ -22,30 +55,12 @@ struct ResourceIndexView: View {
                 }
             }
             .padding(Edge.Set.vertical, 16)
-            .toolbar {
-                ToolbarItem {
-                    Button {
-                        print("xx")
-//                        viewStore.send(.createResourceIndex(.setActive(true)))
-                    } label: {
-                        HStack {
-                            Image(systemName: "doc.badge.plus")
-                            Text("Add Indexes")
-                        }
-                    }
+            .sheet(isPresented: viewStore.binding(get: \.isLoading, send: ResourceIndexAction.setLoading)) {
+                VStack {
+                    ActivityIndicator()
                 }
-                ToolbarItem {
-                    Button {
-                        print("xx")
-//                        viewStore.send(.loadFromCloud)
-                    } label: {
-                        HStack {
-                            Image(systemName: "goforward")
-                            Text("Refresh")
-                        }
-                        
-                    }
-                }
+                .frame(width: 100, height: 100, alignment: .center)
+                .cornerRadius(12)
             }
         }
     }
