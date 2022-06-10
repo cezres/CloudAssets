@@ -16,6 +16,10 @@ pod 'CloudResources', :git => 'https://github.com/cezres/CloudResources.git'
 
 用于管理App不同版本资源文件的 macOS App
 
+![001](https://raw.githubusercontent.com/cezres/CloudResources/main/Screenshots/000.png)
+![001](https://raw.githubusercontent.com/cezres/CloudResources/main/Screenshots/001.png)
+![001](https://raw.githubusercontent.com/cezres/CloudResources/main/Screenshots/002.png)
+
 ## CloudKitJSBridge
 
 封装 javascript package @apple/cktool.database，连接CloudKit数据库。
