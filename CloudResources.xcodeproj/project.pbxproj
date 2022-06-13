@@ -1,0 +1,1149 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7A09CAB72856DE760033D274 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 7A09CAB62856DE750033D274 /* main.js */; };
+		7A8A4A4A285345E9004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A49285345E9004B761F /* CloudResourcesFoundation */; };
+		7A8A4A4C285345F2004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */; };
+		7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4D28534602004B761F /* CloudResources.swift */; };
+		7A8A4A5028550CC9004B761F /* CloudAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4F28550CC9004B761F /* CloudAssets.swift */; };
+		7A8A4A5328550D09004B761F /* UIImageView+CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */; };
+		7A8A4A5528550D21004B761F /* CloudAssets+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5428550D21004B761F /* CloudAssets+Test.swift */; };
+		7A8A4A5D28550D4C004B761F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5C28550D4C004B761F /* AppDelegate.swift */; };
+		7A8A4A5F28550D4C004B761F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5E28550D4C004B761F /* SceneDelegate.swift */; };
+		7A8A4A6128550D4C004B761F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A6028550D4C004B761F /* ViewController.swift */; };
+		7A8A4A6428550D4C004B761F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A8A4A6228550D4C004B761F /* Main.storyboard */; };
+		7A8A4A6628550D4E004B761F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A8A4A6528550D4E004B761F /* Assets.xcassets */; };
+		7A8A4A6928550D4E004B761F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A8A4A6728550D4E004B761F /* LaunchScreen.storyboard */; };
+		7A8A4A7028550D74004B761F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A8A4A6F28550D74004B761F /* CloudKit.framework */; };
+		7A8A4A7128550DAA004B761F /* CloudResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABEB76F2851D10200C51E18 /* CloudResources.framework */; };
+		7A8A4A7228550DAA004B761F /* CloudResources.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABEB76F2851D10200C51E18 /* CloudResources.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7A8A4A8D28550F17004B761F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7828550F17004B761F /* Database.swift */; };
+		7A8A4A8E28550F17004B761F /* SQLiteRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7928550F17004B761F /* SQLiteRecord.swift */; };
+		7A8A4A8F28550F17004B761F /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7B28550F17004B761F /* Version.swift */; };
+		7A8A4A9028550F17004B761F /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7C28550F17004B761F /* Resource.swift */; };
+		7A8A4A9128550F17004B761F /* CKToolConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7D28550F17004B761F /* CKToolConfiguration.swift */; };
+		7A8A4A9228550F17004B761F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7E28550F17004B761F /* Asset.swift */; };
+		7A8A4A9328550F17004B761F /* ResourceIndexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7F28550F17004B761F /* ResourceIndexes.swift */; };
+		7A8A4A9428550F17004B761F /* CKToolJS+WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8128550F17004B761F /* CKToolJS+WebView.swift */; };
+		7A8A4A9528550F17004B761F /* CKToolJS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8228550F17004B761F /* CKToolJS.swift */; };
+		7A8A4A9628550F17004B761F /* CKToolJS+Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8328550F17004B761F /* CKToolJS+Upload.swift */; };
+		7A8A4A9728550F17004B761F /* AssetDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8528550F17004B761F /* AssetDownloader.swift */; };
+		7A8A4A9828550F17004B761F /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8728550F17004B761F /* AppState.swift */; };
+		7A8A4A9928550F17004B761F /* ConfigurationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8828550F17004B761F /* ConfigurationState.swift */; };
+		7A8A4A9A28550F17004B761F /* ResourcesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8928550F17004B761F /* ResourcesState.swift */; };
+		7A8A4A9B28550F17004B761F /* ResourceIndexState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8A28550F17004B761F /* ResourceIndexState.swift */; };
+		7A8A4A9C28550F17004B761F /* CreateAssetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8B28550F17004B761F /* CreateAssetState.swift */; };
+		7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */; };
+		7A8A4A9F28550F30004B761F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A9E28550F30004B761F /* ComposableArchitecture */; };
+		7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA2285512D1004B761F /* ResourcesView.swift */; };
+		7A8A4AAD285512D1004B761F /* AssetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA3285512D1004B761F /* AssetView.swift */; };
+		7A8A4AAE285512D1004B761F /* CreateAssetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA4285512D1004B761F /* CreateAssetView.swift */; };
+		7A8A4AAF285512D1004B761F /* OpenFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */; };
+		7A8A4AB0285512D1004B761F /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA7285512D1004B761F /* ConfigurationView.swift */; };
+		7A8A4AB1285512D1004B761F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA8285512D1004B761F /* ContentView.swift */; };
+		7A8A4AB2285512D1004B761F /* ResourceIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAA285512D1004B761F /* ResourceIndexView.swift */; };
+		7A8A4AB3285512D1004B761F /* CreateResourceIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAB285512D1004B761F /* CreateResourceIndexView.swift */; };
+		7A8A4B4D2856D406004B761F /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4B4C2856D406004B761F /* SwiftUIX */; };
+		7AB50B25285227330078E89D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 7AB50B24285227330078E89D /* SQLite */; };
+		7ABEB7742851D10200C51E18 /* CloudResources.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7732851D10200C51E18 /* CloudResources.docc */; };
+		7ABEB77A2851D10200C51E18 /* CloudResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABEB76F2851D10200C51E18 /* CloudResources.framework */; };
+		7ABEB77F2851D10200C51E18 /* CloudResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB77E2851D10200C51E18 /* CloudResourcesTests.swift */; };
+		7ABEB7802851D10200C51E18 /* CloudResources.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ABEB7722851D10200C51E18 /* CloudResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7ABEB7902851D11300C51E18 /* CloudResourcesManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB78F2851D11300C51E18 /* CloudResourcesManagerApp.swift */; };
+		7ABEB7942851D11500C51E18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABEB7932851D11500C51E18 /* Assets.xcassets */; };
+		7ABEB7972851D11500C51E18 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABEB7962851D11500C51E18 /* Preview Assets.xcassets */; };
+		7ABEB79E2851D14100C51E18 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABEB79D2851D14100C51E18 /* Alamofire */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A8A4A7328550DAA004B761F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ABEB7662851D10200C51E18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ABEB76E2851D10200C51E18;
+			remoteInfo = CloudResources;
+		};
+		7ABEB77B2851D10200C51E18 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ABEB7662851D10200C51E18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ABEB76E2851D10200C51E18;
+			remoteInfo = CloudResources;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7A8A4A4628534548004B761F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A8A4A7528550DAA004B761F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7A8A4A7228550DAA004B761F /* CloudResources.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7A09CAB62856DE750033D274 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
+		7A8A4A48285345D0004B761F /* CloudResourcesFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudResourcesFoundation; sourceTree = "<group>"; };
+		7A8A4A4D28534602004B761F /* CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResources.swift; sourceTree = "<group>"; };
+		7A8A4A4F28550CC9004B761F /* CloudAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudAssets.swift; sourceTree = "<group>"; };
+		7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+CloudResources.swift"; sourceTree = "<group>"; };
+		7A8A4A5428550D21004B761F /* CloudAssets+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudAssets+Test.swift"; sourceTree = "<group>"; };
+		7A8A4A5A28550D4C004B761F /* CloudResourcesExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudResourcesExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A8A4A5C28550D4C004B761F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7A8A4A5E28550D4C004B761F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7A8A4A6028550D4C004B761F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7A8A4A6328550D4C004B761F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7A8A4A6528550D4E004B761F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7A8A4A6828550D4E004B761F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7A8A4A6A28550D4E004B761F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A8A4A6E28550D5B004B761F /* CloudResourcesExamples.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CloudResourcesExamples.entitlements; sourceTree = "<group>"; };
+		7A8A4A6F28550D74004B761F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		7A8A4A7828550F17004B761F /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		7A8A4A7928550F17004B761F /* SQLiteRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteRecord.swift; sourceTree = "<group>"; };
+		7A8A4A7B28550F17004B761F /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		7A8A4A7C28550F17004B761F /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		7A8A4A7D28550F17004B761F /* CKToolConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKToolConfiguration.swift; sourceTree = "<group>"; };
+		7A8A4A7E28550F17004B761F /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		7A8A4A7F28550F17004B761F /* ResourceIndexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexes.swift; sourceTree = "<group>"; };
+		7A8A4A8128550F17004B761F /* CKToolJS+WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKToolJS+WebView.swift"; sourceTree = "<group>"; };
+		7A8A4A8228550F17004B761F /* CKToolJS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKToolJS.swift; sourceTree = "<group>"; };
+		7A8A4A8328550F17004B761F /* CKToolJS+Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKToolJS+Upload.swift"; sourceTree = "<group>"; };
+		7A8A4A8528550F17004B761F /* AssetDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetDownloader.swift; sourceTree = "<group>"; };
+		7A8A4A8728550F17004B761F /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		7A8A4A8828550F17004B761F /* ConfigurationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationState.swift; sourceTree = "<group>"; };
+		7A8A4A8928550F17004B761F /* ResourcesState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesState.swift; sourceTree = "<group>"; };
+		7A8A4A8A28550F17004B761F /* ResourceIndexState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexState.swift; sourceTree = "<group>"; };
+		7A8A4A8B28550F17004B761F /* CreateAssetState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetState.swift; sourceTree = "<group>"; };
+		7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexState.swift; sourceTree = "<group>"; };
+		7A8A4AA2285512D1004B761F /* ResourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesView.swift; sourceTree = "<group>"; };
+		7A8A4AA3285512D1004B761F /* AssetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetView.swift; sourceTree = "<group>"; };
+		7A8A4AA4285512D1004B761F /* CreateAssetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetView.swift; sourceTree = "<group>"; };
+		7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenFileSelector.swift; sourceTree = "<group>"; };
+		7A8A4AA7285512D1004B761F /* ConfigurationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
+		7A8A4AA8285512D1004B761F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7A8A4AAA285512D1004B761F /* ResourceIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexView.swift; sourceTree = "<group>"; };
+		7A8A4AAB285512D1004B761F /* CreateResourceIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexView.swift; sourceTree = "<group>"; };
+		7ABEB76F2851D10200C51E18 /* CloudResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CloudResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ABEB7722851D10200C51E18 /* CloudResources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudResources.h; sourceTree = "<group>"; };
+		7ABEB7732851D10200C51E18 /* CloudResources.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CloudResources.docc; sourceTree = "<group>"; };
+		7ABEB7792851D10200C51E18 /* CloudResourcesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudResourcesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ABEB77E2851D10200C51E18 /* CloudResourcesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResourcesTests.swift; sourceTree = "<group>"; };
+		7ABEB78D2851D11300C51E18 /* CloudResourcesManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudResourcesManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ABEB78F2851D11300C51E18 /* CloudResourcesManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResourcesManagerApp.swift; sourceTree = "<group>"; };
+		7ABEB7932851D11500C51E18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7ABEB7962851D11500C51E18 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7ABEB7982851D11500C51E18 /* CloudResourcesManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CloudResourcesManager.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A8A4A5728550D4C004B761F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A8A4A7128550DAA004B761F /* CloudResources.framework in Frameworks */,
+				7A8A4A7028550D74004B761F /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB76C2851D10200C51E18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A8A4A4C285345F2004B761F /* CloudResourcesFoundation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB7762851D10200C51E18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ABEB77A2851D10200C51E18 /* CloudResources.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB78A2851D11300C51E18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7AB50B25285227330078E89D /* SQLite in Frameworks */,
+				7A8A4A4A285345E9004B761F /* CloudResourcesFoundation in Frameworks */,
+				7A8A4A9F28550F30004B761F /* ComposableArchitecture in Frameworks */,
+				7A8A4B4D2856D406004B761F /* SwiftUIX in Frameworks */,
+				7ABEB79E2851D14100C51E18 /* Alamofire in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A09CAB52856DE750033D274 /* dist */ = {
+			isa = PBXGroup;
+			children = (
+				7A09CAB62856DE750033D274 /* main.js */,
+			);
+			name = dist;
+			path = CloudKitJSBridge/dist;
+			sourceTree = SOURCE_ROOT;
+		};
+		7A8A4A4128534548004B761F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A6F28550D74004B761F /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7A8A4A47285345D0004B761F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A48285345D0004B761F /* CloudResourcesFoundation */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		7A8A4A5128550CE1004B761F /* UIKitExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */,
+			);
+			path = UIKitExtensions;
+			sourceTree = "<group>";
+		};
+		7A8A4A5B28550D4C004B761F /* CloudResourcesExamples */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A6E28550D5B004B761F /* CloudResourcesExamples.entitlements */,
+				7A8A4A5C28550D4C004B761F /* AppDelegate.swift */,
+				7A8A4A5E28550D4C004B761F /* SceneDelegate.swift */,
+				7A8A4A6028550D4C004B761F /* ViewController.swift */,
+				7A8A4A6228550D4C004B761F /* Main.storyboard */,
+				7A8A4A6528550D4E004B761F /* Assets.xcassets */,
+				7A8A4A6728550D4E004B761F /* LaunchScreen.storyboard */,
+				7A8A4A6A28550D4E004B761F /* Info.plist */,
+			);
+			path = CloudResourcesExamples;
+			sourceTree = "<group>";
+		};
+		7A8A4A7628550F17004B761F /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A7728550F17004B761F /* Database */,
+				7A8A4A7A28550F17004B761F /* Types */,
+				7A8A4A8028550F17004B761F /* CloudKit */,
+				7A8A4A8428550F17004B761F /* Utils */,
+				7A8A4A8628550F17004B761F /* ViewState */,
+			);
+			path = Backend;
+			sourceTree = "<group>";
+		};
+		7A8A4A7728550F17004B761F /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A7828550F17004B761F /* Database.swift */,
+				7A8A4A7928550F17004B761F /* SQLiteRecord.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		7A8A4A7A28550F17004B761F /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A7B28550F17004B761F /* Version.swift */,
+				7A8A4A7C28550F17004B761F /* Resource.swift */,
+				7A8A4A7D28550F17004B761F /* CKToolConfiguration.swift */,
+				7A8A4A7E28550F17004B761F /* Asset.swift */,
+				7A8A4A7F28550F17004B761F /* ResourceIndexes.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		7A8A4A8028550F17004B761F /* CloudKit */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A8128550F17004B761F /* CKToolJS+WebView.swift */,
+				7A8A4A8228550F17004B761F /* CKToolJS.swift */,
+				7A8A4A8328550F17004B761F /* CKToolJS+Upload.swift */,
+			);
+			path = CloudKit;
+			sourceTree = "<group>";
+		};
+		7A8A4A8428550F17004B761F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A8528550F17004B761F /* AssetDownloader.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		7A8A4A8628550F17004B761F /* ViewState */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A8728550F17004B761F /* AppState.swift */,
+				7A8A4A8828550F17004B761F /* ConfigurationState.swift */,
+				7A8A4A8928550F17004B761F /* ResourcesState.swift */,
+				7A8A4A8A28550F17004B761F /* ResourceIndexState.swift */,
+				7A8A4A8B28550F17004B761F /* CreateAssetState.swift */,
+				7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */,
+			);
+			path = ViewState;
+			sourceTree = "<group>";
+		};
+		7A8A4AA0285512D1004B761F /* Frontend */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4AA1285512D1004B761F /* Resources */,
+				7A8A4AA5285512D1004B761F /* Common */,
+				7A8A4AA7285512D1004B761F /* ConfigurationView.swift */,
+				7A8A4AA8285512D1004B761F /* ContentView.swift */,
+				7A8A4AA9285512D1004B761F /* ResourceIndex */,
+			);
+			path = Frontend;
+			sourceTree = "<group>";
+		};
+		7A8A4AA1285512D1004B761F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4AA2285512D1004B761F /* ResourcesView.swift */,
+				7A8A4AA3285512D1004B761F /* AssetView.swift */,
+				7A8A4AA4285512D1004B761F /* CreateAssetView.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7A8A4AA5285512D1004B761F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7A8A4AA9285512D1004B761F /* ResourceIndex */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4AAA285512D1004B761F /* ResourceIndexView.swift */,
+				7A8A4AAB285512D1004B761F /* CreateResourceIndexView.swift */,
+			);
+			path = ResourceIndex;
+			sourceTree = "<group>";
+		};
+		7ABEB7652851D10200C51E18 = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A47285345D0004B761F /* Packages */,
+				7ABEB7712851D10200C51E18 /* CloudResources */,
+				7ABEB77D2851D10200C51E18 /* CloudResourcesTests */,
+				7ABEB78E2851D11300C51E18 /* CloudResourcesManager */,
+				7A8A4A5B28550D4C004B761F /* CloudResourcesExamples */,
+				7ABEB7702851D10200C51E18 /* Products */,
+				7A8A4A4128534548004B761F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7ABEB7702851D10200C51E18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7ABEB76F2851D10200C51E18 /* CloudResources.framework */,
+				7ABEB7792851D10200C51E18 /* CloudResourcesTests.xctest */,
+				7ABEB78D2851D11300C51E18 /* CloudResourcesManager.app */,
+				7A8A4A5A28550D4C004B761F /* CloudResourcesExamples.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7ABEB7712851D10200C51E18 /* CloudResources */ = {
+			isa = PBXGroup;
+			children = (
+				7A8A4A5128550CE1004B761F /* UIKitExtensions */,
+				7ABEB7722851D10200C51E18 /* CloudResources.h */,
+				7ABEB7732851D10200C51E18 /* CloudResources.docc */,
+				7A8A4A4D28534602004B761F /* CloudResources.swift */,
+				7A8A4A4F28550CC9004B761F /* CloudAssets.swift */,
+				7A8A4A5428550D21004B761F /* CloudAssets+Test.swift */,
+			);
+			path = CloudResources;
+			sourceTree = "<group>";
+		};
+		7ABEB77D2851D10200C51E18 /* CloudResourcesTests */ = {
+			isa = PBXGroup;
+			children = (
+				7ABEB77E2851D10200C51E18 /* CloudResourcesTests.swift */,
+			);
+			path = CloudResourcesTests;
+			sourceTree = "<group>";
+		};
+		7ABEB78E2851D11300C51E18 /* CloudResourcesManager */ = {
+			isa = PBXGroup;
+			children = (
+				7A09CAB52856DE750033D274 /* dist */,
+				7A8A4AA0285512D1004B761F /* Frontend */,
+				7A8A4A7628550F17004B761F /* Backend */,
+				7ABEB78F2851D11300C51E18 /* CloudResourcesManagerApp.swift */,
+				7ABEB7932851D11500C51E18 /* Assets.xcassets */,
+				7ABEB7982851D11500C51E18 /* CloudResourcesManager.entitlements */,
+				7ABEB7952851D11500C51E18 /* Preview Content */,
+			);
+			path = CloudResourcesManager;
+			sourceTree = "<group>";
+		};
+		7ABEB7952851D11500C51E18 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				7ABEB7962851D11500C51E18 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7ABEB76A2851D10200C51E18 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ABEB7802851D10200C51E18 /* CloudResources.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7A8A4A5928550D4C004B761F /* CloudResourcesExamples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A8A4A6B28550D4E004B761F /* Build configuration list for PBXNativeTarget "CloudResourcesExamples" */;
+			buildPhases = (
+				7A8A4A5628550D4C004B761F /* Sources */,
+				7A8A4A5728550D4C004B761F /* Frameworks */,
+				7A8A4A5828550D4C004B761F /* Resources */,
+				7A8A4A7528550DAA004B761F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A8A4A7428550DAA004B761F /* PBXTargetDependency */,
+			);
+			name = CloudResourcesExamples;
+			productName = CloudResourcesExamples;
+			productReference = 7A8A4A5A28550D4C004B761F /* CloudResourcesExamples.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7ABEB76E2851D10200C51E18 /* CloudResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ABEB7832851D10200C51E18 /* Build configuration list for PBXNativeTarget "CloudResources" */;
+			buildPhases = (
+				7ABEB76A2851D10200C51E18 /* Headers */,
+				7ABEB76B2851D10200C51E18 /* Sources */,
+				7ABEB76C2851D10200C51E18 /* Frameworks */,
+				7ABEB76D2851D10200C51E18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CloudResources;
+			packageProductDependencies = (
+				7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */,
+			);
+			productName = CloudResources;
+			productReference = 7ABEB76F2851D10200C51E18 /* CloudResources.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7ABEB7782851D10200C51E18 /* CloudResourcesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ABEB7862851D10200C51E18 /* Build configuration list for PBXNativeTarget "CloudResourcesTests" */;
+			buildPhases = (
+				7ABEB7752851D10200C51E18 /* Sources */,
+				7ABEB7762851D10200C51E18 /* Frameworks */,
+				7ABEB7772851D10200C51E18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7ABEB77C2851D10200C51E18 /* PBXTargetDependency */,
+			);
+			name = CloudResourcesTests;
+			productName = CloudResourcesTests;
+			productReference = 7ABEB7792851D10200C51E18 /* CloudResourcesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7ABEB78C2851D11300C51E18 /* CloudResourcesManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ABEB7992851D11500C51E18 /* Build configuration list for PBXNativeTarget "CloudResourcesManager" */;
+			buildPhases = (
+				7ABEB7892851D11300C51E18 /* Sources */,
+				7ABEB78A2851D11300C51E18 /* Frameworks */,
+				7ABEB78B2851D11300C51E18 /* Resources */,
+				7A8A4A4628534548004B761F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CloudResourcesManager;
+			packageProductDependencies = (
+				7ABEB79D2851D14100C51E18 /* Alamofire */,
+				7AB50B24285227330078E89D /* SQLite */,
+				7A8A4A49285345E9004B761F /* CloudResourcesFoundation */,
+				7A8A4A9E28550F30004B761F /* ComposableArchitecture */,
+				7A8A4B4C2856D406004B761F /* SwiftUIX */,
+			);
+			productName = CloudResourcesManager;
+			productReference = 7ABEB78D2851D11300C51E18 /* CloudResourcesManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7ABEB7662851D10200C51E18 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					7A8A4A5928550D4C004B761F = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					7ABEB76E2851D10200C51E18 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					7ABEB7782851D10200C51E18 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					7ABEB78C2851D11300C51E18 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 7ABEB7692851D10200C51E18 /* Build configuration list for PBXProject "CloudResources" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7ABEB7652851D10200C51E18;
+			packageReferences = (
+				7ABEB79C2851D14100C51E18 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				7AB50B23285227330078E89D /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				7A8A4A342852D7A1004B761F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				7A8A4B4B2856D3B3004B761F /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+			);
+			productRefGroup = 7ABEB7702851D10200C51E18 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7ABEB76E2851D10200C51E18 /* CloudResources */,
+				7ABEB7782851D10200C51E18 /* CloudResourcesTests */,
+				7ABEB78C2851D11300C51E18 /* CloudResourcesManager */,
+				7A8A4A5928550D4C004B761F /* CloudResourcesExamples */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7A8A4A5828550D4C004B761F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A8A4A6928550D4E004B761F /* LaunchScreen.storyboard in Resources */,
+				7A8A4A6628550D4E004B761F /* Assets.xcassets in Resources */,
+				7A8A4A6428550D4C004B761F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB76D2851D10200C51E18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB7772851D10200C51E18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB78B2851D11300C51E18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A09CAB72856DE760033D274 /* main.js in Resources */,
+				7ABEB7972851D11500C51E18 /* Preview Assets.xcassets in Resources */,
+				7ABEB7942851D11500C51E18 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A8A4A5628550D4C004B761F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A8A4A6128550D4C004B761F /* ViewController.swift in Sources */,
+				7A8A4A5D28550D4C004B761F /* AppDelegate.swift in Sources */,
+				7A8A4A5F28550D4C004B761F /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB76B2851D10200C51E18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A8A4A5328550D09004B761F /* UIImageView+CloudResources.swift in Sources */,
+				7ABEB7742851D10200C51E18 /* CloudResources.docc in Sources */,
+				7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */,
+				7A8A4A5028550CC9004B761F /* CloudAssets.swift in Sources */,
+				7A8A4A5528550D21004B761F /* CloudAssets+Test.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB7752851D10200C51E18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ABEB77F2851D10200C51E18 /* CloudResourcesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ABEB7892851D11300C51E18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A8A4A8D28550F17004B761F /* Database.swift in Sources */,
+				7A8A4AB1285512D1004B761F /* ContentView.swift in Sources */,
+				7A8A4A9B28550F17004B761F /* ResourceIndexState.swift in Sources */,
+				7A8A4AB3285512D1004B761F /* CreateResourceIndexView.swift in Sources */,
+				7A8A4AAD285512D1004B761F /* AssetView.swift in Sources */,
+				7A8A4AAE285512D1004B761F /* CreateAssetView.swift in Sources */,
+				7A8A4A9128550F17004B761F /* CKToolConfiguration.swift in Sources */,
+				7A8A4A9528550F17004B761F /* CKToolJS.swift in Sources */,
+				7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */,
+				7A8A4A8F28550F17004B761F /* Version.swift in Sources */,
+				7A8A4AB2285512D1004B761F /* ResourceIndexView.swift in Sources */,
+				7A8A4A9C28550F17004B761F /* CreateAssetState.swift in Sources */,
+				7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */,
+				7A8A4A9628550F17004B761F /* CKToolJS+Upload.swift in Sources */,
+				7A8A4A9428550F17004B761F /* CKToolJS+WebView.swift in Sources */,
+				7A8A4AB0285512D1004B761F /* ConfigurationView.swift in Sources */,
+				7A8A4A9028550F17004B761F /* Resource.swift in Sources */,
+				7A8A4A8E28550F17004B761F /* SQLiteRecord.swift in Sources */,
+				7A8A4A9828550F17004B761F /* AppState.swift in Sources */,
+				7A8A4A9228550F17004B761F /* Asset.swift in Sources */,
+				7A8A4A9A28550F17004B761F /* ResourcesState.swift in Sources */,
+				7A8A4A9328550F17004B761F /* ResourceIndexes.swift in Sources */,
+				7A8A4A9928550F17004B761F /* ConfigurationState.swift in Sources */,
+				7A8A4A9728550F17004B761F /* AssetDownloader.swift in Sources */,
+				7ABEB7902851D11300C51E18 /* CloudResourcesManagerApp.swift in Sources */,
+				7A8A4AAF285512D1004B761F /* OpenFileSelector.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7A8A4A7428550DAA004B761F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7ABEB76E2851D10200C51E18 /* CloudResources */;
+			targetProxy = 7A8A4A7328550DAA004B761F /* PBXContainerItemProxy */;
+		};
+		7ABEB77C2851D10200C51E18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7ABEB76E2851D10200C51E18 /* CloudResources */;
+			targetProxy = 7ABEB77B2851D10200C51E18 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7A8A4A6228550D4C004B761F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A8A4A6328550D4C004B761F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7A8A4A6728550D4E004B761F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A8A4A6828550D4E004B761F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7A8A4A6C28550D4E004B761F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CloudResourcesExamples/CloudResourcesExamples.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CloudResourcesExamples/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResourcesExamples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7A8A4A6D28550D4E004B761F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CloudResourcesExamples/CloudResourcesExamples.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CloudResourcesExamples/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResourcesExamples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7ABEB7812851D10200C51E18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7ABEB7822851D10200C51E18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7ABEB7842851D10200C51E18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResources;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7ABEB7852851D10200C51E18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResources;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7ABEB7872851D10200C51E18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResourcesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7ABEB7882851D10200C51E18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResourcesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7ABEB79A2851D11500C51E18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CloudResourcesManager/CloudResourcesManager.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CloudResourcesManager/Preview Content\"";
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResourcesManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7ABEB79B2851D11500C51E18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CloudResourcesManager/CloudResourcesManager.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CloudResourcesManager/Preview Content\"";
+				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cezres.CloudResourcesManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A8A4A6B28550D4E004B761F /* Build configuration list for PBXNativeTarget "CloudResourcesExamples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A8A4A6C28550D4E004B761F /* Debug */,
+				7A8A4A6D28550D4E004B761F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ABEB7692851D10200C51E18 /* Build configuration list for PBXProject "CloudResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ABEB7812851D10200C51E18 /* Debug */,
+				7ABEB7822851D10200C51E18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ABEB7832851D10200C51E18 /* Build configuration list for PBXNativeTarget "CloudResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ABEB7842851D10200C51E18 /* Debug */,
+				7ABEB7852851D10200C51E18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ABEB7862851D10200C51E18 /* Build configuration list for PBXNativeTarget "CloudResourcesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ABEB7872851D10200C51E18 /* Debug */,
+				7ABEB7882851D10200C51E18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ABEB7992851D11500C51E18 /* Build configuration list for PBXNativeTarget "CloudResourcesManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ABEB79A2851D11500C51E18 /* Debug */,
+				7ABEB79B2851D11500C51E18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7A8A4A342852D7A1004B761F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.36.0;
+			};
+		};
+		7A8A4B4B2856D3B3004B761F /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+		7AB50B23285227330078E89D /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.3;
+			};
+		};
+		7ABEB79C2851D14100C51E18 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7A8A4A49285345E9004B761F /* CloudResourcesFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CloudResourcesFoundation;
+		};
+		7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CloudResourcesFoundation;
+		};
+		7A8A4A9E28550F30004B761F /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A8A4A342852D7A1004B761F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		7A8A4B4C2856D406004B761F /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A8A4B4B2856D3B3004B761F /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
+		7AB50B24285227330078E89D /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7AB50B23285227330078E89D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		7ABEB79D2851D14100C51E18 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ABEB79C2851D14100C51E18 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7ABEB7662851D10200C51E18 /* Project object */;
+}
