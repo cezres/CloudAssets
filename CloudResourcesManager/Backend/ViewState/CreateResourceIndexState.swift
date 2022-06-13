@@ -8,11 +8,12 @@
 import Foundation
 import ComposableArchitecture
 import Combine
+import CloudResourcesFoundation
 
 struct CreateResourceIndexState: Equatable {
     var isActive: Bool = false
     var version: String = ""
-    var base: ResourceIndex?
+    var base: ResourceIndexes?
     var isLoading: Bool = false
 }
 
@@ -20,19 +21,19 @@ enum CreateResourceIndexAction {
     case setActive(Bool)
     case setLoading(Bool)
     case setVersion(String)
-    case setBase(ResourceIndex?)
+    case setBase(ResourceIndexes?)
     case confirm
-    case completion(ResourceIndex)
+    case completion(ResourceIndexes)
 }
 
 let createResourceIndexReducer = Reducer<CreateResourceIndexState, CreateResourceIndexAction, AppEnvironment>.init { state, action, env in
     switch action {
     case .confirm:
-        guard let version = Version.stringToInt(state.version) else {
+        guard let version = Version.stringVersionToInt(state.version) else {
             break
         }
         let indexes = state.base?.indexes ?? [:]
-        let resourceIndex = ResourceIndex(id: "\(version)_resource_index", version: version, indexes: indexes, checksum: "")
+        let resourceIndex = ResourceIndexes(id: "\(version)_resource_index", version: version, indexes: indexes, checksum: "")
         
         return Effect.run { subscriber in
             subscriber.send(.setLoading(true))
@@ -40,7 +41,7 @@ let createResourceIndexReducer = Reducer<CreateResourceIndexState, CreateResourc
                 do {
                     let record = try await env.cktool.createResourceIndexRecord(indexes: resourceIndex)
                     
-                    let resourceIndex = ResourceIndex(id: record.recordName, version: record.version, indexes: indexes, checksum: record.indexes.fileChecksum)
+                    let resourceIndex = ResourceIndexes(id: record.recordName, version: record.version, indexes: indexes, checksum: record.indexes.fileChecksum)
                     try env.database.save(resourceIndex)
                     
                     DispatchQueue.main.async {

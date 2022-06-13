@@ -1,5 +1,5 @@
 //
-//  ResourceIndex.swift
+//  ResourceIndexes.swift
 //  CloudAssetsManager
 //
 //  Created by azusa on 2022/6/9.
@@ -8,7 +8,7 @@
 import Foundation
 import SQLite
 
-struct ResourceIndex: Equatable, Identifiable {
+struct ResourceIndexes: Equatable, Identifiable {
     let id: String
     let version: Int
     var indexes: [ResourceName: Record]
@@ -21,7 +21,7 @@ struct ResourceIndex: Equatable, Identifiable {
     }
 }
 
-extension ResourceIndex: SQLiteRecord {
+extension ResourceIndexes: SQLiteRecord {
     static let table: Table = .init("ResourceIndex")
     static let idExpression: Expression<String> = .init("id")
     static let versionExpression: Expression<Int> = .init("version")
@@ -39,12 +39,12 @@ extension ResourceIndex: SQLiteRecord {
         )
     }
     
-    static func query(_ predicate: Expression<Bool>?, from db: Connection) throws -> [ResourceIndex] {
+    static func query(_ predicate: Expression<Bool>?, from db: Connection) throws -> [ResourceIndexes] {
         let query = predicate == nil ? table : table.filter(predicate!)
         return try db.prepare(query).map { row in
             let data = row[indexesExpression]
             let indexes = try JSONDecoder().decode([ResourceName: Record].self, from: data)
-            return ResourceIndex(id: row[idExpression], version: row[versionExpression], indexes: indexes, checksum: row[checksumExpression])
+            return ResourceIndexes(id: row[idExpression], version: row[versionExpression], indexes: indexes, checksum: row[checksumExpression])
         }
     }
     

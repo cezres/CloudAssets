@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import Combine
+import CloudResourcesFoundation
 
 struct CreateAssetState: Equatable {
     var url: URL?
@@ -35,7 +36,7 @@ let createAssetReducer = Reducer<CreateAssetState, CreateAssetAction, AppEnviron
     case .confirm:
         guard
             let url = state.url,
-            let version = Version.stringToInt(state.version),
+            let version = Version.stringVersionToInt(state.version),
             !state.name.isEmpty
         else {
             return .none

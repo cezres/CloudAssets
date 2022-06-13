@@ -1,5 +1,5 @@
 //
-//  ResourceIndexView.swift
+//  ResourceIndexesView.swift
 //  CloudAssetsManager
 //
 //  Created by azusa on 2022/6/9.
@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import SwiftUIX
 
-struct ResourceIndexView: View {
+struct ResourceIndexesView: View {
     let store: Store<ResourceIndexState, ResourceIndexAction>
     
     var body: some View {
@@ -71,7 +71,7 @@ struct ResourceIndexView: View {
             ForEach.init(rightData) { element in
                 HStack(spacing: 12) {
                     ForEach.init(element.assets) { resource in
-                        AssetView(resource: resource) { resource in
+                        ResourceView(resource: resource) { resource in
                         }
                         .onTapGesture {
                             viewStore.send(tapAction(resource))

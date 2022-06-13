@@ -46,7 +46,7 @@ class Database {
             try Resource.create(to: db!)
             try CKToolConfiguration.create(to: db!)
             try Asset.create(to: db!)
-            try ResourceIndex.create(to: db!)
+            try ResourceIndexes.create(to: db!)
         } catch {
             debugPrint(error)
         }

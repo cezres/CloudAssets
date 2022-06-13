@@ -10,7 +10,6 @@ import Foundation
 public struct ResourceRecord: Codable {
     public let recordName: String
     public let modifiedTimestamp: Double
-    
     public let name: String
     public let version: Int
     public let pathExtension: String

@@ -39,7 +39,7 @@ enum AppAction {
     case loadFromCloud
     
     // Page
-    case indexes(ResourceIndex.ID, ResourceIndexAction)
+    case indexes(ResourceIndexes.ID, ResourceIndexAction)
     case assets(ResourcesAction)
     case createAsset(CreateAssetAction)
     case createResourceIndex(CreateResourceIndexAction)
@@ -108,7 +108,7 @@ func loadFromDB(_ state: AppState, _ action: AppAction, _ env: AppEnvironment) -
     return Effect.task {
         let cktoolConfiguration = env.database.loadCKToolConfiguration()
         let localAssets: [Resource] = try env.database.query()
-        let localIndexes: [ResourceIndex] = try env.database.query()
+        let localIndexes: [ResourceIndexes] = try env.database.query()
         return { (state: inout AppState) in
             state.configuration.containerId = cktoolConfiguration.containerId
             state.configuration.environment = .init(rawValue: cktoolConfiguration.environment) ?? .development

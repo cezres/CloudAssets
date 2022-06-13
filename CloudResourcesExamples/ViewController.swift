@@ -10,12 +10,12 @@ import CloudResources
 
 class ViewController: UIViewController {
     
-    let assets: CloudAssets = .shared
+    let assets: CloudResources = .shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        assets.start(identifier: "iCloud.im.bycoin.ios", version: 300000001)
+        assets.start(identifier: "iCloud.im.bycoin.ios", version: "3.0.1")
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7A09CAB72856DE760033D274 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 7A09CAB62856DE750033D274 /* main.js */; };
+		7A09CABC285732A20033D274 /* DeployView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CABB285732A20033D274 /* DeployView.swift */; };
 		7A8A4A4A285345E9004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A49285345E9004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4C285345F2004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4D28534602004B761F /* CloudResources.swift */; };
-		7A8A4A5028550CC9004B761F /* CloudAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4F28550CC9004B761F /* CloudAssets.swift */; };
 		7A8A4A5328550D09004B761F /* UIImageView+CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */; };
-		7A8A4A5528550D21004B761F /* CloudAssets+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5428550D21004B761F /* CloudAssets+Test.swift */; };
+		7A8A4A5528550D21004B761F /* CloudResources+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5428550D21004B761F /* CloudResources+Test.swift */; };
 		7A8A4A5D28550D4C004B761F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5C28550D4C004B761F /* AppDelegate.swift */; };
 		7A8A4A5F28550D4C004B761F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A5E28550D4C004B761F /* SceneDelegate.swift */; };
 		7A8A4A6128550D4C004B761F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A6028550D4C004B761F /* ViewController.swift */; };
@@ -25,7 +25,6 @@
 		7A8A4A7228550DAA004B761F /* CloudResources.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABEB76F2851D10200C51E18 /* CloudResources.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7A8A4A8D28550F17004B761F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7828550F17004B761F /* Database.swift */; };
 		7A8A4A8E28550F17004B761F /* SQLiteRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7928550F17004B761F /* SQLiteRecord.swift */; };
-		7A8A4A8F28550F17004B761F /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7B28550F17004B761F /* Version.swift */; };
 		7A8A4A9028550F17004B761F /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7C28550F17004B761F /* Resource.swift */; };
 		7A8A4A9128550F17004B761F /* CKToolConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7D28550F17004B761F /* CKToolConfiguration.swift */; };
 		7A8A4A9228550F17004B761F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A7E28550F17004B761F /* Asset.swift */; };
@@ -42,13 +41,13 @@
 		7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */; };
 		7A8A4A9F28550F30004B761F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A9E28550F30004B761F /* ComposableArchitecture */; };
 		7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA2285512D1004B761F /* ResourcesView.swift */; };
-		7A8A4AAD285512D1004B761F /* AssetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA3285512D1004B761F /* AssetView.swift */; };
-		7A8A4AAE285512D1004B761F /* CreateAssetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA4285512D1004B761F /* CreateAssetView.swift */; };
+		7A8A4AAD285512D1004B761F /* ResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA3285512D1004B761F /* ResourceView.swift */; };
+		7A8A4AAE285512D1004B761F /* CreateResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA4285512D1004B761F /* CreateResourceView.swift */; };
 		7A8A4AAF285512D1004B761F /* OpenFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */; };
 		7A8A4AB0285512D1004B761F /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA7285512D1004B761F /* ConfigurationView.swift */; };
 		7A8A4AB1285512D1004B761F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA8285512D1004B761F /* ContentView.swift */; };
-		7A8A4AB2285512D1004B761F /* ResourceIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAA285512D1004B761F /* ResourceIndexView.swift */; };
-		7A8A4AB3285512D1004B761F /* CreateResourceIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAB285512D1004B761F /* CreateResourceIndexView.swift */; };
+		7A8A4AB2285512D1004B761F /* ResourceIndexesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAA285512D1004B761F /* ResourceIndexesView.swift */; };
+		7A8A4AB3285512D1004B761F /* CreateResourceIndexesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAB285512D1004B761F /* CreateResourceIndexesView.swift */; };
 		7A8A4B4D2856D406004B761F /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4B4C2856D406004B761F /* SwiftUIX */; };
 		7AB50B25285227330078E89D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 7AB50B24285227330078E89D /* SQLite */; };
 		7ABEB7742851D10200C51E18 /* CloudResources.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7732851D10200C51E18 /* CloudResources.docc */; };
@@ -104,11 +103,11 @@
 
 /* Begin PBXFileReference section */
 		7A09CAB62856DE750033D274 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
+		7A09CABB285732A20033D274 /* DeployView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeployView.swift; sourceTree = "<group>"; };
 		7A8A4A48285345D0004B761F /* CloudResourcesFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudResourcesFoundation; sourceTree = "<group>"; };
 		7A8A4A4D28534602004B761F /* CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResources.swift; sourceTree = "<group>"; };
-		7A8A4A4F28550CC9004B761F /* CloudAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudAssets.swift; sourceTree = "<group>"; };
 		7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+CloudResources.swift"; sourceTree = "<group>"; };
-		7A8A4A5428550D21004B761F /* CloudAssets+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudAssets+Test.swift"; sourceTree = "<group>"; };
+		7A8A4A5428550D21004B761F /* CloudResources+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudResources+Test.swift"; sourceTree = "<group>"; };
 		7A8A4A5A28550D4C004B761F /* CloudResourcesExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudResourcesExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A8A4A5C28550D4C004B761F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A8A4A5E28550D4C004B761F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,7 +120,6 @@
 		7A8A4A6F28550D74004B761F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		7A8A4A7828550F17004B761F /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		7A8A4A7928550F17004B761F /* SQLiteRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteRecord.swift; sourceTree = "<group>"; };
-		7A8A4A7B28550F17004B761F /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		7A8A4A7C28550F17004B761F /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		7A8A4A7D28550F17004B761F /* CKToolConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKToolConfiguration.swift; sourceTree = "<group>"; };
 		7A8A4A7E28550F17004B761F /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
@@ -137,13 +135,13 @@
 		7A8A4A8B28550F17004B761F /* CreateAssetState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetState.swift; sourceTree = "<group>"; };
 		7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexState.swift; sourceTree = "<group>"; };
 		7A8A4AA2285512D1004B761F /* ResourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesView.swift; sourceTree = "<group>"; };
-		7A8A4AA3285512D1004B761F /* AssetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetView.swift; sourceTree = "<group>"; };
-		7A8A4AA4285512D1004B761F /* CreateAssetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetView.swift; sourceTree = "<group>"; };
+		7A8A4AA3285512D1004B761F /* ResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceView.swift; sourceTree = "<group>"; };
+		7A8A4AA4285512D1004B761F /* CreateResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceView.swift; sourceTree = "<group>"; };
 		7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenFileSelector.swift; sourceTree = "<group>"; };
 		7A8A4AA7285512D1004B761F /* ConfigurationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		7A8A4AA8285512D1004B761F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		7A8A4AAA285512D1004B761F /* ResourceIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexView.swift; sourceTree = "<group>"; };
-		7A8A4AAB285512D1004B761F /* CreateResourceIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexView.swift; sourceTree = "<group>"; };
+		7A8A4AAA285512D1004B761F /* ResourceIndexesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexesView.swift; sourceTree = "<group>"; };
+		7A8A4AAB285512D1004B761F /* CreateResourceIndexesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexesView.swift; sourceTree = "<group>"; };
 		7ABEB76F2851D10200C51E18 /* CloudResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CloudResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABEB7722851D10200C51E18 /* CloudResources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudResources.h; sourceTree = "<group>"; };
 		7ABEB7732851D10200C51E18 /* CloudResources.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CloudResources.docc; sourceTree = "<group>"; };
@@ -248,8 +246,8 @@
 		7A8A4A7628550F17004B761F /* Backend */ = {
 			isa = PBXGroup;
 			children = (
-				7A8A4A7728550F17004B761F /* Database */,
 				7A8A4A7A28550F17004B761F /* Types */,
+				7A8A4A7728550F17004B761F /* Database */,
 				7A8A4A8028550F17004B761F /* CloudKit */,
 				7A8A4A8428550F17004B761F /* Utils */,
 				7A8A4A8628550F17004B761F /* ViewState */,
@@ -269,9 +267,8 @@
 		7A8A4A7A28550F17004B761F /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				7A8A4A7B28550F17004B761F /* Version.swift */,
-				7A8A4A7C28550F17004B761F /* Resource.swift */,
 				7A8A4A7D28550F17004B761F /* CKToolConfiguration.swift */,
+				7A8A4A7C28550F17004B761F /* Resource.swift */,
 				7A8A4A7E28550F17004B761F /* Asset.swift */,
 				7A8A4A7F28550F17004B761F /* ResourceIndexes.swift */,
 			);
@@ -281,8 +278,8 @@
 		7A8A4A8028550F17004B761F /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
-				7A8A4A8128550F17004B761F /* CKToolJS+WebView.swift */,
 				7A8A4A8228550F17004B761F /* CKToolJS.swift */,
+				7A8A4A8128550F17004B761F /* CKToolJS+WebView.swift */,
 				7A8A4A8328550F17004B761F /* CKToolJS+Upload.swift */,
 			);
 			path = CloudKit;
@@ -312,11 +309,12 @@
 		7A8A4AA0285512D1004B761F /* Frontend */ = {
 			isa = PBXGroup;
 			children = (
-				7A8A4AA1285512D1004B761F /* Resources */,
 				7A8A4AA5285512D1004B761F /* Common */,
+				7A8A4AA1285512D1004B761F /* Resources */,
+				7A8A4AA9285512D1004B761F /* ResourceIndex */,
+				7A09CABB285732A20033D274 /* DeployView.swift */,
 				7A8A4AA7285512D1004B761F /* ConfigurationView.swift */,
 				7A8A4AA8285512D1004B761F /* ContentView.swift */,
-				7A8A4AA9285512D1004B761F /* ResourceIndex */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -325,8 +323,8 @@
 			isa = PBXGroup;
 			children = (
 				7A8A4AA2285512D1004B761F /* ResourcesView.swift */,
-				7A8A4AA3285512D1004B761F /* AssetView.swift */,
-				7A8A4AA4285512D1004B761F /* CreateAssetView.swift */,
+				7A8A4AA3285512D1004B761F /* ResourceView.swift */,
+				7A8A4AA4285512D1004B761F /* CreateResourceView.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -342,8 +340,8 @@
 		7A8A4AA9285512D1004B761F /* ResourceIndex */ = {
 			isa = PBXGroup;
 			children = (
-				7A8A4AAA285512D1004B761F /* ResourceIndexView.swift */,
-				7A8A4AAB285512D1004B761F /* CreateResourceIndexView.swift */,
+				7A8A4AAA285512D1004B761F /* ResourceIndexesView.swift */,
+				7A8A4AAB285512D1004B761F /* CreateResourceIndexesView.swift */,
 			);
 			path = ResourceIndex;
 			sourceTree = "<group>";
@@ -379,8 +377,7 @@
 				7ABEB7722851D10200C51E18 /* CloudResources.h */,
 				7ABEB7732851D10200C51E18 /* CloudResources.docc */,
 				7A8A4A4D28534602004B761F /* CloudResources.swift */,
-				7A8A4A4F28550CC9004B761F /* CloudAssets.swift */,
-				7A8A4A5428550D21004B761F /* CloudAssets+Test.swift */,
+				7A8A4A5428550D21004B761F /* CloudResources+Test.swift */,
 			);
 			path = CloudResources;
 			sourceTree = "<group>";
@@ -397,8 +394,8 @@
 			isa = PBXGroup;
 			children = (
 				7A09CAB52856DE750033D274 /* dist */,
-				7A8A4AA0285512D1004B761F /* Frontend */,
 				7A8A4A7628550F17004B761F /* Backend */,
+				7A8A4AA0285512D1004B761F /* Frontend */,
 				7ABEB78F2851D11300C51E18 /* CloudResourcesManagerApp.swift */,
 				7ABEB7932851D11500C51E18 /* Assets.xcassets */,
 				7ABEB7982851D11500C51E18 /* CloudResourcesManager.entitlements */,
@@ -618,8 +615,7 @@
 				7A8A4A5328550D09004B761F /* UIImageView+CloudResources.swift in Sources */,
 				7ABEB7742851D10200C51E18 /* CloudResources.docc in Sources */,
 				7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */,
-				7A8A4A5028550CC9004B761F /* CloudAssets.swift in Sources */,
-				7A8A4A5528550D21004B761F /* CloudAssets+Test.swift in Sources */,
+				7A8A4A5528550D21004B761F /* CloudResources+Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,14 +634,14 @@
 				7A8A4A8D28550F17004B761F /* Database.swift in Sources */,
 				7A8A4AB1285512D1004B761F /* ContentView.swift in Sources */,
 				7A8A4A9B28550F17004B761F /* ResourceIndexState.swift in Sources */,
-				7A8A4AB3285512D1004B761F /* CreateResourceIndexView.swift in Sources */,
-				7A8A4AAD285512D1004B761F /* AssetView.swift in Sources */,
-				7A8A4AAE285512D1004B761F /* CreateAssetView.swift in Sources */,
+				7A09CABC285732A20033D274 /* DeployView.swift in Sources */,
+				7A8A4AB3285512D1004B761F /* CreateResourceIndexesView.swift in Sources */,
+				7A8A4AAD285512D1004B761F /* ResourceView.swift in Sources */,
+				7A8A4AAE285512D1004B761F /* CreateResourceView.swift in Sources */,
 				7A8A4A9128550F17004B761F /* CKToolConfiguration.swift in Sources */,
 				7A8A4A9528550F17004B761F /* CKToolJS.swift in Sources */,
 				7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */,
-				7A8A4A8F28550F17004B761F /* Version.swift in Sources */,
-				7A8A4AB2285512D1004B761F /* ResourceIndexView.swift in Sources */,
+				7A8A4AB2285512D1004B761F /* ResourceIndexesView.swift in Sources */,
 				7A8A4A9C28550F17004B761F /* CreateAssetState.swift in Sources */,
 				7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */,
 				7A8A4A9628550F17004B761F /* CKToolJS+Upload.swift in Sources */,
@@ -981,7 +977,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CloudResourcesManager/Preview Content\"";
-				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				DEVELOPMENT_TEAM = 2T6WKE788U;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1010,7 +1006,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CloudResourcesManager/Preview Content\"";
-				DEVELOPMENT_TEAM = MQ4BAK6QRP;
+				DEVELOPMENT_TEAM = 2T6WKE788U;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -23,7 +23,7 @@ struct ResourcesView: View {
                 ForEach.init(data) { element in
                     HStack(spacing: 12) {
                         ForEach.init(element.assets) { resource in
-                            AssetView(resource: resource) { resource in
+                            ResourceView(resource: resource) { resource in
                                 viewStore.send(.deleteAsset(resource))
                             }
                         }

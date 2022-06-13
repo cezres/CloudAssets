@@ -1,14 +1,15 @@
 //
-//  AssetView.swift
+//  ResourceView.swift
 //  CloudAssetsManager
 //
 //  Created by azusa on 2022/6/6.
 //
 
 import SwiftUI
+import CloudResourcesFoundation
 
-struct AssetView: View, Equatable {
-    static func == (lhs: AssetView, rhs: AssetView) -> Bool {
+struct ResourceView: View, Equatable {
+    static func == (lhs: ResourceView, rhs: ResourceView) -> Bool {
         lhs.resource == rhs.resource && lhs.resource.checksum == rhs.resource.checksum
     }
     
@@ -22,24 +23,17 @@ struct AssetView: View, Equatable {
             if let image = image {
                 Image(nsImage: image)
                     .resizable()
-//                    .scaledToFit()
-//                    .scaledToFill()
                     .aspectRatio(contentMode: .fit)
-                    
                     .frame(width: 100, height: 100)
                     .clipped()
-//                    .background(Color(red: 240/255.0, green: 240/255.0, blue: 240/255.0))
-//                    .border(.gray, width: 1)
 
             } else {
                 Text(resource.pathExtension.uppercased())
                     .font(.system(size: 34, weight: .bold))
                     .frame(width: 100, height: 100, alignment: .center)
-//                    .background(Color(red: 240/255.0, green: 240/255.0, blue: 240/255.0))
-//                    .border(.gray, width: 1)
             }
             Text(resource.name)
-            Text(Version.intToString(resource.version))
+            Text(Version.intVersionToString(resource.version))
                 .font(.subheadline)
         }
         .frame(width: 120)

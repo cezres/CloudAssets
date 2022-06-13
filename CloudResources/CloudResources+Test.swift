@@ -7,8 +7,9 @@
 
 import Foundation
 import CloudKit
+import CloudResourcesFoundation
 
-public extension CloudAssets {
+public extension CloudResources {
     func test() {
 //        uploadAssets(name: "azusa", version: 100, url: .init(fileURLWithPath: "/Users/azusa/Pictures/ae8b83d9598534fa43f791a5ac688fecf0253009.jpg"))
 //        uploadAssets(name: "azusa", version: 200, url: .init(fileURLWithPath: "/Users/azusa/Pictures/34cea126d0283d4d915fd08661412a9ee2d1452d.jpg"))
@@ -40,7 +41,7 @@ public extension CloudAssets {
     }
 }
 
-extension CloudAssets {
+extension CloudResources {
     func uploadAssetIndexs(version: Int, indexs: ResourceIndexes) {
         let recordName = "asset_indexs_\(version)"
         let url = cachesDirectory.appendingPathComponent(recordName)

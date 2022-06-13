@@ -10,13 +10,12 @@ import UIKit
 
 public extension UIImageView {
     func setCloudAsset(name: String) {
-        let op = CloudAssets.shared.fetch(withAssetName: name) { [weak self] data, error in
+        CloudResources.shared.fetchResource(name) { [weak self] data, error in
             guard let weakself = self, let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
                 weakself.image = image
             }
-        }
-        op.cancel(onObjectRelease: self)
+        }.cancel(onObjectRelease: self)
     }
 }
 
@@ -28,8 +27,34 @@ extension Operation {
     }
 }
 
+
+private var __releaseProxyAssociatedKey: Int = 0
+
 extension NSObject {
-    func addReleaseAction(_ action: () -> Void) {
+    class ReleaseProxy: NSObject {
+        typealias Action = () -> Void
+        var actions: [Action] = []
         
+        deinit {
+            for action in actions {
+                action()
+            }
+        }
+    }
+    
+    func addReleaseAction(_ action: @escaping () -> Void) {
+        __releaseProxy.actions.append(action)
+    }
+    
+    var __releaseProxy: ReleaseProxy {
+        get {
+            var proxy: ReleaseProxy
+            if let result = objc_getAssociatedObject(self, &__releaseProxyAssociatedKey) as? ReleaseProxy {
+                proxy = result
+            } else {
+                proxy = .init()
+            }
+            return proxy
+        }
     }
 }

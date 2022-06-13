@@ -8,6 +8,7 @@
 import SwiftUI
 import WebKit
 import ComposableArchitecture
+import CloudResourcesFoundation
 
 struct ContentView: View {
     
@@ -24,9 +25,9 @@ struct ContentView: View {
                                     NavigationLink(
                                         isActive: viewStore.binding(get: \.isActive, send: ResourceIndexAction.setActive)
                                     ) {
-                                        ResourceIndexView(store: store)
+                                        ResourceIndexesView(store: store)
                                     } label: {
-                                        Text(Version.intToString(viewStore.index.version))
+                                        Text(Version.intVersionToString(viewStore.index.version))
                                     }
                                 }
                             }
@@ -48,6 +49,12 @@ struct ContentView: View {
                             } label: {
                                 Text("Configuration")
                             }
+                            
+                            NavigationLink {
+                                DeployView()
+                            } label: {
+                                Text("Deploy")
+                            }
                         } header: {
                             Text(viewStore.configuration.environment.rawValue)
                         }
@@ -66,13 +73,13 @@ struct ContentView: View {
                     get: { $0.createAsset.isActive },
                     send: { AppAction.createAsset(.setActive($0)) }
                 )) {
-                    CreateAssetView(store: store.scope(state: \.createAsset, action: AppAction.createAsset))
+                    CreateResourceView(store: store.scope(state: \.createAsset, action: AppAction.createAsset))
                 }
                 .sheet(isPresented: viewStore.binding(
                     get: { $0.createResourceIndex.isActive },
                     send: { AppAction.createResourceIndex(.setActive($0)) }
                 )) {
-                    CreateResourceIndexView(
+                    CreateResourceIndexesView(
                         store: store.scope(state: \.createResourceIndex, action: AppAction.createResourceIndex),
                         indexes: viewStore.indexes.map { $0.index }
                     )

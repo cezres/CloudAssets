@@ -101,7 +101,7 @@ class CKToolJS: NSObject {
         return result
     }
     
-    func createResourceIndexRecord(indexes: ResourceIndex) async throws -> ResourceIndexRecord {
+    func createResourceIndexRecord(indexes: ResourceIndexes) async throws -> ResourceIndexRecord {
         let data = try JSONEncoder().encode(indexes.indexes)
         let size = data.count
         
@@ -120,7 +120,7 @@ class CKToolJS: NSObject {
         return result
     }
     
-    func updateResourceIndexRecord(indexes: ResourceIndex) async throws -> ResourceIndexRecord {
+    func updateResourceIndexRecord(indexes: ResourceIndexes) async throws -> ResourceIndexRecord {
         let data = try JSONEncoder().encode(indexes.indexes)
         let size = data.count
         

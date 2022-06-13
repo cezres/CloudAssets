@@ -48,15 +48,15 @@ extension CKToolJS {
                 """
             case .createResourceIndexRecord(let recordName, let version, let fileChecksum, let receipt, let size):
                 return """
-                main.createResourceIndexRecord("\(callbackId)", "\(recordName)", \(version), "\(fileChecksum)", "\(receipt)", \(size))
+                main.createResourceIndexesRecord("\(callbackId)", "\(recordName)", \(version), "\(fileChecksum)", "\(receipt)", \(size))
                 """
             case .searchResourceIndexRecord(let recordName):
                 return """
-                main.searchResourceIndexRecord("\(callbackId)", "\(recordName)")
+                main.searchResourceIndexesRecord("\(callbackId)", "\(recordName)")
                 """
             case .updateResourceIndexRecord(let recordName, let version, let fileChecksum, let receipt, let size):
                 return """
-                main.updateResourceIndexRecord("\(callbackId)", "\(recordName)", \(version), "\(fileChecksum)", "\(receipt)", \(size))
+                main.updateResourceIndexesRecord("\(callbackId)", "\(recordName)", \(version), "\(fileChecksum)", "\(receipt)", \(size))
                 """
             case .deleteRecord(let recordName):
                 return """

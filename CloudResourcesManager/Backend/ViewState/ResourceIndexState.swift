@@ -10,7 +10,7 @@ import ComposableArchitecture
 import Combine
 
 struct ResourceIndexState: Equatable, Identifiable {
-    var index: ResourceIndex
+    var index: ResourceIndexes
     
     var id: String { index.id }
     
@@ -83,7 +83,7 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
 //        .catchToEffect(ResourceIndexAction.save)
     case .save:
         print("save")
-        var indexes: [ResourceIndex.ResourceName: ResourceIndex.Record] = [:]
+        var indexes: [ResourceIndexes.ResourceName: ResourceIndexes.Record] = [:]
         state.leftList.forEach { resource in
             indexes[resource.name] = .init(id: resource.id)
         }
@@ -123,6 +123,7 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
     case .delete:
         let recordName = state.index.id
         let indexes = state.index
+        state.isLoading = true
         return Effect.run { subscriber in
             Task {
                 do {
@@ -139,7 +140,7 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
             return AnyCancellable {}
         }
     case .deleteCompletion:
-        break
+        state.isLoading = false
     case .setLoading(let value):
         state.isLoading = value
     }

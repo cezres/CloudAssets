@@ -1,40 +1,54 @@
 //
-//  CreateResourceIndexView.swift
+//  CreateResourceView.swift
 //  CloudAssetsManager
 //
-//  Created by azusa on 2022/6/9.
+//  Created by azusa on 2022/6/8.
 //
 
 import SwiftUI
-import SwiftUIX
 import ComposableArchitecture
+import SwiftUIX
 
-struct CreateResourceIndexView: View {
-    let store: Store<CreateResourceIndexState, CreateResourceIndexAction>
-    let indexes: [ResourceIndex]
+struct CreateResourceView: View {
+    let store: Store<CreateAssetState, CreateAssetAction>
     
     var body: some View {
         WithViewStore(store) { viewStore in
             Form {
                 Section {
-                    Text("Create Resource Indexes")
+                    Text("Upload Asset")
                         .font(Font.title)
                     
-                    TextField("Version", text: viewStore.binding(get: \.version, send: CreateResourceIndexAction.setVersion))
-                    
-                    if !indexes.isEmpty {
-                        Picker(selection: Binding<Int?>.init {
-                            viewStore.base?.version
-                        } set: { newValue in
-                            viewStore.send(.setBase(indexes.first(where: { $0.version == newValue })))
-                        }) {
-                            ForEach(indexes) { element in
-                                Text(Version.intToString(element.version)).tag(element.version)
-                            }
-                        } label: {
-                            Text("Base")
-                        }
+                    if let url = viewStore.url {
+                        Text(url.path)
+                            .padding(.top, 30)
                     }
+                    Button {
+                        let panel = NSOpenPanel()
+                        panel.title = "Open a file"
+                        panel.canChooseFiles = true
+                        panel.canChooseDirectories = false
+                        guard panel.runModal() == .OK else {
+                            return
+                        }
+                        guard let url = panel.url else {
+                            return
+                        }
+                        viewStore.send(.setURL(url))
+                    } label: {
+                        Text("Choose File")
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(.blue)
+                    }
+                    .buttonStyle(.borderless)
+                    .cornerRadius(8)
+                    .padding(.bottom, 30)
+                    
+                    TextField("Name", text: viewStore.binding(get: \.name, send: CreateAssetAction.setName))
+                    
+                    TextField("Version", text: viewStore.binding(get: \.version, send: CreateAssetAction.setVersion))
                 }
                 
                 Spacer(minLength: 30)
@@ -71,7 +85,7 @@ struct CreateResourceIndexView: View {
             }
             .padding(30)
             .frame(minWidth: 600, minHeight: 300)
-            .sheet(isPresented: viewStore.binding(get: \.isLoading, send: CreateResourceIndexAction.setLoading)) {
+            .sheet(isPresented: viewStore.binding(get: \.isUploading, send: CreateAssetAction.setUploading)) {
                 VStack {
                     ActivityIndicator()
                 }

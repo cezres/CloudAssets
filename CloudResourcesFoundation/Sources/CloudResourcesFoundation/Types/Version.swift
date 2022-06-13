@@ -8,7 +8,7 @@
 import Foundation
 
 public enum Version {
-    static func stringVersionToInt(_ string: String) -> Int? {
+    public static func stringVersionToInt(_ string: String) -> Int? {
         let components = string.components(separatedBy: ".")
         guard components.count == 3 else {
             return nil
@@ -19,7 +19,7 @@ public enum Version {
         return v1 * 1_0000_0000 + v2 * 1_0000 + v3
     }
     
-    static func intVersionToString(_ int: Int) -> String {
+    public static func intVersionToString(_ int: Int) -> String {
         guard int >= 1_0000_0000 else {
             return int.description
         }
