@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7A09CAB72856DE760033D274 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 7A09CAB62856DE750033D274 /* main.js */; };
 		7A09CABC285732A20033D274 /* DeployView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CABB285732A20033D274 /* DeployView.swift */; };
+		7A09CABF28573B6E0033D274 /* LoadingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */; };
 		7A8A4A4A285345E9004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A49285345E9004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4C285345F2004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4D28534602004B761F /* CloudResources.swift */; };
@@ -104,6 +105,7 @@
 /* Begin PBXFileReference section */
 		7A09CAB62856DE750033D274 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		7A09CABB285732A20033D274 /* DeployView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeployView.swift; sourceTree = "<group>"; };
+		7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModifier.swift; sourceTree = "<group>"; };
 		7A8A4A48285345D0004B761F /* CloudResourcesFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudResourcesFoundation; sourceTree = "<group>"; };
 		7A8A4A4D28534602004B761F /* CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResources.swift; sourceTree = "<group>"; };
 		7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+CloudResources.swift"; sourceTree = "<group>"; };
@@ -203,6 +205,14 @@
 			name = dist;
 			path = CloudKitJSBridge/dist;
 			sourceTree = SOURCE_ROOT;
+		};
+		7A09CABD28573B610033D274 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
 		};
 		7A8A4A4128534548004B761F /* Frameworks */ = {
 			isa = PBXGroup;
@@ -332,6 +342,7 @@
 		7A8A4AA5285512D1004B761F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7A09CABD28573B610033D274 /* Modifier */,
 				7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */,
 			);
 			path = Common;
@@ -641,6 +652,7 @@
 				7A8A4A9128550F17004B761F /* CKToolConfiguration.swift in Sources */,
 				7A8A4A9528550F17004B761F /* CKToolJS.swift in Sources */,
 				7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */,
+				7A09CABF28573B6E0033D274 /* LoadingViewModifier.swift in Sources */,
 				7A8A4AB2285512D1004B761F /* ResourceIndexesView.swift in Sources */,
 				7A8A4A9C28550F17004B761F /* CreateAssetState.swift in Sources */,
 				7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */,

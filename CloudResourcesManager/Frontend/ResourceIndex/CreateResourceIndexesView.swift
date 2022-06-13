@@ -72,13 +72,7 @@ struct CreateResourceIndexesView: View {
             }
             .padding(30)
             .frame(minWidth: 600, minHeight: 300)
-            .sheet(isPresented: viewStore.binding(get: \.isLoading, send: CreateResourceIndexAction.setLoading)) {
-                VStack {
-                    ActivityIndicator()
-                }
-                .frame(width: 100, height: 100, alignment: .center)
-                .cornerRadius(12)
-            }
+            .loading(viewStore.binding(get: \.isLoading, send: CreateResourceIndexAction.setLoading))
         }
     }
 }

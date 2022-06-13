@@ -31,13 +31,7 @@ struct ResourcesView: View {
                     }
                 }
             }
-            .sheet(isPresented: viewStore.binding(get: \.loading, send: ResourcesAction.setLoading)) {
-                VStack {
-                    ActivityIndicator()
-                }
-                .frame(width: 100, height: 100, alignment: .center)
-                .cornerRadius(12)
-            }
+            .loading(viewStore.binding(get: \.loading, send: ResourcesAction.setLoading))
         }
     }
     

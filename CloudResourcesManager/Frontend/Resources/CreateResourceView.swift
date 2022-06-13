@@ -85,13 +85,7 @@ struct CreateResourceView: View {
             }
             .padding(30)
             .frame(minWidth: 600, minHeight: 300)
-            .sheet(isPresented: viewStore.binding(get: \.isUploading, send: CreateAssetAction.setUploading)) {
-                VStack {
-                    ActivityIndicator()
-                }
-                .frame(width: 100, height: 100, alignment: .center)
-                .cornerRadius(12)
-            }
+            .loading(viewStore.binding(get: \.isUploading, send: CreateAssetAction.setUploading))
         }
     }
 }
