@@ -10,6 +10,8 @@
 		7A09CAB72856DE760033D274 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 7A09CAB62856DE750033D274 /* main.js */; };
 		7A09CABC285732A20033D274 /* DeployView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CABB285732A20033D274 /* DeployView.swift */; };
 		7A09CABF28573B6E0033D274 /* LoadingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */; };
+		7A09CAC128573DD60033D274 /* ErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CAC028573DD60033D274 /* ErrorViewModifier.swift */; };
+		7A09CAC3285743180033D274 /* MainReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CAC2285743180033D274 /* MainReducer.swift */; };
 		7A8A4A4A285345E9004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A49285345E9004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4C285345F2004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4D28534602004B761F /* CloudResources.swift */; };
@@ -38,8 +40,8 @@
 		7A8A4A9928550F17004B761F /* ConfigurationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8828550F17004B761F /* ConfigurationState.swift */; };
 		7A8A4A9A28550F17004B761F /* ResourcesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8928550F17004B761F /* ResourcesState.swift */; };
 		7A8A4A9B28550F17004B761F /* ResourceIndexState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8A28550F17004B761F /* ResourceIndexState.swift */; };
-		7A8A4A9C28550F17004B761F /* CreateAssetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8B28550F17004B761F /* CreateAssetState.swift */; };
-		7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */; };
+		7A8A4A9C28550F17004B761F /* CreateResourceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8B28550F17004B761F /* CreateResourceState.swift */; };
+		7A8A4A9D28550F17004B761F /* CreateResourceIndexesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A8C28550F17004B761F /* CreateResourceIndexesState.swift */; };
 		7A8A4A9F28550F30004B761F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A9E28550F30004B761F /* ComposableArchitecture */; };
 		7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA2285512D1004B761F /* ResourcesView.swift */; };
 		7A8A4AAD285512D1004B761F /* ResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AA3285512D1004B761F /* ResourceView.swift */; };
@@ -106,6 +108,8 @@
 		7A09CAB62856DE750033D274 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		7A09CABB285732A20033D274 /* DeployView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeployView.swift; sourceTree = "<group>"; };
 		7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModifier.swift; sourceTree = "<group>"; };
+		7A09CAC028573DD60033D274 /* ErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModifier.swift; sourceTree = "<group>"; };
+		7A09CAC2285743180033D274 /* MainReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainReducer.swift; sourceTree = "<group>"; };
 		7A8A4A48285345D0004B761F /* CloudResourcesFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudResourcesFoundation; sourceTree = "<group>"; };
 		7A8A4A4D28534602004B761F /* CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResources.swift; sourceTree = "<group>"; };
 		7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+CloudResources.swift"; sourceTree = "<group>"; };
@@ -134,8 +138,8 @@
 		7A8A4A8828550F17004B761F /* ConfigurationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationState.swift; sourceTree = "<group>"; };
 		7A8A4A8928550F17004B761F /* ResourcesState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesState.swift; sourceTree = "<group>"; };
 		7A8A4A8A28550F17004B761F /* ResourceIndexState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexState.swift; sourceTree = "<group>"; };
-		7A8A4A8B28550F17004B761F /* CreateAssetState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetState.swift; sourceTree = "<group>"; };
-		7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexState.swift; sourceTree = "<group>"; };
+		7A8A4A8B28550F17004B761F /* CreateResourceState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceState.swift; sourceTree = "<group>"; };
+		7A8A4A8C28550F17004B761F /* CreateResourceIndexesState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexesState.swift; sourceTree = "<group>"; };
 		7A8A4AA2285512D1004B761F /* ResourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesView.swift; sourceTree = "<group>"; };
 		7A8A4AA3285512D1004B761F /* ResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceView.swift; sourceTree = "<group>"; };
 		7A8A4AA4285512D1004B761F /* CreateResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceView.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */,
+				7A09CAC028573DD60033D274 /* ErrorViewModifier.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -307,11 +312,12 @@
 			isa = PBXGroup;
 			children = (
 				7A8A4A8728550F17004B761F /* AppState.swift */,
-				7A8A4A8828550F17004B761F /* ConfigurationState.swift */,
 				7A8A4A8928550F17004B761F /* ResourcesState.swift */,
 				7A8A4A8A28550F17004B761F /* ResourceIndexState.swift */,
-				7A8A4A8B28550F17004B761F /* CreateAssetState.swift */,
-				7A8A4A8C28550F17004B761F /* CreateResourceIndexState.swift */,
+				7A8A4A8B28550F17004B761F /* CreateResourceState.swift */,
+				7A8A4A8C28550F17004B761F /* CreateResourceIndexesState.swift */,
+				7A8A4A8828550F17004B761F /* ConfigurationState.swift */,
+				7A09CAC2285743180033D274 /* MainReducer.swift */,
 			);
 			path = ViewState;
 			sourceTree = "<group>";
@@ -654,14 +660,16 @@
 				7A8A4AAC285512D1004B761F /* ResourcesView.swift in Sources */,
 				7A09CABF28573B6E0033D274 /* LoadingViewModifier.swift in Sources */,
 				7A8A4AB2285512D1004B761F /* ResourceIndexesView.swift in Sources */,
-				7A8A4A9C28550F17004B761F /* CreateAssetState.swift in Sources */,
-				7A8A4A9D28550F17004B761F /* CreateResourceIndexState.swift in Sources */,
+				7A8A4A9C28550F17004B761F /* CreateResourceState.swift in Sources */,
+				7A8A4A9D28550F17004B761F /* CreateResourceIndexesState.swift in Sources */,
 				7A8A4A9628550F17004B761F /* CKToolJS+Upload.swift in Sources */,
 				7A8A4A9428550F17004B761F /* CKToolJS+WebView.swift in Sources */,
 				7A8A4AB0285512D1004B761F /* ConfigurationView.swift in Sources */,
 				7A8A4A9028550F17004B761F /* Resource.swift in Sources */,
+				7A09CAC128573DD60033D274 /* ErrorViewModifier.swift in Sources */,
 				7A8A4A8E28550F17004B761F /* SQLiteRecord.swift in Sources */,
 				7A8A4A9828550F17004B761F /* AppState.swift in Sources */,
+				7A09CAC3285743180033D274 /* MainReducer.swift in Sources */,
 				7A8A4A9228550F17004B761F /* Asset.swift in Sources */,
 				7A8A4A9A28550F17004B761F /* ResourcesState.swift in Sources */,
 				7A8A4A9328550F17004B761F /* ResourceIndexes.swift in Sources */,

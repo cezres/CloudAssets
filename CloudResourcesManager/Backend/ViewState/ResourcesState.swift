@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct ResourcesState: Equatable {
     var resources: [Resource] = []
     var loading: Bool = false
+    var error: String = ""
 }
 
 enum ResourcesAction {
@@ -18,9 +19,10 @@ enum ResourcesAction {
     case deleteAssetResponse(Result<Resource, Error>)
     
     case setLoading(Bool)
+    case setError(String)
 }
 
-let assetsReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.init { state, action, env in
+let resourcesReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.init { state, action, env in
     switch action {
     case .deleteAsset(let asset):
         state.loading = true
@@ -39,12 +41,14 @@ let assetsReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.ini
                 state.resources.remove(at: index)
             }
         case .failure(let error):
-            debugPrint(error)
+            state.error = error.toString()
         }
         state.loading = false
         
     case .setLoading(let value):
         state.loading = value
+    case .setError(let error):
+        state.error = error
     }
     return .none
 }

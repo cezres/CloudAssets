@@ -20,14 +20,14 @@ struct AppEnvironment {
 }
 
 struct AppState: Equatable {
-    var indexes: IdentifiedArrayOf<ResourceIndexState> = []
-    var loading: Bool = false
-    
-    // Page
+    var resourceIndexes: IdentifiedArrayOf<ResourceIndexState> = []
     var resources = ResourcesState()
-    var createAsset = CreateAssetState()
-    var createResourceIndex = CreateResourceIndexState()
+    var createResource = CreateResourceState()
+    var createResourceIndexes = CreateResourceIndexesState()
     var configuration = ConfigurationState()
+    
+    var loading: Bool = false
+    var error: String = ""
 }
 
 
@@ -35,14 +35,15 @@ typealias StateUpdater<T> = (_ state: inout T) -> Void
 
 enum AppAction {
     case update(Result<StateUpdater<AppState>, Error>)
+    case setError(String)
     case loadFromDB
     case loadFromCloud
     
     // Page
-    case indexes(ResourceIndexes.ID, ResourceIndexAction)
-    case assets(ResourcesAction)
-    case createAsset(CreateAssetAction)
-    case createResourceIndex(CreateResourceIndexAction)
+    case resourceIndexes(ResourceIndexes.ID, ResourceIndexAction)
+    case resources(ResourcesAction)
+    case createResource(CreateResourceAction)
+    case createResourceIndexes(CreateResourceIndexesAction)
     case configuration(ConfigurationAction)
 }
 
@@ -53,18 +54,20 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.init { state, acti
         case .success(let updater):
             updater(&state)
         case .failure(let error):
-            debugPrint(error)
+            state.error = error.toString()
         }
         return .none
+    case .setError(let error):
+        state.error = error
     case .loadFromDB:
         return loadFromDB(state, action, env)
     case .loadFromCloud:
         return loadFromCloud(state, action, env)
     
     // Page
-    case .assets(let action):
+    case .resources(let action):
         break
-    case .createAsset(let action):
+    case .createResource(let action):
         switch action {
         case .completionHandler(let result):
             if case .success(let value) = result {
@@ -73,29 +76,29 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.init { state, acti
         default:
             break
         }
-    case .createResourceIndex(let action):
+    case .createResourceIndexes(let action):
         switch action {
         case .completion(let result):
-            state.indexes.insert(.init(index: result), at: 0)
-            state.indexes.sort(by: { $0.index.version > $1.index.version })
+            state.resourceIndexes.insert(.init(index: result), at: 0)
+            state.resourceIndexes.sort(by: { $0.index.version > $1.index.version })
         default:
             break
         }
     case .configuration(let action):
         break
-    case .indexes(let id, let action):
+    case .resourceIndexes(let id, let action):
         switch action {
         case .setActive(let value):
-            if let index = state.indexes.firstIndex(where: { $0.id == id }) {
-                var elements = state.indexes.elements
+            if let index = state.resourceIndexes.firstIndex(where: { $0.id == id }) {
+                var elements = state.resourceIndexes.elements
                 if value {
                     elements[index].resources = state.resources.resources
-                    state.indexes = .init(uniqueElements: elements)
+                    state.resourceIndexes = .init(uniqueElements: elements)
                 }
             }
         case .deleteCompletion:
-            if let index = state.indexes.firstIndex(where: { $0.id == id }) {
-                state.indexes.remove(at: index)
+            if let index = state.resourceIndexes.firstIndex(where: { $0.id == id }) {
+                state.resourceIndexes.remove(at: index)
             }
         default:
             break
@@ -118,7 +121,7 @@ func loadFromDB(_ state: AppState, _ action: AppAction, _ env: AppEnvironment) -
             
             state.resources.resources = localAssets
             
-            state.indexes.append(contentsOf: localIndexes.map { ResourceIndexState(index: $0) })
+            state.resourceIndexes.append(contentsOf: localIndexes.map { ResourceIndexState(index: $0) })
         }
     }
     .receive(on: env.mainQueue)
@@ -132,9 +135,10 @@ func loadFromCloud(_ state: AppState, _ action: AppAction, _ env: AppEnvironment
             let records: [CKToolJS.AssetsRecord]
             do {
                 records = try await env.cktool.queryResourceRecords()
-                print(records)
             } catch {
-                debugPrint(error)
+                DispatchQueue.main.async {
+                    subscriber.send(.setError(error.toString()))
+                }
                 return
             }
             
@@ -185,12 +189,3 @@ func loadFromCloud(_ state: AppState, _ action: AppAction, _ env: AppEnvironment
         }
     }
 }
-
-let mainReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
-    appReducer,
-    createAssetReducer.pullback(state: \.createAsset, action: /AppAction.createAsset, environment: { $0 }),
-    configurationReducer.pullback(state: \.configuration, action: /AppAction.configuration, environment: { $0 }),
-    assetsReducer.pullback(state: \.resources, action: /AppAction.assets, environment: { $0 }),
-    createResourceIndexReducer.pullback(state: \.createResourceIndex, action: /AppAction.createResourceIndex, environment: { $0 }),
-    resourceIndexReducer.forEach(state: \.indexes, action: /AppAction.indexes, environment: { $0 })
-)

@@ -1,5 +1,5 @@
 //
-//  CreateAssetState.swift
+//  CreateResourceState.swift
 //  CloudAssetsManager
 //
 //  Created by azusa on 2022/6/8.
@@ -10,28 +10,30 @@ import ComposableArchitecture
 import Combine
 import CloudResourcesFoundation
 
-struct CreateAssetState: Equatable {
+struct CreateResourceState: Equatable {
     var url: URL?
     var name: String = ""
     var version: String = ""
     var isActive: Bool = false
-    var isUploading = false
+    var isLoading = false
+    var error: String = ""
 }
 
-enum CreateAssetAction {
+enum CreateResourceAction {
     case confirm
     case completionHandler(Result<Resource, Error>)
     
-    case update(Result<StateUpdater<CreateAssetState>, Error>)
+    case update(Result<StateUpdater<CreateResourceState>, Error>)
     
     case setActive(Bool)
     case setURL(URL?)
     case setName(String)
     case setVersion(String)
-    case setUploading(Bool)
+    case setLoading(Bool)
+    case setError(String)
 }
 
-let createAssetReducer = Reducer<CreateAssetState, CreateAssetAction, AppEnvironment>.init { state, action, env in
+let createResourceReducer = Reducer<CreateResourceState, CreateResourceAction, AppEnvironment>.init { state, action, env in
     switch action {
     case .confirm:
         guard
@@ -42,7 +44,7 @@ let createAssetReducer = Reducer<CreateAssetState, CreateAssetAction, AppEnviron
             return .none
         }
         let name = state.name
-        state.isUploading = true
+        state.isLoading = true
         return Effect.task {
             let record = try await env.cktool.createAssetsRecord(name: name, version: version, asset: url)
             let resource = Resource(
@@ -62,7 +64,7 @@ let createAssetReducer = Reducer<CreateAssetState, CreateAssetAction, AppEnviron
             return resource
         }
         .receive(on: env.mainQueue)
-        .catchToEffect(CreateAssetAction.completionHandler)
+        .catchToEffect(CreateResourceAction.completionHandler)
     case .completionHandler(let result):
         switch result {
         case .success(let value):
@@ -71,10 +73,9 @@ let createAssetReducer = Reducer<CreateAssetState, CreateAssetAction, AppEnviron
             state.url = nil
             state.isActive = false
         case .failure(let error):
-            print(error)
-            break
+            state.error = error.toString()
         }
-        state.isUploading = false
+        state.isLoading = false
     case .setActive(let value):
         state.isActive = value
     case .setURL(let value):
@@ -83,14 +84,16 @@ let createAssetReducer = Reducer<CreateAssetState, CreateAssetAction, AppEnviron
         state.name = value
     case .setVersion(let value):
         state.version = value
-    case .setUploading(let value):
-        state.isUploading = value
+    case .setLoading(let value):
+        state.isLoading = value
+    case .setError(let value):
+        state.error = value
     case .update(let result):
         switch result {
         case .success(let updater):
             updater(&state)
         case .failure(let error):
-            debugPrint(error)
+            state.error = error.toString()
         }
     }
     return .none

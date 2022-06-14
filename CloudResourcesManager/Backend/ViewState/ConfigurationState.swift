@@ -14,6 +14,7 @@ struct ConfigurationState: Equatable {
     var userToken: String = ""
     var isActive: Bool = false
     var isChanged: Bool = false
+    var error: String = ""
     
     enum Environment: String, Hashable, Identifiable {
         var id: String { rawValue }
@@ -27,6 +28,7 @@ enum ConfigurationAction {
     case setContainerId(String)
     case setEnvironment(ConfigurationState.Environment)
     case setUserToken(String)
+    case setError(String)
     
     case update
 }
@@ -38,7 +40,7 @@ let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, AppE
         do {
             try env.database.saveCKToolConfiguration(state.containerId, state.environment.rawValue, state.userToken)
         } catch {
-            debugPrint(error)
+            state.error = error.toString()
         }
     case .setContainerId(let value):
         state.containerId = value
@@ -47,6 +49,8 @@ let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, AppE
         state.environment = value
     case .setUserToken(let value):
         state.userToken = value
+    case .setError(let value):
+        state.error = value
     }
     state.isChanged = env.cktool.configurationToken != CKToolConfiguration(containerId: state.containerId, environment: state.environment.rawValue, userToken: state.userToken).token()
     return .none

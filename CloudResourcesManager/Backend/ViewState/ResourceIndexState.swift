@@ -23,6 +23,7 @@ struct ResourceIndexState: Equatable, Identifiable {
     
     var isActive: Bool = false
     var isLoading: Bool = false
+    var error: String = ""
     var leftList: [Resource] = []
     var rightList: [Resource] = []
 }
@@ -44,6 +45,7 @@ extension ResourceIndexState {
 enum ResourceIndexAction {
     case setActive(Bool)
     case setLoading(Bool)
+    case setError(String)
     case tapLeft(Resource)
     case tapRight(Resource)
     case upload
@@ -82,7 +84,6 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
 //        .throttle(for: 4, scheduler: env.mainQueue, latest: true)
 //        .catchToEffect(ResourceIndexAction.save)
     case .save:
-        print("save")
         var indexes: [ResourceIndexes.ResourceName: ResourceIndexes.Record] = [:]
         state.leftList.forEach { resource in
             indexes[resource.name] = .init(id: resource.id)
@@ -95,7 +96,6 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
             } catch {
                 debugPrint(error)
             }
-            print("saved")
         }
         .receive(on: env.mainQueue)
         .fireAndForget()
@@ -108,7 +108,9 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
                 do {
                     let result = try await env.cktool.updateResourceIndexRecord(indexes: indexes)
                 } catch {
-                    debugPrint(error)
+                    DispatchQueue.main.async {
+                        subscriber.send(.setError(error.toString()))
+                    }
                 }
                 
                 DispatchQueue.main.async {
@@ -129,7 +131,9 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
                 do {
                     try await env.cktool.deleteRecord(recordName: recordName)
                 } catch {
-                    debugPrint(error)
+                    DispatchQueue.main.async {
+                        subscriber.send(.setError(error.toString()))
+                    }
                 }
                 try indexes.delete(to: env.database.database()!)
                 DispatchQueue.main.async {
@@ -143,6 +147,8 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
         state.isLoading = false
     case .setLoading(let value):
         state.isLoading = value
+    case .setError(let value):
+        state.error = value
     }
     return .none
 }

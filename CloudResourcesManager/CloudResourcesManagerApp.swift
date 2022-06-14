@@ -19,7 +19,7 @@ struct CloudResourcesManagerApp: App {
                     .frame(width: 10, height: 10)
                 
                 ContentView(store: .init(
-                    initialState: .init(indexes: []),
+                    initialState: .init(resourceIndexes: []),
                     reducer: mainReducer,
                     environment: .init(cktool: cktool, database: .default)
                 ))

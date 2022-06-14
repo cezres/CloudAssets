@@ -1,5 +1,5 @@
 //
-//  CreateResourceIndexState.swift
+//  CreateResourceIndexesState.swift
 //  CloudAssetsManager
 //
 //  Created by azusa on 2022/6/9.
@@ -10,23 +10,25 @@ import ComposableArchitecture
 import Combine
 import CloudResourcesFoundation
 
-struct CreateResourceIndexState: Equatable {
+struct CreateResourceIndexesState: Equatable {
     var isActive: Bool = false
     var version: String = ""
     var base: ResourceIndexes?
     var isLoading: Bool = false
+    var error: String = ""
 }
 
-enum CreateResourceIndexAction {
+enum CreateResourceIndexesAction {
     case setActive(Bool)
     case setLoading(Bool)
+    case setError(String)
     case setVersion(String)
     case setBase(ResourceIndexes?)
     case confirm
     case completion(ResourceIndexes)
 }
 
-let createResourceIndexReducer = Reducer<CreateResourceIndexState, CreateResourceIndexAction, AppEnvironment>.init { state, action, env in
+let createResourceIndexesReducer = Reducer<CreateResourceIndexesState, CreateResourceIndexesAction, AppEnvironment>.init { state, action, env in
     switch action {
     case .confirm:
         guard let version = Version.stringVersionToInt(state.version) else {
@@ -52,6 +54,7 @@ let createResourceIndexReducer = Reducer<CreateResourceIndexState, CreateResourc
                 } catch {
                     DispatchQueue.main.async {
                         subscriber.send(.setLoading(false))
+                        subscriber.send(.setError(error.toString()))
                     }
                 }
             }
@@ -67,6 +70,8 @@ let createResourceIndexReducer = Reducer<CreateResourceIndexState, CreateResourc
         state.base = value
     case .setLoading(let value):
         state.isLoading = value
+    case .setError(let value):
+        state.error = value
     }
     return .none
 }

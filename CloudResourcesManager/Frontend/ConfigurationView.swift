@@ -59,6 +59,7 @@ struct ConfigurationView: View {
                 }
                 Spacer()
             }
+            .error(viewStore.binding(get: \.error, send: ConfigurationAction.setError))
             .padding(30)
         }
         

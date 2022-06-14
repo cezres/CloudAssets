@@ -125,10 +125,15 @@ extension CKToolJS: WKScriptMessageHandler, WKNavigationDelegate {
             print(message.body)
             return
         }
-        if let id = body["id"] as? String, let handler = evaluateJavaScriptCompletionHandlers.removeValue(forKey: id) {
+        if
+            let id = body["id"] as? String,
+            let handler = evaluateJavaScriptCompletionHandlers.removeValue(forKey: id)
+        {
             if let error = body["error"] as? String {
                 print(body)
                 handler.error(error)
+            } else if let error = body["error"] as? [String: Any] {
+                handler.error(error.description)
             } else {
                 handler.success(body)
             }

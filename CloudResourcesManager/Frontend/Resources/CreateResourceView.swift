@@ -10,13 +10,13 @@ import ComposableArchitecture
 import SwiftUIX
 
 struct CreateResourceView: View {
-    let store: Store<CreateAssetState, CreateAssetAction>
+    let store: Store<CreateResourceState, CreateResourceAction>
     
     var body: some View {
         WithViewStore(store) { viewStore in
             Form {
                 Section {
-                    Text("Upload Asset")
+                    Text("Upload Resource")
                         .font(Font.title)
                     
                     if let url = viewStore.url {
@@ -46,9 +46,9 @@ struct CreateResourceView: View {
                     .cornerRadius(8)
                     .padding(.bottom, 30)
                     
-                    TextField("Name", text: viewStore.binding(get: \.name, send: CreateAssetAction.setName))
+                    TextField("Name", text: viewStore.binding(get: \.name, send: CreateResourceAction.setName))
                     
-                    TextField("Version", text: viewStore.binding(get: \.version, send: CreateAssetAction.setVersion))
+                    TextField("Version", text: viewStore.binding(get: \.version, send: CreateResourceAction.setVersion))
                 }
                 
                 Spacer(minLength: 30)
@@ -85,7 +85,8 @@ struct CreateResourceView: View {
             }
             .padding(30)
             .frame(minWidth: 600, minHeight: 300)
-            .loading(viewStore.binding(get: \.isUploading, send: CreateAssetAction.setUploading))
+            .loading(viewStore.binding(get: \.isLoading, send: CreateResourceAction.setLoading))
+            .error(viewStore.binding(get: \.error, send: CreateResourceAction.setError))
         }
     }
 }

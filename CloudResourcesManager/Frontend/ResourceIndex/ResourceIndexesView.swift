@@ -56,6 +56,7 @@ struct ResourceIndexesView: View {
             }
             .padding(Edge.Set.vertical, 16)
             .loading(viewStore.binding(get: \.isLoading, send: ResourceIndexAction.setLoading))
+            .error(viewStore.binding(get: \.error, send: ResourceIndexAction.setError))
         }
     }
     

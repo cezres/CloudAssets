@@ -20,7 +20,7 @@ struct ContentView: View {
                 NavigationView {
                     List {
                         Section {
-                            ForEachStore(store.scope(state: \.indexes, action: AppAction.indexes)) { store in
+                            ForEachStore(store.scope(state: \.resourceIndexes, action: AppAction.resourceIndexes)) { store in
                                 WithViewStore(store) { viewStore in
                                     NavigationLink(
                                         isActive: viewStore.binding(get: \.isActive, send: ResourceIndexAction.setActive)
@@ -37,7 +37,7 @@ struct ContentView: View {
                                                 
                         Section {
                             NavigationLink("Resources") {
-                                ResourcesView(store: store.scope(state: \.resources, action: AppAction.assets))
+                                ResourcesView(store: store.scope(state: \.resources, action: AppAction.resources))
                             }
                         } header: {
                             Text("Resources")
@@ -55,7 +55,8 @@ struct ContentView: View {
                             } label: {
                                 Text("Deploy")
                             }
-                        } header: {
+                        }
+                        header: {
                             Text(viewStore.configuration.environment.rawValue)
                         }
                     }
@@ -70,20 +71,21 @@ struct ContentView: View {
                     viewStore.send(.loadFromDB)
                 }
                 .sheet(isPresented: viewStore.binding(
-                    get: { $0.createAsset.isActive },
-                    send: { AppAction.createAsset(.setActive($0)) }
+                    get: { $0.createResource.isActive },
+                    send: { AppAction.createResource(.setActive($0)) }
                 )) {
-                    CreateResourceView(store: store.scope(state: \.createAsset, action: AppAction.createAsset))
+                    CreateResourceView(store: store.scope(state: \.createResource, action: AppAction.createResource))
                 }
                 .sheet(isPresented: viewStore.binding(
-                    get: { $0.createResourceIndex.isActive },
-                    send: { AppAction.createResourceIndex(.setActive($0)) }
+                    get: { $0.createResourceIndexes.isActive },
+                    send: { AppAction.createResourceIndexes(.setActive($0)) }
                 )) {
                     CreateResourceIndexesView(
-                        store: store.scope(state: \.createResourceIndex, action: AppAction.createResourceIndex),
-                        indexes: viewStore.indexes.map { $0.index }
+                        store: store.scope(state: \.createResourceIndexes, action: AppAction.createResourceIndexes),
+                        indexes: viewStore.resourceIndexes.map { $0.index }
                     )
                 }
+                .error(viewStore.binding(get: \.error, send: AppAction.setError))
             }
         }
     }
@@ -92,7 +94,7 @@ struct ContentView: View {
         ToolbarContentBuilder.buildBlock(
             ToolbarItem {
                 Button {
-                    viewStore.send(.createResourceIndex(.setActive(true)))
+                    viewStore.send(.createResourceIndexes(.setActive(true)))
                 } label: {
                     HStack {
                         Image(systemName: "doc.badge.plus")
@@ -102,7 +104,7 @@ struct ContentView: View {
             },
             ToolbarItem {
                 Button {
-                    viewStore.send(.createAsset(.setActive(true)))
+                    viewStore.send(.createResource(.setActive(true)))
                 } label: {
                     HStack {
                         Image(systemName: "doc.badge.plus")

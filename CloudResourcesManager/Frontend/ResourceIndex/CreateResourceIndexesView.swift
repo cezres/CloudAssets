@@ -11,7 +11,7 @@ import ComposableArchitecture
 import CloudResourcesFoundation
 
 struct CreateResourceIndexesView: View {
-    let store: Store<CreateResourceIndexState, CreateResourceIndexAction>
+    let store: Store<CreateResourceIndexesState, CreateResourceIndexesAction>
     let indexes: [ResourceIndexes]
     
     var body: some View {
@@ -21,7 +21,7 @@ struct CreateResourceIndexesView: View {
                     Text("Create Resource Indexes")
                         .font(Font.title)
                     
-                    TextField("Version", text: viewStore.binding(get: \.version, send: CreateResourceIndexAction.setVersion))
+                    TextField("Version", text: viewStore.binding(get: \.version, send: CreateResourceIndexesAction.setVersion))
                     
                     if !indexes.isEmpty {
                         Picker(selection: Binding<Int?>.init {
@@ -72,7 +72,8 @@ struct CreateResourceIndexesView: View {
             }
             .padding(30)
             .frame(minWidth: 600, minHeight: 300)
-            .loading(viewStore.binding(get: \.isLoading, send: CreateResourceIndexAction.setLoading))
+            .loading(viewStore.binding(get: \.isLoading, send: CreateResourceIndexesAction.setLoading))
+            .error(viewStore.binding(get: \.error, send: CreateResourceIndexesAction.setError))
         }
     }
 }

@@ -32,6 +32,7 @@ struct ResourcesView: View {
                 }
             }
             .loading(viewStore.binding(get: \.loading, send: ResourcesAction.setLoading))
+            .error(viewStore.binding(get: \.error, send: ResourcesAction.setError))
         }
     }
     
