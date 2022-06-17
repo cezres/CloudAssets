@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Combine
 
 struct ResourcesState: Equatable {
     var resources: [Resource] = []
@@ -26,13 +27,22 @@ let resourcesReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.
     switch action {
     case .deleteAsset(let asset):
         state.loading = true
-        return Effect.task {
-            try await env.cktool.deleteRecord(recordName: asset.id)
-            try asset.delete(to: Database.default.database()!)
-            return asset
+        return Effect.run { subscriber in
+            Task {
+                let result: Result<Resource, Error>
+                do {
+                    try await env.cktool.deleteRecord(recordName: asset.id)
+                    try asset.delete(to: Database.default.database()!)
+                    result = .success(asset)
+                } catch {
+                    result = .failure(error)
+                }
+                DispatchQueue.main.async {
+                    subscriber.send(.deleteAssetResponse(result))
+                }
+            }
+            return AnyCancellable {}
         }
-        .receive(on: env.mainQueue)
-        .catchToEffect(ResourcesAction.deleteAssetResponse)
         
     case .deleteAssetResponse(let result):
         switch result {

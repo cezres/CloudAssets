@@ -1,4 +1,4 @@
-import { PromisesApi, CKEnvironment, CKDatabaseType, CKDBAssetUploadUrlResponse, CKDBAsset, createCKDBRecordFieldStringValue, createCKDBRecordFieldInt64Value, toInt64, createCKDBRecordFieldAssetValue } from "@apple/cktool.database";
+import { PromisesApi, CKDatabaseType, CKDBAssetUploadUrlResponse, CKDBAsset, createCKDBRecordFieldStringValue, createCKDBRecordFieldInt64Value, toInt64, createCKDBRecordFieldAssetValue } from "@apple/cktool.database";
 import { createConfiguration } from "@apple/cktool.target.browser"
 
 export function wk_callback(value) {
@@ -13,13 +13,18 @@ var api = new PromisesApi({
 });
 var defaultParams = {}
 
-export function configureEnvironment(containerId, environment, userToken) {
+// window.opener.postMessage
+
+export function configureEnvironment(containerId, environment, ckAPIToken, ckWebAuthToken) {
     api = new PromisesApi({
         configuration: createConfiguration(),
         security: { 
-            "UserTokenAuth": userToken,
+            // "UserTokenAuth": userToken,
+            "CloudKitAPITokenAuth": ckAPIToken,
+            "CloudKitWebAuthTokenAuth": ckWebAuthToken
         }
     });
+
     defaultParams = {
         containerId: containerId,
         environment: environment,
@@ -31,6 +36,9 @@ export function configureEnvironment(containerId, environment, userToken) {
 }
 
 export function createAssetUploadUrl(id, recordType, fieldName, size) {
+    console.log(recordType)
+    console.log(fieldName)
+    console.log(size)
     api.createAssetUploadUrl({
         ...defaultParams,
         body: {

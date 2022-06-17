@@ -12,13 +12,17 @@ struct ErrorViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content.sheet(
-            isPresented: .init(get: {
-                return !error.wrappedValue.isEmpty
-            }, set: { value in
-                if !value {
-                    error.wrappedValue = ""
+            isPresented: .init(
+                get: {
+                    !error.wrappedValue.isEmpty
+                },
+                set: { value in
+                    if !value {
+                        error.wrappedValue = ""
+                    }
                 }
-            })) {
+            ),
+            content: {
                 VStack {
                     Text(error.wrappedValue)
                         .padding(.bottom, 16)
@@ -29,6 +33,7 @@ struct ErrorViewModifier: ViewModifier {
                 .frame(maxWidth: 600)
                 .padding(30)
             }
+        )
     }
 }
 

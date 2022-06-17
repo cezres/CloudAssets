@@ -43,9 +43,9 @@ class Database {
         do {
             db = try Connection(location, readonly: false)
             
-            try Resource.create(to: db!)
             try CKToolConfiguration.create(to: db!)
             try Asset.create(to: db!)
+            try Resource.create(to: db!)
             try ResourceIndexes.create(to: db!)
         } catch {
             debugPrint(error)

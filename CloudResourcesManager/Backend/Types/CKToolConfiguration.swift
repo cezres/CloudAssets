@@ -10,20 +10,16 @@ import CryptoKit
 import SQLite
 
 extension Database {
-    func saveCKToolConfiguration(_ containerId: String, _ environment: String, _ userToken: String) throws {
-        try CKToolConfiguration(
-            containerId: containerId,
-            environment: environment,
-            userToken: userToken
-        ).save(to: database()!)
+    func saveCKToolConfiguration(_ config: CKToolConfiguration) throws {
+        try config.save(to: database()!)
     }
     
-    func loadCKToolConfiguration() -> (containerId: String, environment: String, userToken: String) {
+    func loadCKToolConfiguration() -> CKToolConfiguration {
         let result = (try? CKToolConfiguration.query(nil, from: database()!)) ?? []
         if let config = result.first {
-            return (config.containerId, config.environment, config.userToken)
+            return config
         } else {
-            return ("", ConfigurationState.Environment.development.rawValue, "")
+            return .init(containerId: "", developmentCKAPIToken: "", developmentCKWebAuthToken: "", productionCKAPIToken: "", productionCKWebAuthToken: "")
         }
     }
 }
@@ -32,20 +28,24 @@ struct CKToolConfiguration: SQLiteRecord {
     static let table: Table = .init("CKToolConfiguration")
     static let idExpression: Expression<String> = .init("id")
     static let containerIdExpression: Expression<String> = .init("containerId")
-    static let environmentExpression: Expression<String> = .init("environment")
-    static let userTokenExpression: Expression<String> = .init("userToken")
+    static let developmentCKAPITokenExpression: Expression<String> = .init("developmentCKAPIToken")
+    static let developmentCKWebAuthTokenExpression: Expression<String> = .init("developmentCKWebAuthToken")
+    static let productionCKAPITokenExpression: Expression<String> = .init("productionCKAPIToken")
+    static let productionCKWebAuthTokenExpression: Expression<String> = .init("productionCKWebAuthToken")
     
     let id = "CKToolConfiguration"
     let containerId: String
-    let environment: String
-    let userToken: String
+    let developmentCKAPIToken: String
+    let developmentCKWebAuthToken: String
+    let productionCKAPIToken: String
+    let productionCKWebAuthToken: String
     
-    func token() -> String {
-        var md5 = Insecure.MD5()
-        md5.update(data: containerId.data(using: .utf8)!)
-        md5.update(data: environment.data(using: .utf8)!)
-        md5.update(data: userToken.data(using: .utf8)!)
-        return Data(md5.finalize()).reduce("", { $0 + String(format: "%02x", $1) })
+    init(containerId: String, developmentCKAPIToken: String, developmentCKWebAuthToken: String, productionCKAPIToken: String, productionCKWebAuthToken: String) {
+        self.containerId = containerId
+        self.developmentCKAPIToken = developmentCKAPIToken
+        self.developmentCKWebAuthToken = developmentCKWebAuthToken
+        self.productionCKAPIToken = productionCKAPIToken
+        self.productionCKWebAuthToken = productionCKWebAuthToken
     }
     
     static func create(to db: Connection) throws {
@@ -53,8 +53,10 @@ struct CKToolConfiguration: SQLiteRecord {
             table.create(temporary: false, ifNotExists: true, withoutRowid: false, block: { builder in
                 builder.column(idExpression, primaryKey: true)
                 builder.column(containerIdExpression)
-                builder.column(environmentExpression)
-                builder.column(userTokenExpression)
+                builder.column(developmentCKAPITokenExpression)
+                builder.column(developmentCKWebAuthTokenExpression)
+                builder.column(productionCKAPITokenExpression)
+                builder.column(productionCKWebAuthTokenExpression)
             })
         )
     }
@@ -62,11 +64,7 @@ struct CKToolConfiguration: SQLiteRecord {
     static func query(_ predicate: Expression<Bool>?, from db: Connection) throws -> [CKToolConfiguration] {
         let query = predicate == nil ? table : table.filter(predicate!)
         return try db.prepare(query).map { row in
-            CKToolConfiguration(
-                containerId: row[containerIdExpression],
-                environment: row[environmentExpression],
-                userToken: row[userTokenExpression]
-            )
+            CKToolConfiguration(containerId: row[containerIdExpression], developmentCKAPIToken: row[developmentCKAPITokenExpression], developmentCKWebAuthToken: row[developmentCKWebAuthTokenExpression], productionCKAPIToken: row[productionCKAPITokenExpression], productionCKWebAuthToken: row[productionCKWebAuthTokenExpression])
         }
     }
     
@@ -77,16 +75,20 @@ struct CKToolConfiguration: SQLiteRecord {
                 Self.table.insert(
                     Self.idExpression <- id,
                     Self.containerIdExpression <- containerId,
-                    Self.environmentExpression <- environment,
-                    Self.userTokenExpression <- userToken
+                    Self.developmentCKAPITokenExpression <- developmentCKAPIToken,
+                    Self.developmentCKWebAuthTokenExpression <- developmentCKWebAuthToken,
+                    Self.productionCKAPITokenExpression <- productionCKAPIToken,
+                    Self.productionCKWebAuthTokenExpression <- productionCKWebAuthToken
                 )
             )
         } else {
             try db.run(
                 row.update(
                     Self.containerIdExpression <- containerId,
-                    Self.environmentExpression <- environment,
-                    Self.userTokenExpression <- userToken
+                    Self.developmentCKAPITokenExpression <- developmentCKAPIToken,
+                    Self.developmentCKWebAuthTokenExpression <- developmentCKWebAuthToken,
+                    Self.productionCKAPITokenExpression <- productionCKAPIToken,
+                    Self.productionCKWebAuthTokenExpression <- productionCKWebAuthToken
                 )
             )
         }

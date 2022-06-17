@@ -25,6 +25,7 @@ struct AppState: Equatable {
     var createResource = CreateResourceState()
     var createResourceIndexes = CreateResourceIndexesState()
     var configuration = ConfigurationState()
+    var deploy = DeployState()
     
     var loading: Bool = false
     var error: String = ""
@@ -45,6 +46,7 @@ enum AppAction {
     case createResource(CreateResourceAction)
     case createResourceIndexes(CreateResourceIndexesAction)
     case configuration(ConfigurationAction)
+    case deploy(DeployAction)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.init { state, action, env in
@@ -103,6 +105,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.init { state, acti
         default:
             break
         }
+    case .deploy(let action):
+        break
     }
     return .none
 }
@@ -113,14 +117,16 @@ func loadFromDB(_ state: AppState, _ action: AppAction, _ env: AppEnvironment) -
         let localAssets: [Resource] = try env.database.query()
         let localIndexes: [ResourceIndexes] = try env.database.query()
         return { (state: inout AppState) in
-            state.configuration.containerId = cktoolConfiguration.containerId
-            state.configuration.environment = .init(rawValue: cktoolConfiguration.environment) ?? .development
-            state.configuration.userToken = cktoolConfiguration.userToken
+            env.cktool.configureEnvironment(cktoolConfiguration.containerId, environment: ConfigurationState.Environment.development.rawValue, ckAPIToken: cktoolConfiguration.developmentCKAPIToken, ckWebAuthToken: cktoolConfiguration.developmentCKWebAuthToken)
             
-            env.cktool.configureEnvironment(cktoolConfiguration.containerId, cktoolConfiguration.environment, cktoolConfiguration.userToken)
+            state.configuration.containerId = cktoolConfiguration.containerId
+            state.configuration.developmentCKAPIToken = cktoolConfiguration.developmentCKAPIToken
+            state.configuration.developmentCKWebAuthToken = cktoolConfiguration.developmentCKWebAuthToken
+            state.configuration.productionCKAPIToken = cktoolConfiguration.productionCKAPIToken
+            state.configuration.productionCKWebAuthToken = cktoolConfiguration.productionCKWebAuthToken
             
             state.resources.resources = localAssets
-            
+            state.resourceIndexes.removeAll()
             state.resourceIndexes.append(contentsOf: localIndexes.map { ResourceIndexState(index: $0) })
         }
     }

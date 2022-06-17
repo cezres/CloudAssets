@@ -20,7 +20,7 @@ extension CKToolJS {
     struct AssetIndexsRecord: Codable {
         let recordName: String
         let version: Int
-        let indexs: FileRecord
+        let indexes: FileRecord
     }
     
     struct AssetsRecord: Codable {
@@ -48,8 +48,6 @@ class CKToolJS: NSObject {
     var injected = false
     var session = Session()
     
-    var configurationToken: String = ""
-    
     let token = ""
     
     override init() {
@@ -62,10 +60,14 @@ class CKToolJS: NSObject {
         self.injectJs.enter()
     }
     
-    func configureEnvironment(_ containerId: String, _ environment: String, _ userToken: String) {
-        let js = JavaScriptMethod.configureEnvironment(containerId: containerId, environment: environment, userToken: userToken).createJavaScriptString(with: UUID().uuidString)
+    func configureEnvironment(_ containerId: String, environment: String, ckAPIToken: String, ckWebAuthToken: String) {
+        let js = JavaScriptMethod.configureEnvironment(
+            containerId: containerId,
+            environment: environment,
+            ckAPIToken: ckAPIToken,
+            ckWebAuthToken: ckWebAuthToken
+        ).createJavaScriptString(with: UUID().uuidString)
         webView?.evaluateJavaScript(js)
-        configurationToken = CKToolConfiguration.init(containerId: containerId, environment: environment, userToken: userToken).token()
     }
         
     func deleteRecord(recordName: String) async throws {
@@ -81,23 +83,25 @@ class CKToolJS: NSObject {
         try await evaluateJavaScript(method: .queryResourceRecords)
     }
     
-    func createAssetsRecord(name: String, version: Int, asset: URL) async throws -> AssetsRecord {
-        let attributes = try FileManager.default.attributesOfItem(atPath: asset.path)
+    func createAssetsRecord(recordName: String, name: String, version: Int, pathExtension: String, asset: Data) async throws -> AssetsRecord {
+//        let attributes = try FileManager.default.attributesOfItem(atPath: asset.path)
+//
+//        guard let size = attributes[.size] as? Int else {
+//            throw NSError(domain: "Invalid file size", code: -1)
+//        }
+//        debugPrint(size)
+        let size = asset.count
         
-        guard let size = attributes[.size] as? Int else {
-            throw NSError(domain: "Invalid file size", code: -1)
-        }
-        debugPrint(size)
-        
-        let uploadUrlString: String = try await evaluateJavaScript(method: .createAssetUploadUrl(recordType: "Assets", fieldName: "asset", size: size))
+        let uploadUrlString: String = try await evaluateJavaScript(method: .createAssetUploadUrl(recordType: "Resource", fieldName: "asset", size: size))
         
         guard let uploadUrl = URL(string: uploadUrlString) else {
             throw NSError(domain: "Invalid uploadUrl: \(uploadUrlString)", code: -1)
         }
-        let uploadResult = try await upload(uploadUrl, file: asset).singleFile
+//        let uploadResult = try await upload(uploadUrl, file: asset).singleFile
+        let uploadResult = try await upload(uploadUrl, data: asset).singleFile
         
-        let recordName = UUID().uuidString
-        let result: AssetsRecord = try await evaluateJavaScript(method: .createResourceRecord(recordName: recordName, name: name, version: version, pathExtension: asset.pathExtension.lowercased(), fileChecksum: uploadResult.fileChecksum, receipt: uploadResult.receipt, size: size))
+//        let recordName = UUID().uuidString
+        let result: AssetsRecord = try await evaluateJavaScript(method: .createResourceRecord(recordName: recordName, name: name, version: version, pathExtension: pathExtension.lowercased(), fileChecksum: uploadResult.fileChecksum, receipt: uploadResult.receipt, size: size))
         return result
     }
     
@@ -106,7 +110,7 @@ class CKToolJS: NSObject {
         let size = data.count
         
         print("Create upload url")
-        let uploadUrlString: String = try await evaluateJavaScript(method: .createAssetUploadUrl(recordType: "ResourceIndex", fieldName: "indexes", size: size))
+        let uploadUrlString: String = try await evaluateJavaScript(method: .createAssetUploadUrl(recordType: "ResourceIndexes", fieldName: "indexes", size: size))
         
         guard let uploadUrl = URL(string: uploadUrlString) else {
             throw NSError(domain: "Invalid uploadUrl: \(uploadUrlString)", code: -1)
@@ -115,7 +119,7 @@ class CKToolJS: NSObject {
         let uploadResult = try await upload(uploadUrl, data: data).singleFile
 
         print("Create record")
-        let recordName = "\(indexes.version)_resource_indexes"
+        let recordName = indexes.id.isEmpty ? "\(indexes.version)_resource_indexes" : indexes.id
         let result: ResourceIndexRecord = try await evaluateJavaScript(method: .createResourceIndexRecord(recordName: recordName, version: indexes.version, fileChecksum: uploadResult.fileChecksum, receipt: uploadResult.receipt, size: size))
         return result
     }

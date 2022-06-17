@@ -10,7 +10,7 @@ import WebKit
 
 extension CKToolJS {
     enum JavaScriptMethod {
-        case configureEnvironment(containerId: String, environment: String, userToken: String)
+        case configureEnvironment(containerId: String, environment: String, ckAPIToken: String, ckWebAuthToken: String)
         case queryResourceIndexRecords
         case queryResourceRecords
         
@@ -26,9 +26,9 @@ extension CKToolJS {
         
         func createJavaScriptString(with callbackId: String) -> String {
             switch self {
-            case .configureEnvironment(let containerId, let environment, let userToken):
+            case .configureEnvironment(let containerId, let environment, let ckAPIToken, let ckWebAuthToken):
                 return """
-                main.configureEnvironment("\(containerId)", "\(environment)", "\(userToken)")
+                main.configureEnvironment("\(containerId)", "\(environment)", "\(ckAPIToken)", "\(ckWebAuthToken)")
                 """
             case .queryResourceIndexRecords:
                 return """
@@ -133,6 +133,7 @@ extension CKToolJS: WKScriptMessageHandler, WKNavigationDelegate {
                 print(body)
                 handler.error(error)
             } else if let error = body["error"] as? [String: Any] {
+                print(body)
                 handler.error(error.description)
             } else {
                 handler.success(body)

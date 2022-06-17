@@ -45,26 +45,37 @@ let createResourceReducer = Reducer<CreateResourceState, CreateResourceAction, A
         }
         let name = state.name
         state.isLoading = true
-        return Effect.task {
-            let record = try await env.cktool.createAssetsRecord(name: name, version: version, asset: url)
-            let resource = Resource(
-                id: record.recordName,
-                name: record.name,
-                version: record.version,
-                pathExtension: record.pathExtension,
-                checksum: record.asset.fileChecksum
-            )
-            try resource.save(to: Database.default.database()!)
-            
-            if let data = try? Data(contentsOf: url) {
-                let asset = Asset(id: record.recordName, data: data)
-                try asset.save(to: Database.default.database()!)
+        
+        return Effect.run { subscriber in
+            Task {
+                let result: Result<Resource, Error>
+                do {
+//                    let record = try await env.cktool.createAssetsRecord(name: name, version: version, asset: url)
+                    let data = try Data(contentsOf: url)
+                    let record = try await env.cktool.createAssetsRecord(recordName: UUID().uuidString, name: name, version: version, pathExtension: url.pathExtension, asset: data)
+                    let resource = Resource(
+                        id: record.recordName,
+                        name: record.name,
+                        version: record.version,
+                        pathExtension: record.pathExtension,
+                        checksum: record.asset.fileChecksum
+                    )
+                    try resource.save(to: Database.default.database()!)
+                    
+                    if let data = try? Data(contentsOf: url) {
+                        let asset = Asset(id: record.recordName, data: data)
+                        try asset.save(to: Database.default.database()!)
+                    }
+                    result = .success(resource)
+                } catch {
+                    result = .failure(error)
+                }
+                DispatchQueue.main.async {
+                    subscriber.send(.completionHandler(result))
+                }
             }
-            
-            return resource
+            return AnyCancellable {}
         }
-        .receive(on: env.mainQueue)
-        .catchToEffect(CreateResourceAction.completionHandler)
     case .completionHandler(let result):
         switch result {
         case .success(let value):

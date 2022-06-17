@@ -58,7 +58,6 @@ extension CKToolJS {
         let group = DispatchGroup()
         group.enter()
         session.upload(multipartFormData: { multipartFormData in
-//            multipartFormData.append(file, withName: "file")
             multipartFormData.append(data, withName: "file")
         }, to: url).responseData { response in
             if let data = response.data {

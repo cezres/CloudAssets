@@ -10,10 +10,14 @@ import ComposableArchitecture
 
 struct ConfigurationState: Equatable {
     var containerId: String = ""
-    var environment: Environment = .development
-    var userToken: String = ""
+    var developmentCKAPIToken: String = ""
+    var developmentCKWebAuthToken: String = ""
+    var productionCKAPIToken = ""
+    var productionCKWebAuthToken = ""
+    
     var isActive: Bool = false
     var isChanged: Bool = false
+    var isLoading: Bool = false
     var error: String = ""
     
     enum Environment: String, Hashable, Identifiable {
@@ -26,8 +30,11 @@ struct ConfigurationState: Equatable {
 
 enum ConfigurationAction {
     case setContainerId(String)
-    case setEnvironment(ConfigurationState.Environment)
-    case setUserToken(String)
+    case setDevelopmentCKAPIToken(String)
+    case setDevelopmentCKWebAuthToken(String)
+    case setProductionCKAPIToken(String)
+    case setProductionCKWebAuthToken(String)
+    case setLoading(Bool)
     case setError(String)
     
     case update
@@ -36,22 +43,35 @@ enum ConfigurationAction {
 let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, AppEnvironment>.init { state, action, env in
     switch action {
     case .update:
-        env.cktool.configureEnvironment(state.containerId, state.environment.rawValue, state.userToken)
+        guard !state.containerId.isEmpty || !state.developmentCKAPIToken.isEmpty else {
+            break
+        }
         do {
-            try env.database.saveCKToolConfiguration(state.containerId, state.environment.rawValue, state.userToken)
+            try env.database.saveCKToolConfiguration(.init(containerId: state.containerId, developmentCKAPIToken: state.developmentCKAPIToken, developmentCKWebAuthToken: state.developmentCKWebAuthToken, productionCKAPIToken: state.productionCKAPIToken, productionCKWebAuthToken: state.productionCKWebAuthToken))
         } catch {
             state.error = error.toString()
         }
+        
+        guard !state.developmentCKAPIToken.isEmpty else {
+            break
+        }
+        env.cktool.configureEnvironment(state.containerId, environment: ConfigurationState.Environment.development.rawValue, ckAPIToken: state.developmentCKAPIToken, ckWebAuthToken: state.developmentCKWebAuthToken)
     case .setContainerId(let value):
         state.containerId = value
         
-    case .setEnvironment(let value):
-        state.environment = value
-    case .setUserToken(let value):
-        state.userToken = value
+    case .setDevelopmentCKAPIToken(let value):
+        state.developmentCKAPIToken = value
+    case .setDevelopmentCKWebAuthToken(let value):
+        state.developmentCKWebAuthToken = value
+    case .setProductionCKAPIToken(let value):
+        state.productionCKAPIToken = value
+    case .setProductionCKWebAuthToken(let value):
+        state.productionCKWebAuthToken = value
     case .setError(let value):
         state.error = value
+    case .setLoading(let value):
+        state.isLoading = value
     }
-    state.isChanged = env.cktool.configurationToken != CKToolConfiguration(containerId: state.containerId, environment: state.environment.rawValue, userToken: state.userToken).token()
+//    state.isChanged = env.cktool.configurationToken != CKToolConfiguration(containerId: state.containerId, environment: state.environment.rawValue, userToken: state.userToken).token()
     return .none
 }

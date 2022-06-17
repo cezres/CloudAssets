@@ -51,13 +51,14 @@ struct ContentView: View {
                             }
                             
                             NavigationLink {
-                                DeployView()
+                                DeployView(store: store.scope(state: \.deploy, action: AppAction.deploy))
                             } label: {
                                 Text("Deploy")
                             }
                         }
                         header: {
-                            Text(viewStore.configuration.environment.rawValue)
+//                            Text(viewStore.configuration.environment.rawValue)
+                            Text("Configuration")
                         }
                     }
                     .listStyle(SidebarListStyle())
