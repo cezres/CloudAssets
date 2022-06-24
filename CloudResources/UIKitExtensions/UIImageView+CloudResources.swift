@@ -10,12 +10,23 @@ import UIKit
 
 public extension UIImageView {
     func setCloudAsset(name: String) {
-        CloudResources.shared.fetchResource(name) { [weak self] data, error in
-            guard let weakself = self, let data = data, let image = UIImage(data: data) else { return }
+        CloudResources.shared.fetchResourceURL(name) { [weak self] url, error in
+            guard let weakself = self, let url = url, let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
                 weakself.image = image
             }
-        }.cancel(onObjectRelease: self)
+        }
+//        .cancel(onObjectRelease: self)
+    }
+    
+    func setCloudAssetFromLocal(name: String) {
+        guard
+            let url = CloudResources.shared.fetchResourceUrlFromLocal(name),
+            let image = UIImage(contentsOfFile: url.path)
+        else {
+            return
+        }
+        self.image = image
     }
 }
 
@@ -53,6 +64,7 @@ extension NSObject {
                 proxy = result
             } else {
                 proxy = .init()
+                objc_setAssociatedObject(self, &__releaseProxyAssociatedKey, proxy, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
             return proxy
         }

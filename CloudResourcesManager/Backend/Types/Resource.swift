@@ -7,6 +7,7 @@
 
 import Foundation
 import SQLite
+import Cocoa
 
 struct Resource: Equatable, Identifiable {
     let id: String
@@ -17,6 +18,18 @@ struct Resource: Equatable, Identifiable {
     
     func data() -> Data? {
         searchAssetFromLocalDB()?.data
+    }
+    
+    func thumbnail() -> NSImage? {
+        guard ["png"].contains(pathExtension.lowercased()) else {
+            return nil
+        }
+        
+        // Load thumbnail
+        
+        // Create thumbnail
+        
+        return nil
     }
     
     func hasLocalData(in db: Connection) -> Bool {

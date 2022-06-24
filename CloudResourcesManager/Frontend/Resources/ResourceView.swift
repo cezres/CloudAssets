@@ -52,6 +52,12 @@ struct ResourceView: View, Equatable {
         }
         .contextMenu {
             Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(resource.name, forType: .string)
+            } label: {
+                Text("Copy Name")
+            }
+            Button {
                 deleteAction(resource)
             } label: {
                 Text("Delete")

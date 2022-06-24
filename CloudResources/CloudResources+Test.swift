@@ -7,7 +7,7 @@
 
 import Foundation
 import CloudKit
-import CloudResourcesFoundation
+//import CloudResourcesFoundation
 
 public extension CloudResources {
     func test() {

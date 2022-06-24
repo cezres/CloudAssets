@@ -12,6 +12,7 @@
 		7A09CABF28573B6E0033D274 /* LoadingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */; };
 		7A09CAC128573DD60033D274 /* ErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CAC028573DD60033D274 /* ErrorViewModifier.swift */; };
 		7A09CAC3285743180033D274 /* MainReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CAC2285743180033D274 /* MainReducer.swift */; };
+		7A09CAC528586E560033D274 /* IDMSWebAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09CAC428586E560033D274 /* IDMSWebAuthView.swift */; };
 		7A8A4A4A285345E9004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A49285345E9004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4C285345F2004B761F /* CloudResourcesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4A4B285345F2004B761F /* CloudResourcesFoundation */; };
 		7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4A4D28534602004B761F /* CloudResources.swift */; };
@@ -52,6 +53,9 @@
 		7A8A4AB2285512D1004B761F /* ResourceIndexesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAA285512D1004B761F /* ResourceIndexesView.swift */; };
 		7A8A4AB3285512D1004B761F /* CreateResourceIndexesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8A4AAB285512D1004B761F /* CreateResourceIndexesView.swift */; };
 		7A8A4B4D2856D406004B761F /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 7A8A4B4C2856D406004B761F /* SwiftUIX */; };
+		7AB3C616285B0B6C00877744 /* CloudResourcesOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB3C615285B0B6C00877744 /* CloudResourcesOperationQueue.swift */; };
+		7AB3C618285B167600877744 /* CloudResourcesDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB3C617285B167600877744 /* CloudResourcesDownloader.swift */; };
+		7AB3C61A285B351A00877744 /* DeployState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB3C619285B351A00877744 /* DeployState.swift */; };
 		7AB50B25285227330078E89D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 7AB50B24285227330078E89D /* SQLite */; };
 		7ABEB7742851D10200C51E18 /* CloudResources.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEB7732851D10200C51E18 /* CloudResources.docc */; };
 		7ABEB77A2851D10200C51E18 /* CloudResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABEB76F2851D10200C51E18 /* CloudResources.framework */; };
@@ -110,6 +114,7 @@
 		7A09CABE28573B6E0033D274 /* LoadingViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModifier.swift; sourceTree = "<group>"; };
 		7A09CAC028573DD60033D274 /* ErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModifier.swift; sourceTree = "<group>"; };
 		7A09CAC2285743180033D274 /* MainReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainReducer.swift; sourceTree = "<group>"; };
+		7A09CAC428586E560033D274 /* IDMSWebAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDMSWebAuthView.swift; sourceTree = "<group>"; };
 		7A8A4A48285345D0004B761F /* CloudResourcesFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudResourcesFoundation; sourceTree = "<group>"; };
 		7A8A4A4D28534602004B761F /* CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResources.swift; sourceTree = "<group>"; };
 		7A8A4A5228550D09004B761F /* UIImageView+CloudResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+CloudResources.swift"; sourceTree = "<group>"; };
@@ -148,6 +153,9 @@
 		7A8A4AA8285512D1004B761F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7A8A4AAA285512D1004B761F /* ResourceIndexesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceIndexesView.swift; sourceTree = "<group>"; };
 		7A8A4AAB285512D1004B761F /* CreateResourceIndexesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateResourceIndexesView.swift; sourceTree = "<group>"; };
+		7AB3C615285B0B6C00877744 /* CloudResourcesOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResourcesOperationQueue.swift; sourceTree = "<group>"; };
+		7AB3C617285B167600877744 /* CloudResourcesDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudResourcesDownloader.swift; sourceTree = "<group>"; };
+		7AB3C619285B351A00877744 /* DeployState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeployState.swift; sourceTree = "<group>"; };
 		7ABEB76F2851D10200C51E18 /* CloudResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CloudResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABEB7722851D10200C51E18 /* CloudResources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudResources.h; sourceTree = "<group>"; };
 		7ABEB7732851D10200C51E18 /* CloudResources.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CloudResources.docc; sourceTree = "<group>"; };
@@ -318,6 +326,7 @@
 				7A8A4A8C28550F17004B761F /* CreateResourceIndexesState.swift */,
 				7A8A4A8828550F17004B761F /* ConfigurationState.swift */,
 				7A09CAC2285743180033D274 /* MainReducer.swift */,
+				7AB3C619285B351A00877744 /* DeployState.swift */,
 			);
 			path = ViewState;
 			sourceTree = "<group>";
@@ -328,8 +337,8 @@
 				7A8A4AA5285512D1004B761F /* Common */,
 				7A8A4AA1285512D1004B761F /* Resources */,
 				7A8A4AA9285512D1004B761F /* ResourceIndex */,
-				7A09CABB285732A20033D274 /* DeployView.swift */,
 				7A8A4AA7285512D1004B761F /* ConfigurationView.swift */,
+				7A09CABB285732A20033D274 /* DeployView.swift */,
 				7A8A4AA8285512D1004B761F /* ContentView.swift */,
 			);
 			path = Frontend;
@@ -350,6 +359,7 @@
 			children = (
 				7A09CABD28573B610033D274 /* Modifier */,
 				7A8A4AA6285512D1004B761F /* OpenFileSelector.swift */,
+				7A09CAC428586E560033D274 /* IDMSWebAuthView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -394,7 +404,9 @@
 				7ABEB7722851D10200C51E18 /* CloudResources.h */,
 				7ABEB7732851D10200C51E18 /* CloudResources.docc */,
 				7A8A4A4D28534602004B761F /* CloudResources.swift */,
+				7AB3C615285B0B6C00877744 /* CloudResourcesOperationQueue.swift */,
 				7A8A4A5428550D21004B761F /* CloudResources+Test.swift */,
+				7AB3C617285B167600877744 /* CloudResourcesDownloader.swift */,
 			);
 			path = CloudResources;
 			sourceTree = "<group>";
@@ -629,9 +641,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AB3C618285B167600877744 /* CloudResourcesDownloader.swift in Sources */,
 				7A8A4A5328550D09004B761F /* UIImageView+CloudResources.swift in Sources */,
 				7ABEB7742851D10200C51E18 /* CloudResources.docc in Sources */,
 				7A8A4A4E28534602004B761F /* CloudResources.swift in Sources */,
+				7AB3C616285B0B6C00877744 /* CloudResourcesOperationQueue.swift in Sources */,
 				7A8A4A5528550D21004B761F /* CloudResources+Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +666,7 @@
 				7A8A4AB1285512D1004B761F /* ContentView.swift in Sources */,
 				7A8A4A9B28550F17004B761F /* ResourceIndexState.swift in Sources */,
 				7A09CABC285732A20033D274 /* DeployView.swift in Sources */,
+				7A09CAC528586E560033D274 /* IDMSWebAuthView.swift in Sources */,
 				7A8A4AB3285512D1004B761F /* CreateResourceIndexesView.swift in Sources */,
 				7A8A4AAD285512D1004B761F /* ResourceView.swift in Sources */,
 				7A8A4AAE285512D1004B761F /* CreateResourceView.swift in Sources */,
@@ -671,6 +686,7 @@
 				7A8A4A9828550F17004B761F /* AppState.swift in Sources */,
 				7A09CAC3285743180033D274 /* MainReducer.swift in Sources */,
 				7A8A4A9228550F17004B761F /* Asset.swift in Sources */,
+				7AB3C61A285B351A00877744 /* DeployState.swift in Sources */,
 				7A8A4A9A28550F17004B761F /* ResourcesState.swift in Sources */,
 				7A8A4A9328550F17004B761F /* ResourceIndexes.swift in Sources */,
 				7A8A4A9928550F17004B761F /* ConfigurationState.swift in Sources */,
@@ -993,6 +1009,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CloudResourcesManager/CloudResourcesManager.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1022,6 +1039,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CloudResourcesManager/CloudResourcesManager.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

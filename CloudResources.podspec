@@ -25,9 +25,18 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/cezres/CloudResources.git", :tag => "#{spec.version}" }
 
 
-  spec.source_files  = "CloudAssets", "CloudAssets/**/*.{h,swift}"
-  spec.public_header_files = "CloudAssets/**/*.h"
+  spec.default_subspecs = 'Core'
+
+  spec.subspec 'Foundation' do |ss|
+    ss.source_files = 'CloudResourcesFoundation/Sources/**/*.swift'
+    ss.exclude_files = 'CloudResourcesFoundation/Package.swift'
+  end
 
 
+  spec.subspec 'Core' do |ss|
+    ss.source_files  = "CloudResources", "CloudResources/**/*.{h,swift}"
+    ss.public_header_files = "CloudResources/**/*.h"
+    ss.dependency 'CloudResources/Foundation'
+  end
   
 end
