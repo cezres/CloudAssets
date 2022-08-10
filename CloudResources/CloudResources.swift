@@ -7,15 +7,17 @@
 
 import Foundation
 import CloudKit
-//import CloudResourcesFoundation
+
+private var queryResourceIndexesGroup = DispatchGroup()
 
 public class CloudResources {
+    
+    typealias FetchResourceCompletionHandler = (_ result: Result<URL, Error>) -> Void
+    
     struct TodoTask {
         let name: String
         var handlers: [FetchResourceCompletionHandler]
     }
-    
-    typealias FetchResourceCompletionHandler = (_ url: URL?, _ error: Error?) -> Void
     
     public static let shared = CloudResources()
     
@@ -23,20 +25,18 @@ public class CloudResources {
     private(set) var version: Int!
     let cachesDirectory: URL
     
-    private let syncQueue = OS_dispatch_queue_serial(label: "CloudResources")
-    private var taskQueue = OperationQueue()
-    private var queue = OperationQueue()
-    private var resourceIndexesRecord: ResourceIndexesRecord?
-    private var queryResourceIndexesGroup = DispatchGroup()
+    @MainActor var xxx: Int = 0
     
-    private var fetchingList: [String: [FetchResourceCompletionHandler]] = [:]
-    private var todoList: [TodoTask] = []
-    private let maxConcurrentOperationCount = 2
+    private var resourceIndexesRecord: ResourceIndexesRecord?
+    
+//    private var fetchingList: [String: [FetchResourceCompletionHandler]] = [:]
+//    private var todoList: [TodoTask] = []
+//    private let maxConcurrentOperationCount = 3
+    
+    private var queue: CloudResourcesOperationQueue<String, Result<URL, Error>>!
     
     init() {
-        cachesDirectory = .init(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0], isDirectory: true).appendingPathComponent("cache_assets")
-        
-//        try? FileManager.default.removeItem(at: cachesDirectory)
+        cachesDirectory = .init(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true).appendingPathComponent("cache_assets")
         
         var isDirectory: ObjCBool = false
         if !FileManager.default.fileExists(atPath: cachesDirectory.path, isDirectory: &isDirectory) || !isDirectory.boolValue {
@@ -46,49 +46,43 @@ public class CloudResources {
                 debugPrint(error)
             }
         }
-        
-        taskQueue.name = "CloudResources"
-        taskQueue.qualityOfService = .default
-//        taskQueue.maxConcurrentOperationCount = 6
-        
-        queue.maxConcurrentOperationCount = 1
-        
-        // 网络状态
     }
-    
+        
+//    nonisolated
     public func start(identifier: String, version: String) {
         guard let version = Version.stringVersionToInt(version) else {
             fatalError("Invalid version number")
         }
         self.container = .init(identifier: identifier)
         self.version = version
-        queryResourceIndexes()
         
-        DispatchQueue.global().async {
-            self.queryResourceIndexesGroup.wait()
-
-            guard let keys = self.resourceIndexesRecord?.indexes.keys.reversed() else { return }
-
-            keys.forEach { resourceName in
-                print(resourceName)
-                self.fetchResourceURL(resourceName) { url, error in
-                    print("预加载完成 - \(resourceName)")
+        queue = .init(maxConcurrentCount: 4, check: {
+            self.resourceIndexesRecord != nil
+        }, handler: { op in
+            do {
+                let url = try await self._fetchResourceURL(op)
+                return .success(url)
+            } catch {
+                return .failure(error)
+            }
+        })
+        
+        self.queryResourceIndexes()
+    }
+    
+    func queryResourceIndexesCompleted() {
+        guard let keys = resourceIndexesRecord?.indexes.keys.reversed() else { return }
+        Task.detached(priority: .background) {
+//            queryResourceIndexesGroup.wait()
+            await withThrowingTaskGroup(of: Void.self) { group in
+                (["wallet_chain_background_ethereum", "wallet_chain_background_bytom", "wallet_chain_background_bsc", "wallet_chain_background_litecoin"] + keys).forEach { name in
+                    group.addTask {
+                        let url = try await self.fetchResourceURL(name)
+                        print("预加载完成 - \(name) - \(url.lastPathComponent)")
+                    }
                 }
             }
         }
-    }
-    
-    public func threadSafety(block: @escaping () -> Void) {
-        syncQueue.async(group: nil, qos: .background, flags: .barrier, execute: block)
-        
-//        if Thread.current.name == "CloudResources" {
-//            block()
-//        } else {
-//            syncQueue.async(group: nil, qos: .background, flags: .barrier) {
-//                Thread.current.name = "CloudResources"
-//                block()
-//            }
-//        }
     }
 }
 
@@ -100,25 +94,6 @@ extension CloudResources {
 }
 
 extension CloudResources {
-    private func fetchResourceFromTodoList() {
-        threadSafety {
-            while self.fetchingList.count < self.maxConcurrentOperationCount && !self.todoList.isEmpty {
-                let todo = self.todoList.removeLast()
-                self.fetchingList[todo.name] = todo.handlers
-                self._fetchResourceURL(todo.name) { url, error in
-                    self.threadSafety {
-                        if let handlers = self.fetchingList.removeValue(forKey: todo.name) {
-                            handlers.forEach { $0(url, error) }
-                        } else {
-                            fatalError()
-                        }
-                        self.fetchResourceFromTodoList()
-                    }
-                }
-            }
-        }
-    }
-    
     public func fetchResourceUrlFromLocal(_ name: String) -> URL? {
         guard let indexes = resourceIndexesRecord?.indexes else {
             return nil
@@ -131,49 +106,17 @@ extension CloudResources {
         }
     }
     
-    public func fetchResourceURL(_ name: String, completionHandler: @escaping (_ url: URL?, _ error: Error?) -> Void) {
-        threadSafety {
-            if let list = self.fetchingList[name] {
-                self.fetchingList[name] = list + [completionHandler]
-                return
-            }
-            
-            if let index = self.todoList.firstIndex(where: { $0.name == name }) {
-                let handlers = self.todoList.remove(at: index).handlers + [completionHandler]
-                self.todoList.append(.init(name: name, handlers: handlers))
-            } else {
-                self.todoList.append(.init(name: name, handlers: [completionHandler]))
-            }
-            
-            self.fetchResourceFromTodoList()
-        }
+    public func fetchResourceURL(_ name: String) async throws -> URL {
+        return try await queue.insert(op: name).get()
     }
     
-    private func _fetchResourceURL(_ name: String, completionHandler: @escaping (_ url: URL?, _ error: Error?) -> Void) {
-        let op = BlockOperation {
-            /// 在索引中查询资源ID，并使用资源ID直接获取数据
-            if let recordId = self.queryResourceRecordId(resourceName: name) {
-                self.fetchResourceURL(recordId: recordId, completionHandler: completionHandler)
-            } else {
-                /// 查询名称符合并且版本号最接近的资源
-                let semaphore = DispatchSemaphore(value: 0)
-                self.queryResourceURL(name: name, version: self.version) { url, error in
-                    completionHandler(url, error)
-                    semaphore.signal()
-                }
-                semaphore.wait()
-            }
-        }
-        taskQueue.addOperation(op)
-    }
-    
-    public func fetchResource(_ name: String, completionHandler: @escaping (_ data: Data?, _ error: Error?) -> Void) {
-        fetchResourceURL(name) { url, error in
-            if let url = url {
-                completionHandler(try? Data(contentsOf: url), error)
-            } else {
-                completionHandler(nil, error)
-            }
+    private func _fetchResourceURL(_ name: String) async throws -> URL {
+        /// 在索引中查询资源ID，并使用资源ID直接获取数据
+        if let recordId = self.queryResourceRecordId(resourceName: name) {
+            return try await self.fetchResourceURL(recordId: recordId)
+        } else {
+            /// 查询名称符合并且版本号最接近的资源
+            return try await self.queryResourceURL(name: name, version: self.version)
         }
     }
 }
@@ -212,8 +155,9 @@ extension CloudResources {
             let localIndexes = try? JSONDecoder().decode(ResourceIndexesRecord.self, from: data)
         {
             self.resourceIndexesRecord = localIndexes
-//            self.queryResourceIndexesGroup.leave()
-//            isLeave = true
+            queryResourceIndexesGroup.leave()
+            isLeave = true
+            self.queryResourceIndexesCompleted()
         }
         
         // Load from cloud
@@ -232,16 +176,18 @@ extension CloudResources {
                 version != self.resourceIndexesRecord?.version || self.resourceIndexesRecord?.modifiedTimestamp != record.modificationDate?.timeIntervalSince1970
             else {
                 if !isLeave {
-                    self.queryResourceIndexesGroup.leave()
+                    queryResourceIndexesGroup.leave()
                     isLeave = true
+                    self.queryResourceIndexesCompleted()
                 }
                 return
             }
             self.container.publicCloudDatabase.fetch(withRecordID: record.recordID) { record, error in
                 defer {
                     if !isLeave {
-                        self.queryResourceIndexesGroup.leave()
+                        queryResourceIndexesGroup.leave()
                         isLeave = true
+                        self.queryResourceIndexesCompleted()
                     }
                 }
                 
@@ -267,10 +213,13 @@ extension CloudResources {
         operation.queryCompletionBlock = { (cursor, error) in
             if let error = error {
                 debugPrint(error)
+            } else if let cursor = cursor {
+                return
             }
             if !isLeave {
-                self.queryResourceIndexesGroup.leave()
+                queryResourceIndexesGroup.leave()
                 isLeave = true
+                self.queryResourceIndexesCompleted()
             }
         }
         database.add(operation)
@@ -278,52 +227,38 @@ extension CloudResources {
 }
 // MARK: - Resource
 extension CloudResources {
-    func fetchResourceURL(recordId: CKRecord.ID, completionHandler: @escaping (_ url: URL?, _ error: Error?) -> Void) {
+    private func fetchResourceURL(recordId: CKRecord.ID) async throws -> URL {
         guard let database = container?.publicCloudDatabase else {
-            completionHandler(nil, CloudResourcesError.uninitialized)
-            return
+            throw CloudResourcesError.uninitialized
         }
         
         let localUrl = cachesDirectory.appendingPathComponent(recordId.recordName)
         
         if FileManager.default.fileExists(atPath: localUrl.path) {
-            completionHandler(localUrl, nil)
+            return localUrl
         } else {
-            database.fetch(withRecordID: recordId) { record, error in
-                guard
-                    let record = record,
-                    let asset = record["asset"] as? CKAsset,
-                    let url = asset.fileURL,
-                    let data = try? Data(contentsOf: url)
-                else {
-                    completionHandler(nil, CloudResourcesError.cloudError(error))
-                    return
-                }
-                do {
-                    try data.write(to: localUrl)
-                    completionHandler(localUrl, nil)
-                } catch {
-                    completionHandler(nil, error)
-                }
+            let record = try await database.record(for: recordId)
+            
+            guard
+                let asset = record["asset"] as? CKAsset,
+                let url = asset.fileURL,
+                let data = try? Data(contentsOf: url)
+            else {
+                throw CloudResourcesError.cloudError(nil)
             }
+            
+            do {
+                try data.write(to: localUrl)
+            } catch {
+                throw error
+            }
+            return localUrl
         }
     }
     
-    func queryResourceURL(name: String, version: Int, completionHandler: @escaping (_ url: URL?, _ error: Error?) -> Void) {
+    func queryResourceURL(name: String, version: Int) async throws -> URL {
         guard let database = container?.publicCloudDatabase else {
-            completionHandler(nil, CloudResourcesError.uninitialized)
-            return
-        }
-        
-        let success = { (record: CKRecord) in
-            if let asset = record["asset"] as? CKAsset, let url = asset.fileURL {
-                completionHandler(url, nil)
-            } else {
-                completionHandler(nil, nil)
-            }
-        }
-        let failure = { (error: Error) in
-            completionHandler(nil, CloudResourcesError.cloudError(error))
+            throw CloudResourcesError.uninitialized
         }
         
         let predicate = NSPredicate.init(format: "name == '\(name)' AND version <= \(version)")
@@ -337,17 +272,29 @@ extension CloudResources {
         let desiredKeys = ["name", "version", "asset"]
         let resultsLimit = 1
         
-        let operation = CKQueryOperation(query: query)
-        operation.resultsLimit = resultsLimit
-        operation.desiredKeys = desiredKeys
-        operation.recordFetchedBlock = { record in
-            success(record)
-        }
-        operation.queryCompletionBlock = { (cursor, error) in
-            if let error = error {
-                failure(error)
+        return try await withUnsafeThrowingContinuation { (c: UnsafeContinuation<URL, Error>) in
+            var callbacked = false
+            
+            let operation = CKQueryOperation(query: query)
+            operation.resultsLimit = resultsLimit
+            operation.desiredKeys = desiredKeys
+            operation.recordFetchedBlock = { record in
+                if let asset = record["asset"] as? CKAsset, let url = asset.fileURL {
+                    c.resume(returning: url)
+                    callbacked = true
+                }
             }
+            operation.queryCompletionBlock = { (cursor, error) in
+                guard !callbacked else {
+                    return
+                }
+                if let error = error {
+                    c.resume(throwing: error)
+                } else {
+                    c.resume(throwing: NSError(domain: "Fail: queryResourceURL", code: -1))
+                }
+            }
+            database.add(operation)
         }
-        database.add(operation)
     }
 }

@@ -221,4 +221,36 @@ function convertCKDBAsset(asset) {
     }
 }
 
+
+var openURLInBycoinHandlers;
+
+function openURLInBycoin(url, handler) {
+    let id = "" // UUID
+    openURLInBycoinHandlers[id] = handler
+    webkit.messageHandlers.bycoin.postMessage({id: id, method: "openURL", body: {url: url}})
+    return false
+}
+
+async function asyncOpenURLInBycoin(url) {
+    return new Promise(function(resolve, reject) {
+        let id = "" // UUID
+        openURLInBycoinHandlers[id] = canOpen => {
+            resolve(canOpen)
+        }
+        webkit.messageHandlers.bycoin.postMessage({id: id, method: "openURL", body: {url: url}})
+    })
+}
+
+function bycoinOpenURLCallback(id, canOpen) {
+    if (openURLInBycoinHandlers[id]) {
+        openURLInBycoinHandlers[id](canOpen)
+        openURLInBycoinHandlers[id] = null
+    }
+}
+
+
 console.log("CKToolJS - injected")
+
+
+// bycoin://wallet/maze_asset/deal?erc721=xxx&tokenId=xx
+// bycoin://wallet/maze_asset/offer?erc721=xxx&tokenId=xx

@@ -32,5 +32,45 @@ class CloudResourcesTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testTaksGroup() async {
+        let queue = CloudResourcesOperationQueue<Int, String>()
+        
+        await queue.handle { op in
+            
+            let timeInterval = TimeInterval(200 + arc4random_uniform(800)) / 1000
+            Thread.sleep(forTimeInterval: timeInterval)
+//            Task.sleep(nanoseconds: <#T##UInt64#>)
+            print("Handle - \(op)")
+            return "Azusa - \(op)"
+        }
+        
+//        await group.insert(op: 10) { op, value in
+//            print(op, value)
+//        }
+//        await group.insert(op: 10) { op, value in
+//            print(op, value)
+//        }
+//        await group.insert(op: 20) { op, value in
+//            print(op, value)
+//        }
+        
+        await withTaskGroup(of: Void.self, body: { group in
+            
+            group.addTask {
+                print(await queue.insert(op: 4))
+            }
+            group.addTask {
+                print(await queue.insert(op: 8))
+            }
+            
+            for i in 0..<30 {
+                group.addTask {
+                    print(await queue.insert(op: i))
+                }
+            }
+        })
+        
+    }
 
 }

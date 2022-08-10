@@ -10,10 +10,16 @@ import UIKit
 
 public extension UIImageView {
     func setCloudAsset(name: String) {
-        CloudResources.shared.fetchResourceURL(name) { [weak self] url, error in
-            guard let weakself = self, let url = url, let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
-                weakself.image = image
+        Task.detached {
+            do {
+                let url = try await CloudResources.shared.fetchResourceURL(name)
+                if let image = UIImage(contentsOfFile: url.path) {
+                    await MainActor.run {
+                        self.image = image
+                    }
+                }
+            } catch {
+                debugPrint(error)
             }
         }
 //        .cancel(onObjectRelease: self)

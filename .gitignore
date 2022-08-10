@@ -93,3 +93,4 @@ CloudKitJSBridge/node_modules/
 CloudKitJSBridge/dist/
 CloudKitJSBridge/.cache/
 
+.DS_Store

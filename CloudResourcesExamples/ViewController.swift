@@ -10,15 +10,16 @@ import CloudResources
 
 class ViewController: UIViewController {
     
-    let assets: CloudResources = .shared
+    let resources: CloudResources = .shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        assets.start(identifier: "iCloud.im.bycoin.ios", version: "3.0.1")
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        Task.detached {
+//            await
+//        }
+        self.resources.start(identifier: "iCloud.im.bycoin.ios", version: "3.2.1")
+        
         if let view = view.viewWithTag(2233) {
             view.removeFromSuperview()
         } else {
@@ -33,6 +34,10 @@ class ViewController: UIViewController {
             
             imageView.setCloudAsset(name: "nft_3d_background")
         }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
     }
 
 }

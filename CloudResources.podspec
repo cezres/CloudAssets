@@ -18,8 +18,8 @@ Pod::Spec.new do |spec|
 
   spec.swift_version = '5'
   spec.module_name = 'CloudResources'
-  spec.platform     = :ios, "12.0"
-  spec.ios.deployment_target = "12.0"
+  spec.platform     = :ios, "13.0"
+  spec.ios.deployment_target = "13.0"
 
 
   spec.source       = { :git => "https://github.com/cezres/CloudResources.git", :tag => "#{spec.version}" }
@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
   spec.default_subspecs = 'Core'
 
   spec.subspec 'Foundation' do |ss|
-    ss.source_files = 'CloudResourcesFoundation/Sources/**/*.swift'
+    ss.source_files = 'CloudResourcesFoundation/**/*.swift'
     ss.exclude_files = 'CloudResourcesFoundation/Package.swift'
   end
 
