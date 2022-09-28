@@ -8,12 +8,11 @@
 import Foundation
 import ComposableArchitecture
 import Combine
-import CloudResourcesFoundation
 
 struct CreateResourceIndexesState: Equatable {
     var isActive: Bool = false
     var version: String = ""
-    var base: ResourceIndexes?
+    var base: ResourceIndexesRecord?
     var isLoading: Bool = false
     var error: String = ""
 }
@@ -23,9 +22,9 @@ enum CreateResourceIndexesAction {
     case setLoading(Bool)
     case setError(String)
     case setVersion(String)
-    case setBase(ResourceIndexes?)
+    case setBase(ResourceIndexesRecord?)
     case confirm
-    case completion(ResourceIndexes)
+    case completion(ResourceIndexesRecord)
 }
 
 let createResourceIndexesReducer = Reducer<CreateResourceIndexesState, CreateResourceIndexesAction, AppEnvironment>.init { state, action, env in
@@ -35,29 +34,30 @@ let createResourceIndexesReducer = Reducer<CreateResourceIndexesState, CreateRes
             break
         }
         let indexes = state.base?.indexes ?? [:]
-        let resourceIndex = ResourceIndexes(id: "\(version)_resource_index", version: version, indexes: indexes, checksum: "")
+        let resourceIndex = ResourceIndexesRecord(recordName: "\(version)_resource_index", modifiedTimestamp: 0, version: version, indexes: indexes)
         
         return Effect.run { subscriber in
             subscriber.send(.setLoading(true))
-            Task {
-                do {
-                    let record = try await env.cktool.createResourceIndexRecord(indexes: resourceIndex)
-                    
-                    let resourceIndex = ResourceIndexes(id: record.recordName, version: record.version, indexes: indexes, checksum: record.indexes.fileChecksum)
-                    try env.database.save(resourceIndex)
-                    
-                    DispatchQueue.main.async {
-                        subscriber.send(.setLoading(false))
-                        subscriber.send(.setActive(false))
-                        subscriber.send(.completion(resourceIndex))
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        subscriber.send(.setLoading(false))
-                        subscriber.send(.setError(error.toString()))
-                    }
-                }
-            }
+//            Task {
+//                do {
+//                    let record = try await env.cktool.createResourceIndexRecord(indexes: resourceIndex)
+//                    
+//                    let resourceIndex = ResourceIndexesRecord(recordName: record.recordName, version: record.version, indexes: indexes, checksum: record.indexes.fileChecksum)
+////                    ResourceIndexesRecord(recordName: <#T##String#>, modifiedTimestamp: <#T##Double#>, version: <#T##Int#>, indexes: <#T##ResourceIndexes#>)
+//                    try env.database.save(resourceIndex)
+//                    
+//                    DispatchQueue.main.async {
+//                        subscriber.send(.setLoading(false))
+//                        subscriber.send(.setActive(false))
+//                        subscriber.send(.completion(resourceIndex))
+//                    }
+//                } catch {
+//                    DispatchQueue.main.async {
+//                        subscriber.send(.setLoading(false))
+//                        subscriber.send(.setError(error.toString()))
+//                    }
+//                }
+//            }
             return AnyCancellable {}
         }
     case .completion(let result):

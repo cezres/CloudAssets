@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 public extension UIImageView {
-    func setCloudAsset(name: String) {
+    @discardableResult
+    func setCloudAsset(name: String) -> Task<Void, Never> {
         Task.detached {
             do {
                 let url = try await CloudResources.shared.fetchResourceURL(name)
@@ -22,7 +23,6 @@ public extension UIImageView {
                 debugPrint(error)
             }
         }
-//        .cancel(onObjectRelease: self)
     }
     
     func setCloudAssetFromLocal(name: String) {
@@ -36,11 +36,26 @@ public extension UIImageView {
     }
 }
 
-extension Operation {
-    func cancel(onObjectRelease object: NSObject) {
-        object.addReleaseAction { [weak self] in
-            self?.cancel()
+extension Task {
+    func cancel(whenObjectReleased object: NSObject, file: String = #file, line: Int = #line) {
+        let key = "\(file)-\(line)"
+        object.setReleaseAction({
+            self.cancel()
+        }, for: key)
+        
+        Task<Void, Never>.detached {
+            let result = await self.result
+            debugPrint(result)
+            object.removeReleaseAction(for: key)
         }
+    }
+}
+
+extension NSObject {
+    func task<Success>(priority: TaskPriority? = nil, operation: @escaping @Sendable () async -> Success) -> Task<Success, Never> {
+        let task = Task.detached(priority: priority, operation: operation)
+        task.cancel(whenObjectReleased: self)
+        return task
     }
 }
 
@@ -48,19 +63,26 @@ extension Operation {
 private var __releaseProxyAssociatedKey: Int = 0
 
 extension NSObject {
+    
     class ReleaseProxy: NSObject {
+        
         typealias Action = () -> Void
-        var actions: [Action] = []
+        
+        var actions: [String: Action] = [:]
         
         deinit {
-            for action in actions {
+            for action in actions.values {
                 action()
             }
         }
     }
     
-    func addReleaseAction(_ action: @escaping () -> Void) {
-        __releaseProxy.actions.append(action)
+    func setReleaseAction(_ action: @escaping () -> Void, for key: String) {
+        __releaseProxy.actions[key] = action
+    }
+    
+    func removeReleaseAction(for key: String) {
+        __releaseProxy.actions.removeValue(forKey: key)
     }
     
     var __releaseProxy: ReleaseProxy {

@@ -10,7 +10,7 @@ import ComposableArchitecture
 import Combine
 
 struct ResourceIndexState: Equatable, Identifiable {
-    var index: ResourceIndexes
+    var index: ResourceIndexesRecord
     
     var id: String { index.id }
     
@@ -35,7 +35,7 @@ extension ResourceIndexState {
             if let index = tempList.firstIndex(where: { $0.id == value.id }) {
                 return tempList.remove(at: index)
             } else {
-                return Resource(id: "", name: key, version: 0, pathExtension: "", checksum: "")
+                return Resource(id: "", name: key, version: 0, pathExtension: "", fileChecksum: "")
             }
         }.sorted(by: { $0.name < $1.name })
         rightList = tempList.sorted(by: { $0.name < $1.name })
@@ -84,40 +84,41 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
 //        .throttle(for: 4, scheduler: env.mainQueue, latest: true)
 //        .catchToEffect(ResourceIndexAction.save)
     case .save:
-        var indexes: [ResourceIndexes.ResourceName: ResourceIndexes.Record] = [:]
-        state.leftList.forEach { resource in
-            indexes[resource.name] = .init(id: resource.id)
-        }
-        state.index.indexes = indexes
-        let saveValue = state.index
-        return Effect.task {
-            do {
-                try env.database.save(saveValue)
-            } catch {
-                debugPrint(error)
-            }
-        }
-        .receive(on: env.mainQueue)
-        .fireAndForget()
+//        var indexes: [ResourceIndexes.ResourceName: ResourceIndexes.Record] = [:]
+//        state.leftList.forEach { resource in
+//            indexes[resource.name] = .init(id: resource.id)
+//        }
+//        state.index.indexes = indexes
+//        let saveValue = state.index
+//        return Effect.task {
+//            do {
+//                try env.database.save(saveValue)
+//            } catch {
+//                debugPrint(error)
+//            }
+//        }
+//        .receive(on: env.mainQueue)
+//        .fireAndForget()
+        break
     case .upload:
         let indexes = state.index
         return Effect.run { subscriber in
             subscriber.send(.setLoading(true))
             
-            Task {
-                do {
-                    let result = try await env.cktool.updateResourceIndexRecord(indexes: indexes)
-                } catch {
-                    DispatchQueue.main.async {
-                        subscriber.send(.setError(error.toString()))
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    subscriber.send(.setLoading(false))
-                }
-            }
-            
+//            Task {
+//                do {
+//                    let result = try await env.cktool.updateResourceIndexRecord(indexes: indexes)
+//                } catch {
+//                    DispatchQueue.main.async {
+//                        subscriber.send(.setError(error.toString()))
+//                    }
+//                }
+//                
+//                DispatchQueue.main.async {
+//                    subscriber.send(.setLoading(false))
+//                }
+//            }
+
             return AnyCancellable {}
         }
     case .download:
@@ -127,20 +128,20 @@ let resourceIndexReducer = Reducer<ResourceIndexState, ResourceIndexAction, AppE
         let indexes = state.index
         state.isLoading = true
         return Effect.run { subscriber in
-            Task {
-                do {
-                    try await env.cktool.deleteRecord(recordName: recordName)
-                } catch {
-                    DispatchQueue.main.async {
-                        subscriber.send(.setError(error.toString()))
-                    }
-                }
-                try indexes.delete(to: env.database.database()!)
-                DispatchQueue.main.async {
-                    subscriber.send(.setActive(false))
-                    subscriber.send(.deleteCompletion)
-                }
-            }
+//            Task {
+//                do {
+//                    try await env.cktool.deleteRecord(recordName: recordName)
+//                } catch {
+//                    DispatchQueue.main.async {
+//                        subscriber.send(.setError(error.toString()))
+//                    }
+//                }
+//                try indexes.delete(to: env.database.database()!)
+//                DispatchQueue.main.async {
+//                    subscriber.send(.setActive(false))
+//                    subscriber.send(.deleteCompletion)
+//                }
+//            }
             return AnyCancellable {}
         }
     case .deleteCompletion:

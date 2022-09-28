@@ -8,7 +8,6 @@
 import Foundation
 import ComposableArchitecture
 import Combine
-import CloudResourcesFoundation
 
 struct CreateResourceState: Equatable {
     var url: URL?
@@ -45,32 +44,22 @@ let createResourceReducer = Reducer<CreateResourceState, CreateResourceAction, A
         }
         let name = state.name
         state.isLoading = true
-        
+        let record = Resource.init(id: UUID().uuidString, name: state.name, version: version, pathExtension: url.pathExtension, fileChecksum: "", modifiedTimestamp: Date().timeIntervalSince1970)
         return Effect.run { subscriber in
-            Task {
+            Task.detached {
                 let result: Result<Resource, Error>
                 do {
-//                    let record = try await env.cktool.createAssetsRecord(name: name, version: version, asset: url)
                     let data = try Data(contentsOf: url)
-                    let record = try await env.cktool.createAssetsRecord(recordName: UUID().uuidString, name: name, version: version, pathExtension: url.pathExtension, asset: data)
-                    let resource = Resource(
-                        id: record.recordName,
-                        name: record.name,
-                        version: record.version,
-                        pathExtension: record.pathExtension,
-                        checksum: record.asset.fileChecksum
-                    )
-                    try resource.save(to: Database.default.database()!)
-                    
-                    if let data = try? Data(contentsOf: url) {
-                        let asset = Asset(id: record.recordName, data: data)
-                        try asset.save(to: Database.default.database()!)
-                    }
-                    result = .success(resource)
+                    let asset = Asset(id: record.id, data: data)
+                    try env.localDatabase.insert(asset)
+                    try env.localDatabase.insert(record)
+                    // 添加同步数据到iCloud的后台任务
+                    result = .success(record)
                 } catch {
                     result = .failure(error)
                 }
-                DispatchQueue.main.async {
+                await MainActor.run {
+                    subscriber.send(.setLoading(false))
                     subscriber.send(.completionHandler(result))
                 }
             }
@@ -86,11 +75,12 @@ let createResourceReducer = Reducer<CreateResourceState, CreateResourceAction, A
         case .failure(let error):
             state.error = error.toString()
         }
-        state.isLoading = false
+//        state.isLoading = false
     case .setActive(let value):
         state.isActive = value
     case .setURL(let value):
         state.url = value
+        state.name = value?.lastPathComponent ?? ""
     case .setName(let value):
         state.name = value
     case .setVersion(let value):

@@ -65,13 +65,13 @@ struct ResourceIndexesView: View {
         return ScrollView {
             ForEach.init(rightData) { element in
                 HStack(spacing: 12) {
-                    ForEach.init(element.assets) { resource in
-                        ResourceView(resource: resource) { resource in
-                        }
-                        .onTapGesture {
-                            viewStore.send(tapAction(resource))
-                        }
-                    }
+//                    ForEach.init(element.assets) { resource in
+//                        ResourceItemView(resource: resource) { resource in
+//                        }
+//                        .onTapGesture {
+//                            viewStore.send(tapAction(resource))
+//                        }
+//                    }
                     Spacer()
                 }
             }

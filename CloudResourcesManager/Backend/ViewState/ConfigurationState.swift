@@ -7,35 +7,52 @@
 
 import Foundation
 import ComposableArchitecture
+import SQLiteExt
+import SQLite
 
-struct ConfigurationState: Equatable {
+struct ConfigurationState: Equatable, SQLiteTable, SQLiteTablePrimaryKey, Hashable {
+    
+    static var fields: [AnySQLiteField<ConfigurationState>] = [
+        .init(identifier: "containerId", keyPath: \.containerId),
+        .init(identifier: "developmentServerKeyID", keyPath: \.developmentServerKeyID),
+        .init(identifier: "developmentServerKey", keyPath: \.developmentServerKey),
+        .init(identifier: "productionServerKeyID", keyPath: \.productionServerKeyID),
+        .init(identifier: "productionServerKey", keyPath: \.productionServerKey),
+    ]
+    
+    static var primary: SQLiteFild<ConfigurationState, Int> = .init(identifier: "id", keyPath: \.id)
+    
     var containerId: String = ""
-    var developmentCKAPIToken: String = ""
-    var developmentCKWebAuthToken: String = ""
-    var productionCKAPIToken = ""
-    var productionCKWebAuthToken = ""
+    var developmentServerKeyID: String = ""
+    var developmentServerKey: String = ""
+    var productionServerKeyID = ""
+    var productionServerKey = ""
+    var id = 100
     
-    var isActive: Bool = false
-    var isChanged: Bool = false
-    var isLoading: Bool = false
-    var error: String = ""
+    var hashValueInLocalDatabase = 0
+    var isAbleToUpdate = false
     
-    enum Environment: String, Hashable, Identifiable {
-        var id: String { rawValue }
-        
-        case development = "DEVELOPMENT"
-        case production = "PRODUCTION"
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(containerId)
+        hasher.combine(developmentServerKeyID)
+        hasher.combine(developmentServerKey)
+        hasher.combine(productionServerKeyID)
+        hasher.combine(productionServerKey)
+    }
+    
+    static func load(from db: Connection) throws -> ConfigurationState {
+        var result: ConfigurationState = try db.query().first ?? .init()
+        result.hashValueInLocalDatabase = result.hashValue
+        return result
     }
 }
 
 enum ConfigurationAction {
     case setContainerId(String)
-    case setDevelopmentCKAPIToken(String)
-    case setDevelopmentCKWebAuthToken(String)
-    case setProductionCKAPIToken(String)
-    case setProductionCKWebAuthToken(String)
-    case setLoading(Bool)
-    case setError(String)
+    case setDevelopmentServerKeyID(String)
+    case setDevelopmentServerKey(String)
+    case setProductionServerKeyID(String)
+    case setProductionServerKey(String)
     
     case update
 }
@@ -43,35 +60,23 @@ enum ConfigurationAction {
 let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, AppEnvironment>.init { state, action, env in
     switch action {
     case .update:
-        guard !state.containerId.isEmpty || !state.developmentCKAPIToken.isEmpty else {
-            break
-        }
         do {
-            try env.database.saveCKToolConfiguration(.init(containerId: state.containerId, developmentCKAPIToken: state.developmentCKAPIToken, developmentCKWebAuthToken: state.developmentCKWebAuthToken, productionCKAPIToken: state.productionCKAPIToken, productionCKWebAuthToken: state.productionCKWebAuthToken))
+            try env.localDatabase.insert(state)
+            state.hashValueInLocalDatabase = state.hashValue
         } catch {
-            state.error = error.toString()
+            debugPrint(error)
         }
-        
-        guard !state.developmentCKAPIToken.isEmpty else {
-            break
-        }
-        env.cktool.configureEnvironment(state.containerId, environment: ConfigurationState.Environment.development.rawValue, ckAPIToken: state.developmentCKAPIToken, ckWebAuthToken: state.developmentCKWebAuthToken)
     case .setContainerId(let value):
         state.containerId = value
-        
-    case .setDevelopmentCKAPIToken(let value):
-        state.developmentCKAPIToken = value
-    case .setDevelopmentCKWebAuthToken(let value):
-        state.developmentCKWebAuthToken = value
-    case .setProductionCKAPIToken(let value):
-        state.productionCKAPIToken = value
-    case .setProductionCKWebAuthToken(let value):
-        state.productionCKWebAuthToken = value
-    case .setError(let value):
-        state.error = value
-    case .setLoading(let value):
-        state.isLoading = value
+    case .setDevelopmentServerKeyID(let value):
+        state.developmentServerKeyID = value
+    case .setDevelopmentServerKey(let value):
+        state.developmentServerKey = value
+    case .setProductionServerKeyID(let value):
+        state.productionServerKeyID = value
+    case .setProductionServerKey(let value):
+        state.productionServerKey = value
     }
-//    state.isChanged = env.cktool.configurationToken != CKToolConfiguration(containerId: state.containerId, environment: state.environment.rawValue, userToken: state.userToken).token()
+    state.isAbleToUpdate = state.hashValue != state.hashValueInLocalDatabase
     return .none
 }

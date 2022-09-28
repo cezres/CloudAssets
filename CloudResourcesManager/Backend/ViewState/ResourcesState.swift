@@ -21,6 +21,8 @@ enum ResourcesAction {
     
     case setLoading(Bool)
     case setError(String)
+    
+    case resourceItem(ResourceItemState.ID, ResourceItemAction)
 }
 
 let resourcesReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.init { state, action, env in
@@ -28,19 +30,19 @@ let resourcesReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.
     case .deleteAsset(let asset):
         state.loading = true
         return Effect.run { subscriber in
-            Task {
-                let result: Result<Resource, Error>
-                do {
-                    try await env.cktool.deleteRecord(recordName: asset.id)
-                    try asset.delete(to: Database.default.database()!)
-                    result = .success(asset)
-                } catch {
-                    result = .failure(error)
-                }
-                DispatchQueue.main.async {
-                    subscriber.send(.deleteAssetResponse(result))
-                }
-            }
+//            Task {
+//                let result: Result<Resource, Error>
+//                do {
+//                    try await env.cktool.deleteRecord(recordName: asset.id)
+//                    try asset.delete(to: Database.default.database()!)
+//                    result = .success(asset)
+//                } catch {
+//                    result = .failure(error)
+//                }
+//                DispatchQueue.main.async {
+//                    subscriber.send(.deleteAssetResponse(result))
+//                }
+//            }
             return AnyCancellable {}
         }
         
@@ -59,6 +61,9 @@ let resourcesReducer = Reducer<ResourcesState, ResourcesAction, AppEnvironment>.
         state.loading = value
     case .setError(let error):
         state.error = error
+        
+    case .resourceItem(let id, let action):
+        break
     }
     return .none
 }

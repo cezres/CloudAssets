@@ -33,44 +33,19 @@ class CloudResourcesTests: XCTestCase {
         }
     }
     
-    func testTaksGroup() async {
-        let queue = CloudResourcesOperationQueue<Int, String>()
+    func testTaksGroup() async throws {
+        let config = CloudResources.Configuration(
+            version: 0,
+            modifiedTimestamp: 0,
+            items: [
+                "auctionTypesSupportedByNative": .strings(["radical", "fixed"]), // 支持跳转的拍卖类型
+                "radicalAuctionNFTsToSupportCancellation": .strings(["0xebe3b2635dcef2ddf63e6462d79def0e2b85b9e7"]), // 支持下架功能的激进拍卖NFT项目的合约地址
+                "AppStoreUnderReview": .bool(false), // AppStore正在审核中
+            ]
+        )
         
-        await queue.handle { op in
-            
-            let timeInterval = TimeInterval(200 + arc4random_uniform(800)) / 1000
-            Thread.sleep(forTimeInterval: timeInterval)
-//            Task.sleep(nanoseconds: <#T##UInt64#>)
-            print("Handle - \(op)")
-            return "Azusa - \(op)"
-        }
-        
-//        await group.insert(op: 10) { op, value in
-//            print(op, value)
-//        }
-//        await group.insert(op: 10) { op, value in
-//            print(op, value)
-//        }
-//        await group.insert(op: 20) { op, value in
-//            print(op, value)
-//        }
-        
-        await withTaskGroup(of: Void.self, body: { group in
-            
-            group.addTask {
-                print(await queue.insert(op: 4))
-            }
-            group.addTask {
-                print(await queue.insert(op: 8))
-            }
-            
-            for i in 0..<30 {
-                group.addTask {
-                    print(await queue.insert(op: i))
-                }
-            }
-        })
-        
+        let data = try JSONEncoder().encode(config.items)
+        try data.write(to: .init(fileURLWithPath: "/Users/cezres/Documents/configuration"))
     }
 
 }

@@ -8,16 +8,22 @@
 import Foundation
 import CloudKit
 
+@globalActor actor CloudResourceActor {
+    static let shared = CloudResourceActor()
+    private init() { }
+}
+@globalActor actor CloudConfigurationActor {
+    static let shared = CloudConfigurationActor()
+    private init() { }
+}
+@globalActor actor CloudFileActor {
+    static let shared = CloudFileActor()
+    private init() { }
+}
+
 private var queryResourceIndexesGroup = DispatchGroup()
 
 public class CloudResources {
-    
-    typealias FetchResourceCompletionHandler = (_ result: Result<URL, Error>) -> Void
-    
-    struct TodoTask {
-        let name: String
-        var handlers: [FetchResourceCompletionHandler]
-    }
     
     public static let shared = CloudResources()
     
@@ -25,16 +31,14 @@ public class CloudResources {
     private(set) var version: Int!
     let cachesDirectory: URL
     
-    @MainActor var xxx: Int = 0
-    
     private var resourceIndexesRecord: ResourceIndexesRecord?
-    
-//    private var fetchingList: [String: [FetchResourceCompletionHandler]] = [:]
-//    private var todoList: [TodoTask] = []
-//    private let maxConcurrentOperationCount = 3
     
     private var queue: CloudResourcesOperationQueue<String, Result<URL, Error>>!
     
+    @CloudResourceActor var resourceTasks: [String: Task<Data?, Never>] = [:]
+    
+    var configuration: Configuration = .init(version: 0, modifiedTimestamp: 0, items: [:])
+        
     init() {
         cachesDirectory = .init(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true).appendingPathComponent("cache_assets")
         
@@ -47,7 +51,7 @@ public class CloudResources {
             }
         }
     }
-        
+    
 //    nonisolated
     public func start(identifier: String, version: String) {
         guard let version = Version.stringVersionToInt(version) else {
@@ -67,6 +71,7 @@ public class CloudResources {
             }
         })
         
+        self.loadConfiguration()
         self.queryResourceIndexes()
     }
     
@@ -77,8 +82,8 @@ public class CloudResources {
             await withThrowingTaskGroup(of: Void.self) { group in
                 (["wallet_chain_background_ethereum", "wallet_chain_background_bytom", "wallet_chain_background_bsc", "wallet_chain_background_litecoin"] + keys).forEach { name in
                     group.addTask {
-                        let url = try await self.fetchResourceURL(name)
-                        print("预加载完成 - \(name) - \(url.lastPathComponent)")
+                        let _ = try await self.fetchResourceURL(name)
+//                        print("预加载完成 - \(name) - \(url.lastPathComponent)")
                     }
                 }
             }

@@ -9,21 +9,17 @@ import SwiftUI
 
 @main
 struct CloudResourcesManagerApp: App {
-    let cktool = CKToolJS()
     
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                __WebView(cktool: cktool)
-                    .opacity(0)
-                    .frame(width: 10, height: 10)
-                
-                ContentView(store: .init(
-                    initialState: .init(resourceIndexes: []),
-                    reducer: mainReducer,
-                    environment: .init(cktool: cktool, database: .default)
-                ))
-            }
+            ContentView(store: .init(
+                initialState: .init(),
+                reducer: mainReducer,
+                environment: .init(
+                    cloudDatabase: .init(),
+                    localDatabase: try! .init(.uri(DownloadsDirectory.appendingPathExtension("cloud_resouces.db").path()))
+                )
+            ))
         }
         .windowToolbarStyle(UnifiedWindowToolbarStyle(showsTitle: true))
     }

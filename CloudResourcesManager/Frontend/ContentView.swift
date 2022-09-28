@@ -8,86 +8,91 @@
 import SwiftUI
 import WebKit
 import ComposableArchitecture
-import CloudResourcesFoundation
 
 struct ContentView: View {
     
     let store: Store<AppState, AppAction>
     
+    var newBody: some View {
+        NavigationSplitView {
+            //
+        } detail: {
+            //
+        }
+    }
+    
     var body: some View {
-        ZStack {
-            WithViewStore(store) { viewStore in
-                NavigationView {
-                    List {
-                        Section {
-                            ForEachStore(store.scope(state: \.resourceIndexes, action: AppAction.resourceIndexes)) { store in
-                                WithViewStore(store) { viewStore in
-                                    NavigationLink(
-                                        isActive: viewStore.binding(get: \.isActive, send: ResourceIndexAction.setActive)
-                                    ) {
-                                        ResourceIndexesView(store: store)
-                                    } label: {
-                                        Text(Version.intVersionToString(viewStore.index.version))
-                                    }
+        WithViewStore(store) { viewStore in
+            NavigationView {
+                List {
+                    Section {
+                        ForEachStore(store.scope(state: \.resourceIndexes, action: AppAction.resourceIndexes)) { store in
+                            WithViewStore(store) { viewStore in
+                                NavigationLink(
+                                    isActive: viewStore.binding(get: \.isActive, send: ResourceIndexAction.setActive)
+                                ) {
+                                    ResourceIndexesView(store: store)
+                                } label: {
+                                    Text(Version.intVersionToString(viewStore.index.version))
                                 }
                             }
-                        } header: {
-                            Text("Indexes")
                         }
-                                                
-                        Section {
-                            NavigationLink("Resources") {
-                                ResourcesView(store: store.scope(state: \.resources, action: AppAction.resources))
-                            }
-                        } header: {
-                            Text("Resources")
+                    } header: {
+                        Text("Indexes")
+                    }
+                                            
+                    Section {
+                        NavigationLink("Resources") {
+                            ResourcesView(store: store.scope(state: \.resources, action: AppAction.resources))
                         }
-                        
-                        Section {
-                            NavigationLink {
-                                ConfigurationView(store: store.scope(state: \.configuration, action: AppAction.configuration))
-                            } label: {
-                                Text("Configuration")
-                            }
-                            
-                            NavigationLink {
-                                DeployView(store: store.scope(state: \.deploy, action: AppAction.deploy))
-                            } label: {
-                                Text("Deploy")
-                            }
-                        }
-                        header: {
-//                            Text(viewStore.configuration.environment.rawValue)
+                    } header: {
+                        Text("Resources")
+                    }
+                    
+                    Section {
+                        NavigationLink {
+                            ConfigurationView(store: store.scope(state: \.configuration, action: AppAction.configuration))
+                        } label: {
                             Text("Configuration")
                         }
+                        
+                        NavigationLink {
+                            DeployView(store: store.scope(state: \.deploy, action: AppAction.deploy))
+                        } label: {
+                            Text("Deploy")
+                        }
                     }
-                    .listStyle(SidebarListStyle())
-                    .frame(minWidth: 160)
+                    header: {
+//                            Text(viewStore.configuration.environment.rawValue)
+                        Text("Configuration")
+                    }
                 }
-                .toolbar {
-                    toolbar(viewStore: viewStore)
-                }
-                .frame(minWidth: 1000, minHeight: 600)
-                .onAppear {
-                    viewStore.send(.loadFromDB)
-                }
-                .sheet(isPresented: viewStore.binding(
-                    get: { $0.createResource.isActive },
-                    send: { AppAction.createResource(.setActive($0)) }
-                )) {
-                    CreateResourceView(store: store.scope(state: \.createResource, action: AppAction.createResource))
-                }
-                .sheet(isPresented: viewStore.binding(
-                    get: { $0.createResourceIndexes.isActive },
-                    send: { AppAction.createResourceIndexes(.setActive($0)) }
-                )) {
-                    CreateResourceIndexesView(
-                        store: store.scope(state: \.createResourceIndexes, action: AppAction.createResourceIndexes),
-                        indexes: viewStore.resourceIndexes.map { $0.index }
-                    )
-                }
-                .error(viewStore.binding(get: \.error, send: AppAction.setError))
+                .listStyle(SidebarListStyle())
+                .frame(minWidth: 160)
             }
+            .toolbar {
+                toolbar(viewStore: viewStore)
+            }
+            .frame(minWidth: 1000, minHeight: 600)
+            .onAppear {
+                viewStore.send(.loadFromDB)
+            }
+            .sheet(isPresented: viewStore.binding(
+                get: { $0.createResource.isActive },
+                send: { AppAction.createResource(.setActive($0)) }
+            )) {
+                CreateResourceView(store: store.scope(state: \.createResource, action: AppAction.createResource))
+            }
+            .sheet(isPresented: viewStore.binding(
+                get: { $0.createResourceIndexes.isActive },
+                send: { AppAction.createResourceIndexes(.setActive($0)) }
+            )) {
+                CreateResourceIndexesView(
+                    store: store.scope(state: \.createResourceIndexes, action: AppAction.createResourceIndexes),
+                    indexes: viewStore.resourceIndexes.map { $0.index }
+                )
+            }
+            .error(viewStore.binding(get: \.error, send: AppAction.setError))
         }
     }
     
@@ -128,53 +133,135 @@ struct ContentView: View {
     }
 }
 
+enum Link: Hashable, Identifiable {
+    case indexes(String)
+    case resources
+    case configuration
+    case deploy
+    
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .indexes(let value):
+            hasher.combine(0)
+            hasher.combine(value)
+        case .resources:
+            hasher.combine(1)
+        case .configuration:
+            hasher.combine(2)
+        case .deploy:
+            hasher.combine(3)
+        }
+    }
+    
+    var id: Int { hashValue }
+}
+
+fileprivate struct Sidebar: View {
+    
+    var selection: Binding<Link>
+    var resourceIndexes: IdentifiedArrayOf<ResourceIndexState> = []
+    
+    var body: some View {
+        List(selection: selection) {
+            Section {
+                ForEach(resourceIndexes) { value in
+                    Text(Version.intVersionToString(value.index.version)).tag(Link.indexes(value.id))
+                }
+            } header: {
+                Text("Indexes")
+            }
+            
+            Section {
+                Text("Resources").tag(Link.resources)
+            }
+            
+            Section {
+                Text("Configuration").tag(Link.configuration)
+                Text("Deploy").tag(Link.deploy)
+            }
+        }
+    }
+}
+
+fileprivate struct DetailView: View {
+    
+    var selection: Link
+    
+    let store: Store<AppState, AppAction>
+    
+    @State var path: NavigationPath = .init()
+    
+    var body: some View {
+        switch selection {
+        case .indexes:
+            Text("xxxxx")
+//            WithViewStore(store.scope(state: \.resourceIndexes, action: AppAction.resourceIndexes)) { viewStore in
+//                viewStore
+//            }
+//            ResourceIndexesView(store: <#T##Store<ResourceIndexState, ResourceIndexAction>#>)
+//            ResourcesIndexesView()
+//                .toolbar {
+//                    ToolbarItem {
+//                        Button {
+//                        } label: {
+//                            HStack {
+//                                Image(systemName: "doc.badge.plus")
+//                                Text("Add Indexes")
+//                            }
+//                        }
+//                    }
+//                }
+        case .resources:
+//            ResourcesView()
+            Text("xxx")
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                        } label: {
+                            HStack {
+                                Image(systemName: "doc.badge.plus")
+                                Text("Add Resource")
+                            }
+                        }
+                    }
+                    ToolbarItem {
+                        Button {
+                        } label: {
+                            HStack {
+                                Image(systemName: "goforward")
+                                Text("Refresh")
+                            }
+
+                        }
+                    }
+                }
+        case .configuration:
+//            ConfigurationView(configuration: state.configuration)
+            Text("xxx")
+        case .deploy:
+//            DeployView()
+            Text("xxx")
+        }
+    }
+    
+    func makeNavigationStack(root: some View) -> some View {
+        NavigationStack {
+            root
+        }
+        .toolbar {
+            ToolbarItem {
+                HStack {
+                    Image(systemName: "doc.badge.plus")
+                    Text("Add Indexes")
+                }
+            }
+        }
+    }
+}
+
+
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ContentView()
 //    }
 //}
-
-struct __WebView: NSViewRepresentable {
-    let cktool: CKToolJS
-    
-    func makeNSView(context: Context) -> WKWebView {
-        let view = WKWebView(frame: .init(x: 0, y: 0, width: 200, height: 200), configuration: .init())
-//        view.navigationDelegate = context.coordinator
-        cktool.webView = view
-        view.navigationDelegate = cktool
-        view.configuration.userContentController.add(cktool, name: "bridge")
-        return view
-    }
-    
-    func updateNSView(_ nsView: WKWebView, context: Context) {
-        nsView.loadHTMLString("""
-        <!DOCTYPE html>
-        <html>
-        <body>
-        <script>
-        document.write("<h1>这是一个标题</h1>");
-        document.write("<p>这是一个段落</p>");
-        </script>
-        </body>
-        </html>
-        """, baseURL: nil)
-        cktool.webView = nsView
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(javaScriptString: cktool.javaScriptString)
-    }
-    
-    typealias NSViewType = WKWebView
-    
-    class Coordinator: NSObject,WKNavigationDelegate {
-        let javaScriptString: String
-        
-        init(javaScriptString: String) {
-            self.javaScriptString = javaScriptString
-        }
-        
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        }
-    }
-}

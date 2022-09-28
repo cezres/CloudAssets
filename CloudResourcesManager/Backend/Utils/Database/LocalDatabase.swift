@@ -7,20 +7,21 @@
 
 import Foundation
 import SQLite
+import SQLiteExt
 
 let DownloadsDirectory = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0], isDirectory: true)
 
-class Database {
-    public static let `default` = Database(directory: DownloadsDirectory.appendingPathComponent("CloudResources", isDirectory: true))
-    public static let inMemory = Database(location: .inMemory)
-    public static let temporary = Database(location: .temporary)
+class LocalDatabase {
+    public static let `default` = LocalDatabase(directory: DownloadsDirectory.appendingPathComponent("CloudResources", isDirectory: true))
+    public static let inMemory = LocalDatabase(location: .inMemory)
+    public static let temporary = LocalDatabase(location: .temporary)
     
     private var db: Connection?
     private let location: Connection.Location
     
     private init(location: Connection.Location) {
         self.location = location
-        db = database()
+        db = connection()
     }
     
     private convenience init(directory: URL) {
@@ -35,18 +36,13 @@ class Database {
         }
     }
     
-    func database() -> Connection? {
+    func connection() -> Connection? {
         guard db == nil else {
             return db
         }
         
         do {
             db = try Connection(location, readonly: false)
-            
-            try CKToolConfiguration.create(to: db!)
-            try Asset.create(to: db!)
-            try Resource.create(to: db!)
-            try ResourceIndexes.create(to: db!)
         } catch {
             debugPrint(error)
         }
@@ -54,10 +50,10 @@ class Database {
     }
 }
 
-extension Array where Element: SQLiteRecord {
+extension Array where Element: SQLiteTable {
     func save(to db: Connection) throws {
         for item in self {
-            try item.save(to: db)
+            try db.insert(item)
         }
     }
 }

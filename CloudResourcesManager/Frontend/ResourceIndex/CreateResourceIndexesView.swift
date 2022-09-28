@@ -8,11 +8,10 @@
 import SwiftUI
 import SwiftUIX
 import ComposableArchitecture
-import CloudResourcesFoundation
 
 struct CreateResourceIndexesView: View {
     let store: Store<CreateResourceIndexesState, CreateResourceIndexesAction>
-    let indexes: [ResourceIndexes]
+    let indexes: [ResourceIndexesRecord]
     
     var body: some View {
         WithViewStore(store) { viewStore in

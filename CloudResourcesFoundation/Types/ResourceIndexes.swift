@@ -8,10 +8,10 @@
 import Foundation
 
 public struct ResourceIndexesRecord: Codable, Equatable {
-    public let recordName: String
-    public let modifiedTimestamp: Double
-    public let version: Int
-    public let indexes: ResourceIndexes
+    public var recordName: String = ""
+    public var modifiedTimestamp: Double = 0
+    public var version: Int = 0
+    public var indexes: ResourceIndexes = [:]
     
     public init(recordName: String, modifiedTimestamp: Double, version: Int, indexes: ResourceIndexes) {
         self.recordName = recordName
